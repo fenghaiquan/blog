@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Tech's documentation!
-================================
+我的技术生活
+============
 
 .. toctree::
    :maxdepth: 2
