@@ -7,8 +7,10 @@
 ============
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
+
+   computer_fog/index
+
 
 
 
