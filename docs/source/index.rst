@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-我的技术生活
+技术漫游者
 ============
 
 .. toctree::
