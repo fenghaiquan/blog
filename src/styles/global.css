@@ -15,6 +15,11 @@
 	--box-shadow:
 		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
 		0 16px 32px rgba(var(--gray), 33%);
+	--text-accent: #79c0ff;
+	--text-normal: rgb(34, 41, 57);
+	--text-muted: #8b949e;
+	--background-secondary: rgba(255, 255, 255, 0.05);
+	--shadow-s: 0 4px 6px rgba(0,0,0,0.1);
 }
 body {
 	font-family: var(--font-atkinson);
@@ -26,7 +31,7 @@ body {
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: rgb(var(--gray-dark));
-	font-size: 20px;
+	font-size: 16px;
 	line-height: 1.7;
 }
 main {
@@ -85,6 +90,21 @@ input {
 }
 table {
 	width: 100%;
+	border-collapse: collapse;
+	margin: 1.5em 0;
+}
+th,
+td {
+	border: 1px solid rgb(var(--gray-light));
+	padding: 0.75em 1em;
+	text-align: left;
+}
+thead th {
+	background-color: rgb(var(--gray-light), 0.3);
+	font-weight: 700;
+}
+tbody tr:nth-child(even) {
+	background-color: rgba(var(--gray-light), 0.1);
 }
 img {
 	max-width: 100%;
@@ -115,7 +135,7 @@ hr {
 }
 @media (max-width: 720px) {
 	body {
-		font-size: 18px;
+		font-size: 15px;
 	}
 	main {
 		padding: 1em;
@@ -138,4 +158,38 @@ hr {
 	clip-path: inset(50%);
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
+}
+
+[data-callout] {
+	padding: 1rem 1rem 1rem 1.5rem;
+	border-radius: 8px;
+	border-left: 4px solid rgb(var(--callout-color, 96, 115, 159));
+	background: rgba(var(--callout-color, 96, 115, 159), 0.08);
+	margin: 1em 0;
+}
+[data-callout] > .callout-title {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+	font-weight: 700;
+	margin-bottom: 0.5em;
+	color: rgb(var(--callout-color, 96, 115, 159));
+}
+[data-callout="abstract"]  { --callout-color: 0, 191, 255; }
+[data-callout="tip"]       { --callout-color: 16, 185, 129; }
+[data-callout="question"]  { --callout-color: 245, 158, 11; }
+[data-callout="gear"]      { --callout-color: 168, 85, 247; }
+[data-callout="info"]      { --callout-color: 59, 130, 246; }
+[data-callout="important"] { --callout-color: 239, 68, 68; }
+[data-callout="quote"]     { --callout-color: 156, 163, 175; }
+
+mark {
+	background: rgba(255, 235, 59, 0.4);
+	padding: 0.1em 0.2em;
+	border-radius: 2px;
+}
+
+.wiki-link-broken {
+	color: #ef4444;
+	text-decoration: wavy underline;
 }

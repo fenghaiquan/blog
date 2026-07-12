@@ -1,0 +1,126 @@
+---
+interface Props {
+	headings: { depth: number; slug: string; text: string }[];
+}
+
+const { headings } = Astro.props;
+const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+---
+
+{tocHeadings.length > 0 && (
+	<nav class="toc">
+		<div class="toc-title">
+			<span class="toc-arrow">▶</span>
+			目录
+		</div>
+		<ul>
+			{tocHeadings.map((h) => (
+				<li class={`toc-depth-${h.depth}`}>
+					<a href={`#${h.slug}`}>{h.text}</a>
+				</li>
+			))}
+		</ul>
+	</nav>
+)}
+
+<script>
+	const toc = document.querySelector('.toc');
+	const tocTitle = document.querySelector('.toc-title');
+	
+	if (toc && tocTitle) {
+		tocTitle.addEventListener('click', () => {
+			toc.classList.toggle('expanded');
+		});
+	}
+
+	const links = document.querySelectorAll<HTMLAnchorElement>('.toc a');
+	const headings = Array.from(document.querySelectorAll<HTMLElement>('.prose h2, .prose h3'));
+
+	if (links.length && headings.length) {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					const id = entry.target.id;
+					const link = document.querySelector(`.toc a[href="#${id}"]`);
+					if (link) {
+						if (entry.isIntersecting) {
+							link.classList.add('active');
+						} else {
+							link.classList.remove('active');
+						}
+					}
+				});
+			},
+			{ rootMargin: '-80px 0px -80% 0px' }
+		);
+		headings.forEach((h) => observer.observe(h));
+	}
+</script>
+
+<style>
+	.toc {
+		position: sticky;
+		top: 2em;
+		align-self: flex-start;
+		max-height: calc(100vh - 4em);
+		overflow-y: auto;
+		width: 220px;
+		min-width: 220px;
+		padding: 1em;
+		font-size: 0.85em;
+		border-left: 1px solid rgb(var(--gray-light));
+	}
+	.toc-title {
+		display: flex;
+		align-items: center;
+		gap: 0.4em;
+		font-weight: 700;
+		margin-bottom: 0.75em;
+		color: rgb(var(--gray-dark));
+		font-size: 0.9em;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		cursor: pointer;
+		user-select: none;
+	}
+	.toc-arrow {
+		font-size: 0.7em;
+		transition: transform 0.2s ease;
+	}
+	.toc.expanded .toc-arrow {
+		transform: rotate(90deg);
+	}
+	.toc ul {
+		display: none;
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	.toc.expanded ul {
+		display: block;
+	}
+	.toc li {
+		margin-bottom: 0.4em;
+	}
+	.toc li a {
+		color: rgb(var(--gray));
+		text-decoration: none;
+		line-height: 1.4;
+		transition: color 0.15s;
+	}
+	.toc li a:hover {
+		color: var(--accent);
+	}
+	.toc li a.active {
+		color: var(--accent);
+		font-weight: 600;
+	}
+	.toc li.toc-depth-3 {
+		padding-left: 1em;
+	}
+	@media (max-width: 1100px) {
+		.toc {
+			display: none;
+		}
+	}
+</style>
