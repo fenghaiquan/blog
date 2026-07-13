@@ -30,7 +30,7 @@ export default defineConfig({
 		processor: unified({
 			remarkPlugins: [
 			[remarkObsidianMd, {
-				root: '/mnt/d/Documents/Obsidian/LLMBrain/5_Output/Published',
+				root: './src/content/blog',
 				urlPrefix: '/blog',
 				enableFrontmatter: false,
 				slugify,

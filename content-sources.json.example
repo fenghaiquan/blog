@@ -1,0 +1,11 @@
+{
+  "sources": [
+    {
+      "name": "obsidian",
+      "path": "/path/to/your/obsidian/vault/Published",
+      "pattern": "**/*.md"
+    }
+  ],
+  "target": "src/content/blog",
+  "clean": false
+}

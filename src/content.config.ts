@@ -5,7 +5,7 @@ import { z } from 'astro/zod';
 const blog = defineCollection({
 	loader: glob({
 		pattern: '**/*.md',
-		base: '/mnt/d/Documents/Obsidian/LLMBrain/5_Output/Published',
+		base: './src/content/blog',
 	}),
 	schema: z.object({
 		title: z.string(),
