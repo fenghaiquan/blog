@@ -18,12 +18,8 @@
 (function () {
   'use strict';
 
-  var API_BASE = (function () {
-    var s = document.currentScript;
-    if (!s || !s.src) return '';
-    var url = new URL(s.src);
-    return url.origin;
-  })();
+  var API_BASE = '/api/beehiiv';
+  var BEEHIIV_ORIGIN = 'https://subscribe-forms.beehiiv.com';
 
   // ─── Attribution tracker (absorbed from attribution.js) ──────────────────
 
@@ -454,7 +450,7 @@
 
     this._on(window, 'message', function (e) {
       if (e.source !== iframe.contentWindow) return;
-      if (e.origin !== API_BASE) return;
+      if (e.origin !== BEEHIIV_ORIGIN) return;
       var msg = e.data;
 
       if (msg.type === 'beehiiv:styles') {

@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/beehiiv/:path*",
+      "destination": "https://subscribe-forms.beehiiv.com/:path*"
+    }
+  ]
+}
