@@ -7,19 +7,130 @@ import Header from '../components/Header.astro';
 <!doctype html>
 <html lang="zh-CN">
 	<head>
-		<BaseHead title="订阅 - 冯海泉" description="订阅 Newsletter，每周 AI 洞见直达邮箱" />
+		<BaseHead title="订阅中心 - 冯海泉" description="选择最适合你的方式，获取 AI 工程实践的最新进展" />
 	</head>
-	<body class="bg-bg font-sans text-fg-2 antialiased">
+	<body>
 		<Header />
-		<main id="main" class="max-w-5xl mx-auto px-6 md:px-8 py-16 md:py-24">
-			<div class="text-center">
-				<h1 class="text-3xl md:text-4xl font-bold text-fg tracking-tight mb-4">订阅 Newsletter</h1>
-				<p class="text-muted text-base md:text-lg mb-8">每周 AI 洞见直达邮箱</p>
-				<a href="https://fenghaiquan.beehiiv.com/" target="_blank" rel="noopener" class="nav-cta">
-					前往订阅 →
-				</a>
-			</div>
+		<main id="main">
+			<section class="page-header">
+				<div class="container">
+					<p class="page-header-eyebrow">Subscribe</p>
+					<h1 class="page-header-title">订阅中心</h1>
+					<p class="page-header-desc">选择最适合你的方式，获取 AI 工程实践的最新进展</p>
+				</div>
+			</section>
+
+			<section class="bento-section">
+				<div class="container">
+					<div class="bento-grid">
+						<div class="bento-left">
+							<div class="sub-card sub-card--email">
+								<h2 class="email-title">Feng's Weekly / AI 落地周报</h2>
+								<p class="email-subtitle">每周一早上，直达你的邮箱。这里没有 AI 焦虑，只有：</p>
+								<ul class="email-values">
+									<li class="email-value">
+										<span class="email-value-icon">✅</span>
+										<span>工程踩坑实盘：复盘我在生产环境下解决的真实 Latency 与幻觉问题。</span>
+									</li>
+									<li class="email-value">
+										<span class="email-value-icon">✅</span>
+										<span>真实的成本账本：微调、RAG 与 API 调用的真实开销与精简策略。</span>
+									</li>
+									<li class="email-value">
+										<span class="email-value-icon">✅</span>
+										<span>前沿论文翻译官：用 100 行 Python 代码，人肉复现并评测大热的学术论文。</span>
+									</li>
+								</ul>
+								<p class="email-trust">绝无垃圾邮件。支持 1-Click 随时退订。每周仅一封。</p>
+								<a href="https://fenghaiquan.beehiiv.com/" class="email-cta" target="_blank" rel="noopener">
+									前往订阅
+									<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+								</a>
+							</div>
+						</div>
+
+						<div class="bento-right">
+							<div class="sub-card">
+								<h3 class="card-title">微信公众号</h3>
+								<p class="card-desc">更轻量、即时的 AI 落地思考、小工具推荐、开发随笔，适合移动端碎片化阅读。</p>
+								<div class="qr-placeholder">公众号二维码</div>
+								<button class="btn-outline" data-copy="feng_haiquan">
+									<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="8" height="8" rx="1.5"/><path d="M10 4V3a1.5 1.5 0 00-1.5-1.5H3A1.5 1.5 0 001.5 3v5.5A1.5 1.5 0 003 10h1"/></svg>
+									复制微信号
+								</button>
+							</div>
+
+							<div class="sub-card">
+								<h3 class="card-title">
+									<span class="card-title-icon">
+										<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="2.5" cy="13.5" r="1.5" fill="currentColor" stroke="none"/><path d="M1 8a7 7 0 017 7M1 2a13 13 0 0113 13"/></svg>
+									</span>
+									RSS Feed
+								</h3>
+								<p class="card-desc">拒绝算法推荐。本站支持无感 RSS 订阅，用你最喜欢的阅读器，自主掌控信息流。</p>
+								<button class="btn-outline" data-copy="/rss.xml">
+									<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="8" height="8" rx="1.5"/><path d="M10 4V3a1.5 1.5 0 00-1.5-1.5H3A1.5 1.5 0 001.5 3v5.5A1.5 1.5 0 003 10h1"/></svg>
+									复制 RSS 链接
+								</button>
+							</div>
+
+							<div class="sub-card">
+								<h3 class="card-title">Social Feeds / 公开构建</h3>
+								<div class="social-list">
+									<a href="#" class="social-item">
+										<span class="social-icon">
+											<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M7.4 13.6c0 .6-.4 1-.9 1H3.2c-.5 0-.9-.4-.9-1V2.4c0-.6.4-1 .9-1h3.3c.5 0 .9.4.9 1v11.2zM13.7 13.6c0 .6-.4 1-.9 1h-3.3c-.5 0-.9-.4-.9-1V2.4c0-.6.4-1 .9-1h3.3c.5 0 .9.4.9 1v11.2z"/></svg>
+										</span>
+										<span class="social-name">即刻</span>
+										<span class="social-desc">AI 碎碎念与日常构建日志</span>
+										<span class="social-arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h8M8 4l3 3-3 3"/></svg></span>
+									</a>
+									<a href="#" class="social-item">
+										<span class="social-icon">
+											<svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M11.02 0H13.2L8.45 5.42 14 12.5H9.67L6.26 8.1 2.36 12.5H.18l5.08-5.8L0 .12h4.44l3.08 4.06L11.02 0zm-.77 11.22h1.21L4.63 1.28H3.33l6.92 9.94z"/></svg>
+										</span>
+										<span class="social-name">Twitter (X)</span>
+										<span class="social-desc">与全球开发者交流</span>
+										<span class="social-arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h8M8 4l3 3-3 3"/></svg></span>
+									</a>
+									<a href="#" class="social-item">
+										<span class="social-icon">
+											<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+										</span>
+										<span class="social-name">GitHub</span>
+										<span class="social-desc">开源资产与代码存放地</span>
+										<span class="social-arrow"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7h8M8 4l3 3-3 3"/></svg></span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 		</main>
 		<Footer />
+
+		<div class="toast" id="toast"></div>
 	</body>
 </html>
+
+<script>
+	function showToast(msg: string) {
+		const t = document.getElementById('toast');
+		if (!t) return;
+		t.textContent = msg;
+		t.classList.add('toast--visible');
+		setTimeout(() => t.classList.remove('toast--visible'), 2000);
+	}
+
+	document.querySelectorAll('[data-copy]').forEach((btn) => {
+		btn.addEventListener('click', () => {
+			const text = btn.getAttribute('data-copy') || '';
+			navigator.clipboard.writeText(text).then(() => {
+				showToast('已复制到剪贴板');
+			}).catch(() => {
+				showToast('复制失败，请手动复制');
+			});
+		});
+	});
+</script>

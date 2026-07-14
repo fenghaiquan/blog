@@ -7,90 +7,91 @@ import Header from '../components/Header.astro';
 <!doctype html>
 <html lang="zh-CN">
 	<head>
-		<BaseHead title="关于我 - 冯海权" description="前 AI 开发工程师，现致力于帮中小企业和个人构建好用的 AI 工作流" />
+		<BaseHead title="关于我 - 冯海泉" description="冯海泉 — 前 AI 开发工程师，现独立构建者。专注 RAG 检索优化、Agent 自动化与大模型降本工程。" />
 	</head>
 	<body>
 		<Header />
-		<main>
-			<section class="hero">
-				<h1 class="hero-title">关于我</h1>
-				<p class="hero-tagline">前 AI 开发工程师，现致力于帮中小企业和个人构建好用的 AI 工作流</p>
-				<div class="hero-story">
-					<p>
-						比起写 PPT，我更喜欢用代码解决实际的生产力瓶颈。
-					</p>
-					<p>
-						在大厂做过 AI 开发工程师，现在选择独立构建。不是逃避，是更想掌控方向——用实战验证过的技术，帮真正需要的人解决问题。
-					</p>
-					<p>
-						这里没有概念包装，只有能跑的代码、真实的成本账本、和踩过的坑。
-					</p>
+		<main id="main">
+			<header class="page-header">
+				<div class="container">
+					<p class="page-header-eyebrow">About</p>
+					<h1 class="page-header-title">关于我</h1>
+					<p class="page-header-desc">前 AI 开发工程师，现致力于帮中小企业和个人构建好用的 AI 工作流</p>
+				</div>
+			</header>
+
+			<section class="about-section" aria-label="个人故事">
+				<div class="container">
+					<div class="story-content">
+						<p class="story-p">比起写 PPT，我更喜欢用代码解决实际的生产力瓶颈。在大厂做 AI 开发工程师的那几年，我看到一个反复出现的断裂：模型能力在飞速进步，但把它变成生产系统的人，永远供不应求。到处都是讲概念的 PPT，而真正懂工程落地、懂帮老板算 Token 账的人却少之又少。</p>
+						<p class="story-p">现在选择独立构建。不是逃避，是更想掌控方向——用实战验证过的技术，帮真正需要的人解决问题。我只写跑得通的代码，只分享交过学费换来的工程真相。</p>
+						<p class="story-p story-muted">这里没有概念包装，只有能跑的代码、真实的成本账本、和踩过的坑。</p>
+					</div>
 				</div>
 			</section>
 
-			<section class="middle-grid">
-				<div class="tech-stack">
-					<h2 class="section-title">Tech Stack / 技术底座</h2>
-					<div class="capability-cards">
-						<div class="capability-card">
-							<div class="card-icon">⚡</div>
-							<h3>RAG 检索优化</h3>
-							<p>企业级知识库幻觉治理、检索链路调优、向量数据库选型与性能调优</p>
+			<section class="about-section" aria-label="技术底座">
+				<div class="container">
+					<h2 class="section-eyebrow">Core Competencies <span class="section-eyebrow-divider">/</span> <span class="section-eyebrow-sub">技术底座</span></h2>
+					<div class="capability-grid">
+						<div class="capability-item">
+							<span class="capability-num">01</span>
+							<h3 class="capability-title">RAG 检索增强</h3>
+							<p class="capability-desc">不只是调 API。专注于解决复杂文档解析、向量数据库选型、检索链路微调与消除大模型幻觉。</p>
 						</div>
-						<div class="capability-card">
-							<div class="card-icon">🤖</div>
-							<h3>Agent 自动化</h3>
-							<p>复杂工作流编排、多步推理链路构建、工具调用与状态管理</p>
+						<div class="capability-item">
+							<span class="capability-num">02</span>
+							<h3 class="capability-title">Agent 自动化工作流</h3>
+							<p class="capability-desc">擅长复杂业务逻辑的 Agent 化拆解，处理多 Tool 协同、状态控制与长上下文吞吐。</p>
 						</div>
-						<div class="capability-card">
-							<div class="card-icon">🚀</div>
-							<h3>Fullstack 部署</h3>
-							<p>Astro / Node.js / 大模型 API 端到端交付，从原型到生产环境</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="projects">
-					<h2 class="section-title">Projects / 独立项目</h2>
-					<div class="project-cards">
-						<div class="project-card">
-							<h3>Project Alpha</h3>
-							<p>AI 驱动的知识管理工具，帮团队把散落的文档变成可检索、可问答的智能知识库</p>
-							<a href="#" class="project-link">GitHub →</a>
-						</div>
-						<div class="project-card">
-							<h3>Project Beta</h3>
-							<p>自动化工作流平台，让非技术人员也能搭建复杂的 AI Agent 流程</p>
-							<a href="#" class="project-link">GitHub →</a>
+						<div class="capability-item">
+							<span class="capability-num">03</span>
+							<h3 class="capability-title">大模型降本工程</h3>
+							<p class="capability-desc">精通 Token 消耗分析、语义缓存（Semantic Cache）设计、长文本压缩与 Prompt 路由调优。</p>
 						</div>
 					</div>
 				</div>
 			</section>
 
-			<section class="cta">
-				<h2 class="section-title">如何与我合作？</h2>
-				<div class="service-cards">
-					<div class="service-card">
-						<h3>1对1 咨询</h3>
-						<p class="service-description">诊断 RAG 幻觉、Agent 性能瓶颈、大模型降本方案</p>
-						<p class="service-price">800 元/小时</p>
-					</div>
-					<div class="service-card">
-						<h3>轻量定制开发</h3>
-						<p class="service-description">快速交付企业级 AI 自动化工作流</p>
-						<p class="service-price">按需报价</p>
+			<section class="about-section" aria-label="成长轨迹">
+				<div class="container">
+					<h2 class="section-eyebrow">Timeline <span class="section-eyebrow-divider">/</span> <span class="section-eyebrow-sub">成长轨迹</span></h2>
+					<div class="timeline" role="list">
+						<div class="timeline-line" aria-hidden="true"></div>
+						<div class="timeline-item" role="listitem">
+							<span class="timeline-year timeline-year--current">2026</span>
+							<span class="timeline-dot timeline-dot--active" aria-hidden="true"></span>
+							<div class="timeline-content">
+								<p class="timeline-title">本站上线，持续 Build in Public</p>
+								<p class="timeline-desc">输出 AI 工程实践笔记，记录每一次真实的成本账本与踩坑复盘。</p>
+							</div>
+						</div>
+						<div class="timeline-item" role="listitem">
+							<span class="timeline-year">2025</span>
+							<span class="timeline-dot" aria-hidden="true"></span>
+							<div class="timeline-content">
+								<p class="timeline-title">转型独立构建者（OPC）</p>
+								<p class="timeline-desc">专注 AI 提效工具研发与独立商业探索，掌控方向而非被动接需求。</p>
+							</div>
+						</div>
+						<div class="timeline-item" role="listitem">
+							<span class="timeline-year">2021–24</span>
+							<span class="timeline-dot" aria-hidden="true"></span>
+							<div class="timeline-content">
+								<p class="timeline-title">大厂 AI 开发工程师</p>
+								<p class="timeline-desc">负责生产环境下的 LLM 应用落地，从模型选型到 RAG 管线到成本优化的完整链路。</p>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="contact-info">
-					<div class="contact-item">
-						<span class="contact-label">Email:</span>
-						<a href="mailto:bailiji0426@gmail.com" class="contact-link">bailiji0426@gmail.com</a>
-					</div>
-					<div class="contact-item">
-						<span class="contact-label">微信:</span>
-						<div class="wechat-placeholder">
-							<span>微信二维码</span>
-						</div>
+			</section>
+
+			<section class="soft-bridge" aria-label="了解更多">
+				<div class="container">
+					<div class="soft-bridge-inner">
+						<h2 class="soft-bridge-title">想了解更多？</h2>
+						<p class="soft-bridge-item">如果你想每周收到硬核 AI 踩坑实盘与成本分析，欢迎前往<a href="/subscribe" class="soft-bridge-link">订阅中心</a>。</p>
+						<p class="soft-bridge-item">如果你的企业正面临大模型落地瓶颈、RAG 幻觉或高昂的 API 账单，我们可以在<a href="/cooperate" class="soft-bridge-link">合作咨询</a>聊聊。</p>
 					</div>
 				</div>
 			</section>
@@ -98,216 +99,3 @@ import Header from '../components/Header.astro';
 		<Footer />
 	</body>
 </html>
-
-<style>
-	main {
-		width: 960px;
-	}
-
-	.hero {
-		text-align: center;
-		padding: 3rem 0;
-		border-bottom: 1px solid rgb(var(--gray-light));
-		margin-bottom: 3rem;
-	}
-
-	.hero-title {
-		font-size: 2.5rem;
-		font-weight: 700;
-		margin: 0 0 1rem;
-	}
-
-	.hero-tagline {
-		font-size: 1.25rem;
-		color: rgb(var(--gray));
-		margin: 0 0 2rem;
-	}
-
-	.hero-story {
-		max-width: 600px;
-		margin: 0 auto;
-		text-align: left;
-	}
-
-	.hero-story p {
-		font-size: 1.1rem;
-		line-height: 1.8;
-		margin: 0 0 1rem;
-	}
-
-	.middle-grid {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 3rem;
-		margin-bottom: 3rem;
-	}
-
-	.section-title {
-		font-size: 1.5rem;
-		margin: 0 0 1.5rem;
-		padding-bottom: 0.5rem;
-		border-bottom: 2px solid var(--accent);
-		display: inline-block;
-	}
-
-	.capability-cards,
-	.project-cards {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
-
-	.capability-card,
-	.project-card {
-		padding: 1.5rem;
-		border: 1px solid rgb(var(--gray-light));
-		border-radius: 8px;
-		transition: box-shadow 0.2s ease;
-	}
-
-	.capability-card:hover,
-	.project-card:hover {
-		box-shadow: var(--box-shadow);
-	}
-
-	.card-icon {
-		font-size: 2rem;
-		margin-bottom: 0.5rem;
-	}
-
-	.capability-card h3,
-	.project-card h3 {
-		font-size: 1.25rem;
-		margin: 0 0 0.5rem;
-		color: rgb(var(--black));
-	}
-
-	.capability-card p,
-	.project-card p {
-		font-size: 0.95rem;
-		color: rgb(var(--gray-dark));
-		line-height: 1.6;
-		margin: 0;
-	}
-
-	.project-link {
-		display: inline-block;
-		margin-top: 0.75rem;
-		color: var(--accent);
-		text-decoration: none;
-		font-weight: 600;
-		font-size: 0.95rem;
-	}
-
-	.project-link:hover {
-		text-decoration: underline;
-	}
-
-	.cta {
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
-		padding: 3rem 2rem;
-		border-radius: 12px;
-		margin-bottom: 2rem;
-	}
-
-	.service-cards {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 1.5rem;
-		margin-bottom: 2rem;
-	}
-
-	.service-card {
-		background: white;
-		padding: 2rem;
-		border-radius: 8px;
-		border: 1px solid rgb(var(--gray-light));
-	}
-
-	.service-card h3 {
-		font-size: 1.5rem;
-		margin: 0 0 0.75rem;
-		color: rgb(var(--black));
-	}
-
-	.service-description {
-		font-size: 1rem;
-		color: rgb(var(--gray-dark));
-		line-height: 1.6;
-		margin: 0 0 1rem;
-	}
-
-	.service-price {
-		font-size: 1.25rem;
-		font-weight: 700;
-		color: var(--accent);
-		margin: 0;
-	}
-
-	.contact-info {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		gap: 3rem;
-		padding-top: 2rem;
-		border-top: 1px solid rgb(var(--gray-light));
-	}
-
-	.contact-item {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-	}
-
-	.contact-label {
-		font-weight: 600;
-		color: rgb(var(--gray-dark));
-	}
-
-	.contact-link {
-		color: var(--accent);
-		text-decoration: none;
-	}
-
-	.contact-link:hover {
-		text-decoration: underline;
-	}
-
-	.wechat-placeholder {
-		width: 120px;
-		height: 120px;
-		border: 2px dashed rgb(var(--gray));
-		border-radius: 8px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: rgb(var(--gray));
-		font-size: 0.9rem;
-		text-align: center;
-		padding: 0.5rem;
-	}
-
-	@media (max-width: 720px) {
-		.hero-title {
-			font-size: 2rem;
-		}
-
-		.hero-tagline {
-			font-size: 1.1rem;
-		}
-
-		.middle-grid {
-			grid-template-columns: 1fr;
-			gap: 2rem;
-		}
-
-		.service-cards {
-			grid-template-columns: 1fr;
-		}
-
-		.contact-info {
-			flex-direction: column;
-			gap: 1.5rem;
-		}
-	}
-</style>
