@@ -1,8 +1,17 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+	(a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const featuredPost = allPosts.find((post) => post.data.featured);
+const regularPosts = allPosts.filter((post) => !post.data.featured);
 ---
 
 <!doctype html>
@@ -13,37 +22,298 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<section class="hero">
+				<h1 class="hero-title">冯海泉 (Feng)</h1>
+				<p class="hero-subtitle">前 AI 开发工程师 · 独立构建者</p>
+				<p class="hero-intro">
+					Building in public. 这里没有 PPT 概念，只有通过代码验证过的 AI 落地经验、成本账本与工程真相。
+				</p>
+			</section>
+
+			{featuredPost && (
+				<section class="featured">
+					<h2 class="section-title">Featured / 深度实操</h2>
+					<a href={`/blog/${featuredPost.id}/`} class="featured-card">
+						{featuredPost.data.image && (
+							<img src={featuredPost.data.image} alt="" width="720" height="360" class="featured-image" />
+						)}
+						<div class="featured-content">
+							<h3 class="featured-title">{featuredPost.data.title}</h3>
+							{featuredPost.data.description && (
+								<p class="featured-description">{featuredPost.data.description}</p>
+							)}
+							<div class="featured-meta">
+								<FormattedDate date={featuredPost.data.date} />
+								{featuredPost.data.tags.length > 0 && (
+									<div class="featured-tags">
+										{featuredPost.data.tags.map((tag) => (
+											<span class="tag">{tag}</span>
+										))}
+									</div>
+								)}
+							</div>
+							<span class="read-more">Read more →</span>
+						</div>
+					</a>
+				</section>
+			)}
+
+			{regularPosts.length > 0 && (
+				<section class="recent-posts">
+					<h2 class="section-title">Recent Posts / 近期文章</h2>
+					<ul class="post-list">
+						{regularPosts.map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`} class="post-item">
+									<span class="post-date">
+										<FormattedDate date={post.data.date} />
+									</span>
+									<span class="post-title">{post.data.title}</span>
+									{post.data.tags.length > 0 && (
+										<div class="post-tags">
+											{post.data.tags.map((tag) => (
+												<span class="tag">{tag}</span>
+											))}
+										</div>
+									)}
+								</a>
+							</li>
+						))}
+					</ul>
+				</section>
+			)}
+
+			<section class="newsletter-cta">
+				<h2 class="section-title">Subscribe / 订阅 Newsletter</h2>
+				<p class="newsletter-description">
+					每周 AI 洞见直达邮箱。实战经验、成本分析、工程真相，不灌水。
+				</p>
+				<a href="https://fenghaiquan.beehiiv.com/" target="_blank" rel="noopener" class="newsletter-button">
+					订阅 Newsletter →
+				</a>
+			</section>
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	main {
+		width: 960px;
+	}
+
+	.hero {
+		text-align: center;
+		padding: 4rem 0 3rem;
+		border-bottom: 1px solid rgb(var(--gray-light));
+		margin-bottom: 3rem;
+	}
+
+	.hero-title {
+		font-size: 3.5rem;
+		font-weight: 700;
+		margin: 0 0 0.5rem;
+		line-height: 1;
+	}
+
+	.hero-subtitle {
+		font-size: 1.25rem;
+		color: rgb(var(--gray));
+		margin: 0 0 1.5rem;
+	}
+
+	.hero-intro {
+		font-size: 1.1rem;
+		max-width: 600px;
+		margin: 0 auto;
+		line-height: 1.6;
+	}
+
+	.section-title {
+		font-size: 1.5rem;
+		margin: 0 0 1.5rem;
+		padding-bottom: 0.5rem;
+		border-bottom: 2px solid var(--accent);
+		display: inline-block;
+	}
+
+	.featured {
+		margin-bottom: 3rem;
+	}
+
+	.featured-card {
+		display: block;
+		text-decoration: none;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 12px;
+		overflow: hidden;
+		transition: box-shadow 0.2s ease;
+	}
+
+	.featured-card:hover {
+		box-shadow: var(--box-shadow);
+	}
+
+	.featured-image {
+		width: 100%;
+		height: auto;
+		display: block;
+		border-radius: 0;
+	}
+
+	.featured-content {
+		padding: 1.5rem;
+	}
+
+	.featured-title {
+		font-size: 1.75rem;
+		margin: 0 0 0.75rem;
+		color: rgb(var(--black));
+		line-height: 1.2;
+	}
+
+	.featured-description {
+		font-size: 1rem;
+		color: rgb(var(--gray-dark));
+		margin: 0 0 1rem;
+		line-height: 1.6;
+	}
+
+	.featured-meta {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1rem;
+		font-size: 0.9rem;
+		color: rgb(var(--gray));
+	}
+
+	.featured-tags,
+	.post-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.tag {
+		background: rgb(var(--gray-light));
+		color: rgb(var(--gray-dark));
+		padding: 0.25rem 0.75rem;
+		border-radius: 4px;
+		font-size: 0.85rem;
+	}
+
+	.read-more {
+		color: var(--accent);
+		font-weight: 600;
+		font-size: 1rem;
+	}
+
+	.recent-posts {
+		margin-bottom: 3rem;
+	}
+
+	.post-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.post-list li {
+		margin-bottom: 1rem;
+	}
+
+	.post-item {
+		display: flex;
+		align-items: baseline;
+		gap: 1rem;
+		padding: 1rem;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 8px;
+		text-decoration: none;
+		transition: border-color 0.2s ease;
+	}
+
+	.post-item:hover {
+		border-color: var(--accent);
+	}
+
+	.post-date {
+		color: rgb(var(--gray));
+		font-size: 0.9rem;
+		flex-shrink: 0;
+	}
+
+	.post-title {
+		color: rgb(var(--black));
+		font-weight: 600;
+		font-size: 1.1rem;
+		flex: 1;
+	}
+
+	.post-item:hover .post-title {
+		color: var(--accent);
+	}
+
+	.newsletter-cta {
+		text-align: center;
+		padding: 3rem 2rem;
+		background: linear-gradient(var(--gray-gradient)) no-repeat;
+		border-radius: 12px;
+		margin-bottom: 2rem;
+	}
+
+	.newsletter-description {
+		font-size: 1.1rem;
+		color: rgb(var(--gray-dark));
+		margin: 0 0 1.5rem;
+		max-width: 500px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.newsletter-button {
+		display: inline-block;
+		background: var(--accent);
+		color: white;
+		padding: 0.75rem 2rem;
+		border-radius: 6px;
+		text-decoration: none;
+		font-weight: 600;
+		font-size: 1.1rem;
+		transition: background 0.2s ease;
+	}
+
+	.newsletter-button:hover {
+		background: var(--accent-dark);
+		color: white;
+	}
+
+	@media (max-width: 720px) {
+		.hero-title {
+			font-size: 2.5rem;
+		}
+
+		.hero-subtitle {
+			font-size: 1.1rem;
+		}
+
+		.hero-intro {
+			font-size: 1rem;
+		}
+
+		.featured-title {
+			font-size: 1.5rem;
+		}
+
+		.post-item {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.5rem;
+		}
+
+		.post-tags {
+			margin-top: 0.5rem;
+		}
+	}
+</style>

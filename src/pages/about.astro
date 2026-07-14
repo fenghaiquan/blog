@@ -1,61 +1,313 @@
 ---
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	date={new Date('August 08 2021')}
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead title="关于我 - 冯海权" description="前 AI 开发工程师，现致力于帮中小企业和个人构建好用的 AI 工作流" />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="hero">
+				<h1 class="hero-title">关于我</h1>
+				<p class="hero-tagline">前 AI 开发工程师，现致力于帮中小企业和个人构建好用的 AI 工作流</p>
+				<div class="hero-story">
+					<p>
+						比起写 PPT，我更喜欢用代码解决实际的生产力瓶颈。
+					</p>
+					<p>
+						在大厂做过 AI 开发工程师，现在选择独立构建。不是逃避，是更想掌控方向——用实战验证过的技术，帮真正需要的人解决问题。
+					</p>
+					<p>
+						这里没有概念包装，只有能跑的代码、真实的成本账本、和踩过的坑。
+					</p>
+				</div>
+			</section>
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+			<section class="middle-grid">
+				<div class="tech-stack">
+					<h2 class="section-title">Tech Stack / 技术底座</h2>
+					<div class="capability-cards">
+						<div class="capability-card">
+							<div class="card-icon">⚡</div>
+							<h3>RAG 检索优化</h3>
+							<p>企业级知识库幻觉治理、检索链路调优、向量数据库选型与性能调优</p>
+						</div>
+						<div class="capability-card">
+							<div class="card-icon">🤖</div>
+							<h3>Agent 自动化</h3>
+							<p>复杂工作流编排、多步推理链路构建、工具调用与状态管理</p>
+						</div>
+						<div class="capability-card">
+							<div class="card-icon">🚀</div>
+							<h3>Fullstack 部署</h3>
+							<p>Astro / Node.js / 大模型 API 端到端交付，从原型到生产环境</p>
+						</div>
+					</div>
+				</div>
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+				<div class="projects">
+					<h2 class="section-title">Projects / 独立项目</h2>
+					<div class="project-cards">
+						<div class="project-card">
+							<h3>Project Alpha</h3>
+							<p>AI 驱动的知识管理工具，帮团队把散落的文档变成可检索、可问答的智能知识库</p>
+							<a href="#" class="project-link">GitHub →</a>
+						</div>
+						<div class="project-card">
+							<h3>Project Beta</h3>
+							<p>自动化工作流平台，让非技术人员也能搭建复杂的 AI Agent 流程</p>
+							<a href="#" class="project-link">GitHub →</a>
+						</div>
+					</div>
+				</div>
+			</section>
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+			<section class="cta">
+				<h2 class="section-title">如何与我合作？</h2>
+				<div class="service-cards">
+					<div class="service-card">
+						<h3>1对1 咨询</h3>
+						<p class="service-description">诊断 RAG 幻觉、Agent 性能瓶颈、大模型降本方案</p>
+						<p class="service-price">800 元/小时</p>
+					</div>
+					<div class="service-card">
+						<h3>轻量定制开发</h3>
+						<p class="service-description">快速交付企业级 AI 自动化工作流</p>
+						<p class="service-price">按需报价</p>
+					</div>
+				</div>
+				<div class="contact-info">
+					<div class="contact-item">
+						<span class="contact-label">Email:</span>
+						<a href="mailto:bailiji0426@gmail.com" class="contact-link">bailiji0426@gmail.com</a>
+					</div>
+					<div class="contact-item">
+						<span class="contact-label">微信:</span>
+						<div class="wechat-placeholder">
+							<span>微信二维码</span>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+<style>
+	main {
+		width: 960px;
+	}
+
+	.hero {
+		text-align: center;
+		padding: 3rem 0;
+		border-bottom: 1px solid rgb(var(--gray-light));
+		margin-bottom: 3rem;
+	}
+
+	.hero-title {
+		font-size: 2.5rem;
+		font-weight: 700;
+		margin: 0 0 1rem;
+	}
+
+	.hero-tagline {
+		font-size: 1.25rem;
+		color: rgb(var(--gray));
+		margin: 0 0 2rem;
+	}
+
+	.hero-story {
+		max-width: 600px;
+		margin: 0 auto;
+		text-align: left;
+	}
+
+	.hero-story p {
+		font-size: 1.1rem;
+		line-height: 1.8;
+		margin: 0 0 1rem;
+	}
+
+	.middle-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 3rem;
+		margin-bottom: 3rem;
+	}
+
+	.section-title {
+		font-size: 1.5rem;
+		margin: 0 0 1.5rem;
+		padding-bottom: 0.5rem;
+		border-bottom: 2px solid var(--accent);
+		display: inline-block;
+	}
+
+	.capability-cards,
+	.project-cards {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.capability-card,
+	.project-card {
+		padding: 1.5rem;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 8px;
+		transition: box-shadow 0.2s ease;
+	}
+
+	.capability-card:hover,
+	.project-card:hover {
+		box-shadow: var(--box-shadow);
+	}
+
+	.card-icon {
+		font-size: 2rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.capability-card h3,
+	.project-card h3 {
+		font-size: 1.25rem;
+		margin: 0 0 0.5rem;
+		color: rgb(var(--black));
+	}
+
+	.capability-card p,
+	.project-card p {
+		font-size: 0.95rem;
+		color: rgb(var(--gray-dark));
+		line-height: 1.6;
+		margin: 0;
+	}
+
+	.project-link {
+		display: inline-block;
+		margin-top: 0.75rem;
+		color: var(--accent);
+		text-decoration: none;
+		font-weight: 600;
+		font-size: 0.95rem;
+	}
+
+	.project-link:hover {
+		text-decoration: underline;
+	}
+
+	.cta {
+		background: linear-gradient(var(--gray-gradient)) no-repeat;
+		padding: 3rem 2rem;
+		border-radius: 12px;
+		margin-bottom: 2rem;
+	}
+
+	.service-cards {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1.5rem;
+		margin-bottom: 2rem;
+	}
+
+	.service-card {
+		background: white;
+		padding: 2rem;
+		border-radius: 8px;
+		border: 1px solid rgb(var(--gray-light));
+	}
+
+	.service-card h3 {
+		font-size: 1.5rem;
+		margin: 0 0 0.75rem;
+		color: rgb(var(--black));
+	}
+
+	.service-description {
+		font-size: 1rem;
+		color: rgb(var(--gray-dark));
+		line-height: 1.6;
+		margin: 0 0 1rem;
+	}
+
+	.service-price {
+		font-size: 1.25rem;
+		font-weight: 700;
+		color: var(--accent);
+		margin: 0;
+	}
+
+	.contact-info {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 3rem;
+		padding-top: 2rem;
+		border-top: 1px solid rgb(var(--gray-light));
+	}
+
+	.contact-item {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.contact-label {
+		font-weight: 600;
+		color: rgb(var(--gray-dark));
+	}
+
+	.contact-link {
+		color: var(--accent);
+		text-decoration: none;
+	}
+
+	.contact-link:hover {
+		text-decoration: underline;
+	}
+
+	.wechat-placeholder {
+		width: 120px;
+		height: 120px;
+		border: 2px dashed rgb(var(--gray));
+		border-radius: 8px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: rgb(var(--gray));
+		font-size: 0.9rem;
+		text-align: center;
+		padding: 0.5rem;
+	}
+
+	@media (max-width: 720px) {
+		.hero-title {
+			font-size: 2rem;
+		}
+
+		.hero-tagline {
+			font-size: 1.1rem;
+		}
+
+		.middle-grid {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+
+		.service-cards {
+			grid-template-columns: 1fr;
+		}
+
+		.contact-info {
+			flex-direction: column;
+			gap: 1.5rem;
+		}
+	}
+</style>
