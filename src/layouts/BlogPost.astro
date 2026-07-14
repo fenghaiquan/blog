@@ -86,7 +86,7 @@ const hasToc = headings.filter((h) => h.depth >= 2 && h.depth <= 3).length > 0;
 			{hasToc && <TableOfContents headings={headings} />}
 		</main>
 		<Footer />
-		<script is:inline async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
+		<script is:inline async src="/js/attribution.js"></script>
 		<script>
 			const mermaidBlocks = document.querySelectorAll('pre[data-language="mermaid"]');
 			if (mermaidBlocks.length > 0) {
