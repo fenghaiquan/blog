@@ -2,7 +2,6 @@
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 import Comments from '../../components/Comments.astro';
-import NewsletterEmbed from '../../components/NewsletterEmbed.astro';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -19,6 +18,8 @@ const { Content, headings } = await render(post);
 
 <BlogPost {...post.data} headings={headings}>
 	<Content />
-	<NewsletterEmbed />
+	<p class="newsletter-link">
+		喜欢这篇文章？<a href="https://fenghaiquan.beehiiv.com/subscribe" target="_blank" rel="noopener">订阅我的 Newsletter</a>，每周 AI 洞见直达邮箱。
+	</p>
 	<Comments />
 </BlogPost>
