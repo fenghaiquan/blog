@@ -1,0 +1,28 @@
+---
+const beehiivFormId = import.meta.env.BEEHIIV_FORM_ID;
+---
+
+{beehiivFormId && (
+  <section class="newsletter-container">
+    <div 
+      class="beehiiv-embed" 
+      data-beehiiv-form={beehiivFormId}
+    ></div>
+
+    <script 
+      async 
+      src="https://embeds.beehiiv.com/v3/loader.js"
+    ></script>
+  </section>
+)}
+
+<style>
+  .newsletter-container {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    border: 1px solid rgb(var(--gray-light, 220 220 220));
+    border-radius: 12px;
+    background: rgb(var(--gray-light, 245 245 245) / 0.5);
+    min-height: 200px;
+  }
+</style>

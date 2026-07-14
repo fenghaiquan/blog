@@ -2,6 +2,7 @@
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 import Comments from '../../components/Comments.astro';
+import NewsletterEmbed from '../../components/NewsletterEmbed.astro';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -18,5 +19,6 @@ const { Content, headings } = await render(post);
 
 <BlogPost {...post.data} headings={headings}>
 	<Content />
+	<NewsletterEmbed />
 	<Comments />
 </BlogPost>
