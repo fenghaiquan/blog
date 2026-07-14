@@ -7,7 +7,6 @@
   },
   "scripts": {
     "sync": "node scripts/sync-content.js",
-    "sync:beehiiv": "node scripts/sync-beehiiv.js",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",

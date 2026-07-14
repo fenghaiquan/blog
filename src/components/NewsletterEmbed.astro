@@ -2,16 +2,18 @@
 const beehiivFormId = import.meta.env.BEEHIIV_FORM_ID;
 ---
 
-{beehiivFormId && (
-  <section class="newsletter-container">
-    <script
-      is:inline
-      async
-      src="/js/loader.js"
-      data-beehiiv-form={beehiivFormId}
-    ></script>
-  </section>
-)}
+<section class="newsletter-container">
+  <h3 class="newsletter-title">订阅更新</h3>
+  <p class="newsletter-desc">每周 AI 洞见，直达你的邮箱。</p>
+  <a
+    href="https://fenghaiquan.beehiiv.com/subscribe"
+    target="_blank"
+    rel="noopener"
+    class="newsletter-cta"
+  >
+    点击订阅 →
+  </a>
+</section>
 
 <style>
   .newsletter-container {
@@ -20,6 +22,28 @@ const beehiivFormId = import.meta.env.BEEHIIV_FORM_ID;
     border: 1px solid rgb(var(--gray-light, 220 220 220));
     border-radius: 12px;
     background: rgb(var(--gray-light, 245 245 245) / 0.5);
-    min-height: 200px;
+    text-align: center;
+  }
+  .newsletter-title {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+  }
+  .newsletter-desc {
+    margin: 0 0 1rem;
+    color: rgb(var(--gray, 96 115 159));
+    font-size: 0.95rem;
+  }
+  .newsletter-cta {
+    display: inline-block;
+    background: rgb(var(--black, 15 18 25));
+    color: #fff;
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .newsletter-cta:hover {
+    opacity: 0.85;
   }
 </style>
