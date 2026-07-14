@@ -2,112 +2,180 @@
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 	(a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
+
+const pinnedPosts = posts.filter((post) => post.data.featured);
+const regularPosts = posts.filter((post) => !post.data.featured);
+const allPosts = [...pinnedPosts, ...regularPosts];
+
+const tagCounts = new Map<string, number>();
+for (const post of posts) {
+	for (const tag of post.data.tags) {
+		tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
+	}
+}
+const topTags = Array.from(tagCounts.entries())
+	.sort((a, b) => b[1] - a[1])
+	.slice(0, 8)
+	.map(([tag]) => tag);
+
+const POSTS_PER_PAGE = 20;
+const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+const currentPage = 1;
+const startIndex = 0;
+const endIndex = POSTS_PER_PAGE;
+const pagePosts = allPosts.slice(startIndex, endIndex);
+
+function formatDate(date: Date): string {
+	return date.toISOString().split('T')[0];
+}
+
+function getReadTime(content: string): number {
+	const words = content.split(/\s+/).length;
+	return Math.ceil(words / 200);
+}
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
+		<BaseHead title="Blog - 冯海泉" description="工程实践与 AI 落地笔记" />
 	</head>
-	<body>
+	<body class="bg-bg font-sans text-fg-2 antialiased">
 		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.image && (
-										<img src={post.data.image} alt="" width="720" height="360" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.date} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
+		<main id="main">
+			<header class="page-header">
+				<div class="max-w-3xl mx-auto px-6 md:px-8">
+					<p class="page-header-eyebrow">Blog</p>
+					<h1 class="page-header-title">工程实践与 AI 落地笔记</h1>
+					<p class="page-header-desc">
+						没有 PPT 概念，只有通过代码验证过的经验、成本账本与工程真相。
+					</p>
+				</div>
+			</header>
+
+			<div class="filters">
+				<div class="max-w-3xl mx-auto px-6 md:px-8">
+					<div class="filter-row" role="group" aria-label="按标签筛选">
+						<button class="filter-chip filter-chip--active" aria-pressed="true" data-tag="all">全部</button>
+						{topTags.map((tag) => (
+							<button class="filter-chip" aria-pressed="false" data-tag={tag}>
+								{tag}
+							</button>
+						))}
+					</div>
+				</div>
+			</div>
+
+			<div class="max-w-3xl mx-auto px-6 md:px-8">
+				<div class="post-meta-bar">
+					<span class="post-count">{posts.length} 篇文章</span>
+				</div>
+
+				<div class="article-list" role="feed" aria-label="文章列表">
+					{pagePosts.map((post) => {
+						const isPinned = post.data.featured;
+						const readTime = getReadTime(post.body || '');
+						return (
+							<a href={`/blog/${post.id}/`} class="article-item" aria-label={`${post.data.title} - ${formatDate(post.data.date)}`}>
+								<div class="article-top">
+									<time datetime={formatDate(post.data.date)} class="article-date">
+										{formatDate(post.data.date)}
+									</time>
+									<span class="article-dot"></span>
+									<span class="article-read-time">~ {readTime} min</span>
+									{isPinned && <span class="article-pin">置顶</span>}
+								</div>
+								<h3 class="article-title">{post.data.title}</h3>
+								{post.data.description && (
+									<p class="article-excerpt">{post.data.description}</p>
+								)}
+								<div class="article-bottom">
+									{post.data.tags.map((tag) => (
+										<span class="tag">{tag}</span>
+									))}
+								</div>
+								<span class="article-arrow" aria-hidden="true">
+									<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+										<path d="M4 8h8M9 5l3 3-3 3"/>
+									</svg>
+								</span>
+							</a>
+						);
+					})}
+				</div>
+
+				{totalPages > 1 && (
+					<nav class="pagination" aria-label="分页">
+						<a href="#" class="page-btn page-btn--nav" aria-label="上一页" aria-disabled="true">
+							<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+								<path d="M9 3L5 7l4 4"/>
+							</svg>
+							Prev
+						</a>
+						{Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+							<a
+								href={pageNum === 1 ? '/blog' : `/blog/page/${pageNum}`}
+								class:list={['page-btn', pageNum === currentPage && 'page-btn--active']}
+								aria-current={pageNum === currentPage ? 'page' : undefined}
+							>
+								{pageNum}
+							</a>
+						))}
+						<a
+							href={totalPages > 1 ? `/blog/page/2` : '#'}
+							class="page-btn page-btn--nav"
+							aria-label="下一页"
+							aria-disabled={totalPages <= 1 ? 'true' : undefined}
+						>
+							Next
+							<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+								<path d="M5 3l4 4-4 4"/>
+							</svg>
+						</a>
+					</nav>
+				)}
+			</div>
 		</main>
+
 		<Footer />
 	</body>
 </html>
+
+<script>
+	const filterChips = document.querySelectorAll('.filter-chip');
+	const articleItems = document.querySelectorAll('.article-item');
+	const postCount = document.querySelector('.post-count');
+
+	filterChips.forEach((chip) => {
+		chip.addEventListener('click', () => {
+			const tag = chip.getAttribute('data-tag');
+
+			filterChips.forEach((c) => {
+				c.classList.remove('filter-chip--active');
+				c.setAttribute('aria-pressed', 'false');
+			});
+			chip.classList.add('filter-chip--active');
+			chip.setAttribute('aria-pressed', 'true');
+
+			let visibleCount = 0;
+			articleItems.forEach((item) => {
+				const tags = Array.from(item.querySelectorAll('.tag')).map((t) => t.textContent);
+				if (tag === 'all' || tags.includes(tag)) {
+					item.style.display = 'block';
+					visibleCount++;
+				} else {
+					item.style.display = 'none';
+				}
+			});
+
+			if (postCount) {
+				postCount.textContent = `${visibleCount} 篇文章`;
+			}
+		});
+	});
+</script>

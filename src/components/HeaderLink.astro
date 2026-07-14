@@ -11,28 +11,48 @@ const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
 
 <a
 	href={href}
-	class:list={[
-		'no-underline transition-colors duration-150',
-		isActive
-			? 'relative text-fg font-medium'
-			: 'text-muted hover:text-fg',
-		className,
-	]}
+	class:list={['nav-link', isActive && 'nav-link--active', className]}
 	aria-current={isActive ? 'page' : undefined}
 	{...props}
 >
 	<slot />
-	{isActive && (
-		<span class="absolute bottom-0 left-3 right-3 h-px bg-fg hidden md:block"></span>
-	)}
 </a>
+
 <style>
-	a.active {
-		background-color: var(--color-surface);
+	.nav-link {
+		color: var(--color-muted);
+		font-weight: 500;
+		transition: color 200ms ease-out;
+		position: relative;
+		text-decoration: none;
+		display: flex;
+		align-items: center;
+		height: 100%;
+		outline: none;
 	}
-	@media (min-width: 768px) {
-		a.active {
-			background-color: transparent;
-		}
+	.nav-link:hover { color: var(--color-primary); }
+	.nav-link:focus-visible {
+		box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+		border-radius: 2px;
+	}
+	.nav-link::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 2px;
+		background: var(--color-fg);
+		border-radius: 1px;
+		opacity: 0;
+		transition: opacity 200ms ease-out;
+	}
+
+	.nav-link--active { color: var(--color-fg); }
+	.nav-link--active::after { opacity: 1; }
+	.nav-link--active:hover { color: var(--color-fg); }
+
+	@media (max-width: 640px) {
+		.nav-link::after { display: none; }
 	}
 </style>
