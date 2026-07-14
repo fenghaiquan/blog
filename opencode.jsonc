@@ -1,0 +1,27 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+		"open-design": {
+			"type": "local",
+			"command": ["/home/quan0/od-mcp.sh"]
+		}
+	},
+  "lsp": {
+    "html": {
+      "command": ["vscode-html-language-server", "--stdio"],
+      "extensions": [".html", ".htm"]
+    },
+    "typescript": {
+      "command": ["typescript-language-server", "--stdio"],
+      "extensions": [".ts", ".tsx", ".js", ".jsx"]
+    },
+    "css": {
+      "command": ["vscode-css-language-server", "--stdio"],
+      "extensions": [".css", ".scss", ".less"]
+    },
+    "astro": {
+      "command": ["astro-ls", "--stdio"],
+      "extensions": [".astro"]
+    }
+  }
+}
