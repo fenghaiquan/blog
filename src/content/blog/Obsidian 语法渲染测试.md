@@ -140,12 +140,12 @@ LIMIT 10;
 
 | 语法 | Obsidian | Blog 渲染 | 说明 |
 |------|:--------:|:---------:|------|
-| 粗体 | ✅ | ? | `**text**` |
-| Callout | ✅ | ? | `> [!type]` |
-| WikiLink | ✅ | ? | `[[page]]` |
-| 数学公式 | ✅ | ? | `$E=mc^2$` |
-| Mermaid | ✅ | ? | 流程图 |
-| 脚注 | ✅ | ? | `[^1]` |
+| 粗体 | ✅ | ✅ | `**text**` |
+| Callout | ✅ | ✅ | `> [!type]` |
+| WikiLink | ✅ | ✅ | `[[page]]` |
+| 数学公式 | ✅ | ✅ | `$E=mc^2$` |
+| Mermaid | ✅ | ✅ | 流程图 + 时序图 |
+| 脚注 | ✅ | ✅ | `[^1]` |
 
 ---
 
@@ -187,6 +187,8 @@ $$
 
 ## 十、Mermaid 图表
 
+### 流程图
+
 ```mermaid
 graph TD
     A[Obsidian 笔记] --> B{git push}
@@ -195,6 +197,8 @@ graph TD
     D --> E[Blog 上线]
     E --> F[读者访问]
 ```
+
+### 时序图 - 基础
 
 ```mermaid
 sequenceDiagram
@@ -205,6 +209,75 @@ sequenceDiagram
     B->>S: 查询相关
     S-->>B: 返回结果
     B-->>U: 展示内容
+```
+
+### 时序图 - 复杂交互
+
+```mermaid
+sequenceDiagram
+    participant C as 客户端
+    participant A as API 网关
+    participant S as 服务 A
+    participant D as 数据库
+    
+    rect rgb(250, 248, 245)
+        note right of C: 用户请求流程
+        C->>A: GET /api/posts
+        A->>S: 转发请求
+        S->>D: SELECT * FROM posts
+        D-->>S: 返回数据
+        S-->>A: JSON 响应
+        A-->>C: 200 OK
+    end
+    
+    alt 成功
+        C->>A: 请求成功
+        A-->>C: 显示内容
+    else 失败
+        C->>A: 请求失败
+        A-->>C: 错误提示
+    end
+    
+    loop 轮询更新
+        C->>A: 检查新内容
+        A-->>C: 无更新
+    end
+```
+
+### 时序图 - 参与者样式
+
+```mermaid
+sequenceDiagram
+    participant Alice
+    participant Bob
+    participant Charlie
+    
+    Alice->>Bob: 你好 Bob!
+    Bob->>Charlie: 转发给 Charlie
+    Charlie-->>Alice: 回复 Alice
+    Alice->>Alice: 自言自语
+```
+
+### 时序图 - 备注和激活
+
+```mermaid
+sequenceDiagram
+    participant U as 用户
+    participant S as 系统
+    
+    activate U
+    U->>S: 登录请求
+    activate S
+    Note over S: 验证凭据
+    S-->>U: 登录成功
+    deactivate S
+    
+    U->>S: 获取数据
+    activate S
+    Note right of S: 查询数据库
+    S-->>U: 返回数据
+    deactivate S
+    deactivate U
 ```
 
 ---
