@@ -114,6 +114,31 @@ npm run sync            # 从 Obsidian vault 同步内容
 npm run sync -- --clean # 同步并清理不在源中的文件
 ```
 
+### 5.6 OG 图片生成
+
+双路径 OG 图片生成，根据文章标题自动选择路径：
+
+| 路径 | 语言判断 | Skill | Design System | 生成方式 | 尺寸 |
+|------|---------|-------|---------------|---------|------|
+| **英文** | 标题无 CJK 字符 | `card-twitter` | 无 | Open Design MCP → HTML → Playwright 截图 | 1200x630 |
+| **中文** | 标题含 CJK 字符 | `canvas-design` | `paper` | Open Design MCP → HTML → Playwright 截图 | 1080x1080 |
+
+```bash
+npm run og:prepare:dry                     # 预览待生成的 prompt（不执行）
+npm run og:prepare                         # 扫描文章，生成 manifest
+npm run og:prepare -- --slug=文章名         # 只生成指定文章的 OG 图片
+npm run og:screenshot                      # 截图/渲染，输出到 public/og/
+npm run og:validate                        # 验证生成的图片，标记失败任务
+```
+
+完整流程由 `og-image-generator` skill 编排（Phase 1 脚本 → Phase 2 Open Design MCP → Phase 3 截图 → Phase 4 验证）。
+验证失败的任务会自动标记为 `failed`，需要重新生成。
+详见 `.agents/skills/og-image-generator/SKILL.md`。
+
+**字体处理**：中文 OG 图片需要系统字体支持——优先安装 `fonts-noto-cjk`，或手动下载到 `~/.local/share/fonts/` 并运行 `fc-cache`。`screenshot.js` 会在截图前检测字体是否可用。
+
+构建时 `og-images` integration 会自动用 satori 为缺少 OG 图片的文章生成基础版作为 fallback。
+
 ## 6. 文档维护规则
 
 本项目使用三层文档体系：

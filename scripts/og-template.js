@@ -117,10 +117,10 @@ export function createOGTemplate({ title, description, date, tags, siteName }) {
   };
 }
 
-export async function generateOGImage(element, fonts) {
+export async function generateOGImage(element, fonts, width = 1200, height = 630) {
   const svg = await satori(element, {
-    width: 1200,
-    height: 630,
+    width,
+    height,
     fonts,
   });
   return svg;

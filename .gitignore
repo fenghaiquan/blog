@@ -30,3 +30,8 @@ nohup.out
 # fonts (keep subset only)
 src/assets/fonts/*.ttf
 !src/assets/fonts/*.subset.ttf
+
+# og image generator
+.og-cache/
+.og-manifest.json
+# .opencode/plans/*
