@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import Header from '../../components/Header.astro';
+import '../../styles/blog.css';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 	(a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
@@ -12,17 +13,6 @@ const pinnedPosts = posts.filter((post) => post.data.featured);
 const regularPosts = posts.filter((post) => !post.data.featured);
 const allPosts = [...pinnedPosts, ...regularPosts];
 
-const tagCounts = new Map<string, number>();
-for (const post of posts) {
-	for (const tag of post.data.tags) {
-		tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
-	}
-}
-const topTags = Array.from(tagCounts.entries())
-	.sort((a, b) => b[1] - a[1])
-	.slice(0, 8)
-	.map(([tag]) => tag);
-
 const POSTS_PER_PAGE = 20;
 const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
 const currentPage = 1;
@@ -31,7 +21,8 @@ const endIndex = POSTS_PER_PAGE;
 const pagePosts = allPosts.slice(startIndex, endIndex);
 
 function formatDate(date: Date): string {
-	return date.toISOString().split('T')[0];
+	const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+	return `${months[date.getMonth()]} ${String(date.getDate()).padStart(2, '0')}, ${date.getFullYear()}`;
 }
 
 function getReadTime(content: string): number {
@@ -49,7 +40,7 @@ function getReadTime(content: string): number {
 		<Header />
 		<main id="main">
 			<header class="page-header">
-				<div class="max-w-3xl mx-auto px-6 md:px-8">
+				<div class="container">
 					<p class="page-header-eyebrow">Blog</p>
 					<h1 class="page-header-title">工程实践与 AI 落地笔记</h1>
 					<p class="page-header-desc">
@@ -58,46 +49,21 @@ function getReadTime(content: string): number {
 				</div>
 			</header>
 
-			<div class="filters">
-				<div class="max-w-3xl mx-auto px-6 md:px-8">
-					<div class="filter-row" role="group" aria-label="按标签筛选">
-						<button class="filter-chip filter-chip--active" aria-pressed="true" data-tag="all">全部</button>
-						{topTags.map((tag) => (
-							<button class="filter-chip" aria-pressed="false" data-tag={tag}>
-								{tag}
-							</button>
-						))}
-					</div>
-				</div>
-			</div>
-
-			<div class="max-w-3xl mx-auto px-6 md:px-8">
-				<div class="post-meta-bar">
-					<span class="post-count">{posts.length} 篇文章</span>
-				</div>
-
+			<div class="container">
 				<div class="article-list" role="feed" aria-label="文章列表">
 					{pagePosts.map((post) => {
 						const isPinned = post.data.featured;
 						const readTime = getReadTime(post.body || '');
 						return (
-							<a href={`/blog/${post.id}/`} class="article-item" aria-label={`${post.data.title} - ${formatDate(post.data.date)}`}>
-								<div class="article-top">
-									<time datetime={formatDate(post.data.date)} class="article-date">
-										{formatDate(post.data.date)}
-									</time>
-									<span class="article-dot"></span>
-									<span class="article-read-time">~ {readTime} min</span>
-									{isPinned && <span class="article-pin">置顶</span>}
-								</div>
+							<a href={`/blog/${post.id}/`} class="article-item" aria-label={`${post.data.title} — ${formatDate(post.data.date)}${isPinned ? ' — 置顶' : ''}`}>
+								<span class="article-date-badge">{formatDate(post.data.date)}</span>
+								{isPinned && <span class="article-pin">置顶</span>}
 								<h3 class="article-title">{post.data.title}</h3>
 								{post.data.description && (
 									<p class="article-excerpt">{post.data.description}</p>
 								)}
-								<div class="article-bottom">
-									{post.data.tags.map((tag) => (
-										<span class="tag">{tag}</span>
-									))}
+								<div class="article-meta">
+									<span class="article-read-time">~ {readTime} min read</span>
 								</div>
 								<span class="article-arrow" aria-hidden="true">
 									<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -145,37 +111,3 @@ function getReadTime(content: string): number {
 		<Footer />
 	</body>
 </html>
-
-<script>
-	const filterChips = document.querySelectorAll('.filter-chip');
-	const articleItems = document.querySelectorAll('.article-item');
-	const postCount = document.querySelector('.post-count');
-
-	filterChips.forEach((chip) => {
-		chip.addEventListener('click', () => {
-			const tag = chip.getAttribute('data-tag');
-
-			filterChips.forEach((c) => {
-				c.classList.remove('filter-chip--active');
-				c.setAttribute('aria-pressed', 'false');
-			});
-			chip.classList.add('filter-chip--active');
-			chip.setAttribute('aria-pressed', 'true');
-
-			let visibleCount = 0;
-			articleItems.forEach((item) => {
-				const tags = Array.from(item.querySelectorAll('.tag')).map((t) => t.textContent);
-				if (tag === 'all' || tags.includes(tag)) {
-					item.style.display = 'block';
-					visibleCount++;
-				} else {
-					item.style.display = 'none';
-				}
-			});
-
-			if (postCount) {
-				postCount.textContent = `${visibleCount} 篇文章`;
-			}
-		});
-	});
-</script>

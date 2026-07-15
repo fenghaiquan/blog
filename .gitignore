@@ -25,3 +25,4 @@ pnpm-debug.log*
 .vercel
 content-sources.json
 notes/
+nohup.out

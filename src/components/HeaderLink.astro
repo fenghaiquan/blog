@@ -30,9 +30,9 @@ const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
 		height: 100%;
 		outline: none;
 	}
-	.nav-link:hover { color: var(--color-primary); }
+	.nav-link:hover { color: var(--color-fg); }
 	.nav-link:focus-visible {
-		box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+		box-shadow: 0 0 0 3px var(--color-focus-ring);
 		border-radius: 2px;
 	}
 	.nav-link::after {
