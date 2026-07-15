@@ -10,7 +10,7 @@ const { featureFlags } = Astro.locals;
 <html lang="zh-CN">
 	<head>
 		<BaseHead title="合作咨询 - 冯海泉" description="AI 工程咨询与定制开发合作" />
-		{!featureFlags.showCooperate && <script>location.replace('/blog');</script>}
+		{!featureFlags.showCooperate && <script is:inline>location.replace('/blog');</script>}
 	</head>
 	<body class="bg-bg font-sans text-fg-2 antialiased">
 		<Header />
