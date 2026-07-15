@@ -209,14 +209,14 @@ article {
   border-bottom: none;
 }
 
-/* Callouts */
+/* Callouts - 统一卡片结构，按类型区分左边框和图标颜色 */
 .callout {
   border-radius: var(--radius-sm);
   padding: 1.25rem 1.5rem;
   margin: 1.75rem 0;
   background: var(--color-white);
   border: 1px solid var(--color-border);
-  border-left: 3px solid var(--color-accent);
+  border-left: 3px solid var(--callout-color, var(--color-accent));
 }
 .callout-title {
   display: flex;
@@ -235,12 +235,46 @@ article {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background: rgba(146,64,14,0.1);
-  color: var(--color-accent);
+  background: var(--callout-icon-bg, rgba(146,64,14,0.1));
+  color: var(--callout-color, var(--color-accent));
 }
 .callout-icon svg {
   width: 14px;
   height: 14px;
+}
+
+/* Callout 类型色彩 */
+.callout[data-callout="note"],
+.callout[data-callout="info"] {
+  --callout-color: #2563EB;
+  --callout-icon-bg: rgba(37,99,235,0.1);
+}
+.callout[data-callout="tip"],
+.callout[data-callout="success"] {
+  --callout-color: #16A34A;
+  --callout-icon-bg: rgba(22,163,74,0.1);
+}
+.callout[data-callout="warning"],
+.callout[data-callout="question"] {
+  --callout-color: #D97706;
+  --callout-icon-bg: rgba(217,119,6,0.1);
+}
+.callout[data-callout="bug"],
+.callout[data-callout="fail"] {
+  --callout-color: #DC2626;
+  --callout-icon-bg: rgba(220,38,38,0.1);
+}
+.callout[data-callout="example"] {
+  --callout-color: #7C3AED;
+  --callout-icon-bg: rgba(124,58,237,0.1);
+}
+.callout[data-callout="quote"] {
+  --callout-color: #6B7280;
+  --callout-icon-bg: rgba(107,114,128,0.1);
+}
+.callout[data-callout="abstract"] {
+  --callout-color: #92400E;
+  --callout-icon-bg: rgba(146,64,14,0.1);
 }
 .callout[data-callout="quote"] {
   font-style: italic;
