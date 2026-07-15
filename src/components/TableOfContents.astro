@@ -8,119 +8,123 @@ const tocHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 ---
 
 {tocHeadings.length > 0 && (
-	<nav class="toc">
-		<div class="toc-title">
-			<span class="toc-arrow">▶</span>
-			目录
+	<nav class="toc" id="tocNav" aria-label="文章目录">
+		<div class="toc-header" onclick="toggleToc()" role="button" tabindex="0" aria-expanded="true" aria-controls="tocList">
+			<span class="toc-title">目录</span>
+			<div class="toc-toggle">
+				<span class="toc-arrow">▼</span>
+			</div>
 		</div>
-		<ul>
+		<div class="toc-progress">
+			<div class="toc-progress-bar" id="tocProgressBar"></div>
+		</div>
+		<ul class="toc-list" id="tocList">
 			{tocHeadings.map((h) => (
 				<li class={`toc-depth-${h.depth}`}>
-					<a href={`#${h.slug}`}>{h.text}</a>
+					<a href={`#${h.slug}`} data-section={h.slug}>{h.text}</a>
 				</li>
 			))}
 		</ul>
 	</nav>
 )}
 
-<script>
-	const toc = document.querySelector('.toc');
-	const tocTitle = document.querySelector('.toc-title');
-	
-	if (toc && tocTitle) {
-		tocTitle.addEventListener('click', () => {
-			toc.classList.toggle('expanded');
-		});
-	}
-
-	const links = document.querySelectorAll<HTMLAnchorElement>('.toc a');
-	const headings = Array.from(document.querySelectorAll<HTMLElement>('.prose h2, .prose h3'));
-
-	if (links.length && headings.length) {
-		const observer = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					const id = entry.target.id;
-					const link = document.querySelector(`.toc a[href="#${id}"]`);
-					if (link) {
-						if (entry.isIntersecting) {
-							link.classList.add('active');
-						} else {
-							link.classList.remove('active');
-						}
-					}
-				});
-			},
-			{ rootMargin: '-80px 0px -80% 0px' }
-		);
-		headings.forEach((h) => observer.observe(h));
-	}
-</script>
-
 <style>
 	.toc {
+		width: 250px;
+		flex-shrink: 0;
 		position: sticky;
-		top: 2em;
+		top: 5rem;
 		align-self: flex-start;
-		max-height: calc(100vh - 4em);
+		background: var(--color-white);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		padding: 1.25rem;
+		font-size: 0.875rem;
+		box-shadow: var(--shadow-sm);
+		max-height: calc(100vh - 7rem);
 		overflow-y: auto;
-		width: 220px;
-		min-width: 220px;
-		padding: 1em;
-		font-size: 0.85em;
-		border-left: 1px solid rgb(var(--gray-light));
 	}
-	.toc-title {
+	.toc-header {
 		display: flex;
 		align-items: center;
-		gap: 0.4em;
-		font-weight: 700;
-		margin-bottom: 0.75em;
-		color: rgb(var(--gray-dark));
-		font-size: 0.9em;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
+		justify-content: space-between;
+		margin-bottom: 1rem;
 		cursor: pointer;
 		user-select: none;
 	}
-	.toc-arrow {
-		font-size: 0.7em;
-		transition: transform 0.2s ease;
+	.toc-title {
+		font-weight: 600;
+		color: var(--color-fg);
+		font-size: 0.8rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
 	}
-	.toc.expanded .toc-arrow {
-		transform: rotate(90deg);
+	.toc-toggle {
+		width: 24px;
+		height: 24px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: var(--radius-sm);
+		transition: background 0.2s;
+	}
+	.toc-toggle:hover {
+		background: var(--color-border-soft);
+	}
+	.toc-arrow {
+		font-size: 0.65rem;
+		transition: transform 0.25s ease;
+		color: var(--color-fg-3);
+	}
+	.toc.collapsed .toc-arrow {
+		transform: rotate(-90deg);
+	}
+	.toc.collapsed .toc-list {
+		display: none;
+	}
+	.toc-progress {
+		height: 2px;
+		background: var(--color-border-soft);
+		border-radius: 1px;
+		margin-bottom: 1rem;
+		overflow: hidden;
+	}
+	.toc-progress-bar {
+		height: 100%;
+		background: var(--color-accent);
+		border-radius: 1px;
+		transition: width 0.3s ease;
+		width: 0%;
 	}
 	.toc ul {
-		display: none;
 		list-style: none;
 		padding: 0;
 		margin: 0;
 	}
-	.toc.expanded ul {
-		display: block;
-	}
 	.toc li {
-		margin-bottom: 0.4em;
+		margin-bottom: 0.25rem;
 	}
-	.toc li a {
-		color: rgb(var(--gray));
+	.toc a {
+		color: var(--color-fg-3);
 		text-decoration: none;
+		display: block;
+		padding: 0.375rem 0.625rem;
+		border-radius: var(--radius-sm);
+		transition: all 0.2s;
+		font-size: 0.825rem;
 		line-height: 1.4;
-		transition: color 0.15s;
+		border-left: 2px solid transparent;
+		margin-left: -1px;
 	}
-	.toc li a:hover {
-		color: var(--accent);
+	.toc a:hover {
+		color: var(--color-fg-2);
 	}
-	.toc li a.active {
-		color: var(--accent);
-		font-weight: 600;
+	.toc a.active {
+		color: var(--color-accent);
+		font-weight: 500;
+		border-left-color: var(--color-accent);
 	}
-	.toc li.toc-depth-3 {
-		padding-left: 1em;
-	}
-	@media (max-width: 1100px) {
-		.toc {
-			display: none;
-		}
+	.toc-depth-3 {
+		padding-left: 0.75rem;
 	}
 </style>
