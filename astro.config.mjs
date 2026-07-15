@@ -8,6 +8,7 @@ import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
 import remarkObsidianMd from 'remark-obsidian-md';
 import tailwindcss from '@tailwindcss/vite';
+import ogImages from './src/integrations/og-images.ts';
 
 function slugify(text) {
 	if (!text) return '';
@@ -26,7 +27,7 @@ function slugify(text) {
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://example.com',
-	integrations: [mdx(), sitemap()],
+	integrations: [mdx(), sitemap(), ogImages()],
 	vite: {
 		plugins: [tailwindcss()],
 	},

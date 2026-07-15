@@ -10,13 +10,14 @@ import '../styles/blog-post.css';
 
 type Props = CollectionEntry<'blog'>['data'] & {
 	headings?: { depth: number; slug: string; text: string }[];
+	ogImage?: string;
 };
 
-const { title, description, date, image, headings = [] } = Astro.props;
+const { title, description, date, image, headings = [], ogImage } = Astro.props;
 const hasToc = headings.filter((h) => h.depth >= 2 && h.depth <= 3).length > 0;
 ---
 
-<BaseLayout {title} {description} mainClass={{ 'with-toc': hasToc }}>
+<BaseLayout {title} {description} mainClass={{ 'with-toc': hasToc }} ogImage={ogImage}>
 	<div class="reading-progress" id="readingProgress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="阅读进度"></div>
 	<article>
 		<div class="hero-image">

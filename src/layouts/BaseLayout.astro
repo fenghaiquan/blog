@@ -11,9 +11,10 @@ interface Props {
 	description: string;
 	redirectKey?: 'showHome' | 'showAbout' | 'showSubscribe' | 'showCooperate';
 	mainClass?: string;
+	ogImage?: string;
 }
 
-const { title, description, redirectKey, mainClass = '' } = Astro.props;
+const { title, description, redirectKey, mainClass = '', ogImage } = Astro.props;
 const { featureFlags } = Astro.locals;
 const shouldRedirect = redirectKey && !featureFlags[redirectKey];
 ---
@@ -21,7 +22,7 @@ const shouldRedirect = redirectKey && !featureFlags[redirectKey];
 <!doctype html>
 <html lang="zh-CN">
 	<head>
-		<BaseHead {title} {description} />
+		<BaseHead {title} {description} ogImage={ogImage} />
 		{shouldRedirect && <script is:inline>location.replace('/blog');</script>}
 	</head>
 	<body class="bg-bg font-sans text-fg-2 antialiased">

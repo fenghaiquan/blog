@@ -26,3 +26,7 @@ pnpm-debug.log*
 content-sources.json
 notes/
 nohup.out
+
+# fonts (keep subset only)
+src/assets/fonts/*.ttf
+!src/assets/fonts/*.subset.ttf
