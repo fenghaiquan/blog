@@ -418,6 +418,38 @@ article {
   background: var(--color-muted);
 }
 
+/* Mermaid Diagrams */
+.mermaid {
+  background: var(--color-bg) !important;
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+.mermaid svg {
+  background: var(--color-bg) !important;
+}
+.mermaid svg rect[fill] {
+  fill: var(--color-bg) !important;
+}
+.mermaid .actor {
+  fill: var(--color-white) !important;
+  stroke: var(--color-accent) !important;
+}
+.mermaid text {
+  fill: var(--color-fg) !important;
+  font-family: var(--font-sans) !important;
+}
+.mermaid .messageText {
+  fill: var(--color-fg-2) !important;
+}
+.mermaid line, .mermaid .messageLine0, .mermaid .messageLine1 {
+  stroke: var(--color-accent) !important;
+}
+.mermaid .arrowheadPath {
+  fill: var(--color-accent) !important;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .reading-progress {

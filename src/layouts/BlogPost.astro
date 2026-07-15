@@ -144,8 +144,32 @@ const hasToc = headings.filter((h) => h.depth >= 2 && h.depth <= 3).length > 0;
 			script.type = 'module';
 			script.textContent = `
 				import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-				mermaid.initialize({ startOnLoad: false, theme: 'default' });
+				mermaid.initialize({
+				startOnLoad: false,
+				theme: 'base',
+				themeVariables: {
+					primaryColor: '#FAF8F5',
+					primaryTextColor: '#1C1917',
+					primaryBorderColor: '#92400E',
+					lineColor: '#92400E',
+					secondaryColor: '#F5F5F4',
+					tertiaryColor: '#FFFFFF',
+					background: '#FAF8F5',
+					mainBkg: '#FFFFFF',
+					actorBkg: '#FFFFFF',
+					actorBorder: '#92400E',
+					actorTextColor: '#1C1917',
+					noteBkgColor: '#FAF8F5',
+					noteBorderColor: '#E7E5E4',
+					arrowheadColor: '#92400E',
+				}
+				});
 				await mermaid.run();
+				document.querySelectorAll('.mermaid svg').forEach(svg => {
+					svg.style.background = '#FAF8F5';
+					const bgRect = svg.querySelector('rect');
+					if (bgRect) bgRect.setAttribute('fill', '#FAF8F5');
+				});
 			`;
 			document.body.appendChild(script);
 		}
