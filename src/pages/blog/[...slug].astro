@@ -18,6 +18,7 @@ const { Content, headings } = await render(post);
 
 <BlogPost {...post.data} headings={headings}>
 	<Content />
+	<hr class="post-divider" />
 	<p class="newsletter-link">
 		喜欢这篇文章？<a href="https://fenghaiquan.beehiiv.com/" target="_blank" rel="noopener">订阅我的 Newsletter</a>，每周 AI 洞见直达邮箱。
 	</p>
