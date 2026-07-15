@@ -26,7 +26,7 @@ function slugify(text) {
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com',
+	site: 'https://www.fenghaiquan-ai.com',
 	integrations: [mdx(), sitemap(), ogImages()],
 	vite: {
 		plugins: [tailwindcss()],
