@@ -1,6 +1,7 @@
 ---
 import HeaderLink from './HeaderLink.astro';
 
+const { featureFlags } = Astro.locals;
 const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '');
 const subpath = pathname.match(/[^\/]+/g);
 const cooperateActive = subpath?.[0] === 'cooperate';
@@ -18,11 +19,11 @@ const cooperateActive = subpath?.[0] === 'cooperate';
 			<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
 		</button>
 		<div class="nav-links" id="navLinks">
-			<HeaderLink href="/">Home</HeaderLink>
+			{featureFlags.showHome && <HeaderLink href="/">Home</HeaderLink>}
 			<HeaderLink href="/blog">Blog</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
-			<HeaderLink href="/subscribe">Subscribe</HeaderLink>
-			<a href="/cooperate" class:list={['nav-cta', cooperateActive && 'nav-cta--active']}>Cooperate</a>
+			{featureFlags.showAbout && <HeaderLink href="/about">About</HeaderLink>}
+			{featureFlags.showSubscribe && <HeaderLink href="/subscribe">Subscribe</HeaderLink>}
+			{featureFlags.showCooperate && <a href="/cooperate" class:list={['nav-cta', cooperateActive && 'nav-cta--active']}>Cooperate</a>}
 		</div>
 	</div>
 </nav>

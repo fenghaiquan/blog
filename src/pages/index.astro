@@ -5,6 +5,8 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import '../styles/home.css';
 
+const { featureFlags } = Astro.locals;
+
 const allPosts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 	(a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
@@ -26,6 +28,7 @@ function getReadTime(content: string): number {
 <html lang="zh-CN">
 	<head>
 		<BaseHead title="冯海泉 — AI Engineer & Indie Builder" description="Building in public. 这里没有 PPT 概念，只有通过代码验证过的 AI 落地经验、成本账本与工程真相。" />
+		{!featureFlags.showHome && <meta http-equiv="refresh" content="0;url=/blog" />}
 	</head>
 	<body class="bg-bg font-sans text-fg-2 antialiased">
 		<Header />

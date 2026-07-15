@@ -8,7 +8,7 @@ tags:
   - Johari-Window
   - Obsidian-Note
   - 人机协同
-draft: false
+draft: true
 speaker:
 source: self
 ---
