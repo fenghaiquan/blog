@@ -1,105 +1,94 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/about.css';
-
-const { featureFlags } = Astro.locals;
 ---
 
-<!doctype html>
-<html lang="zh-CN">
-	<head>
-		<BaseHead title="关于我 - 冯海泉" description="冯海泉 — 前 AI 开发工程师，现独立构建者。专注 RAG 检索优化、Agent 自动化与大模型降本工程。" />
-		{!featureFlags.showAbout && <script is:inline>location.replace('/blog');</script>}
-	</head>
-	<body class="bg-bg font-sans text-fg-2 antialiased">
-		<Header />
-		<main id="main">
-			<header class="page-header">
-				<div class="container">
-					<p class="page-header-eyebrow">About</p>
-					<h1 class="page-header-title">关于我</h1>
-					<p class="page-header-desc">前 AI 开发工程师，现致力于帮中小企业和个人构建好用的 AI 工作流</p>
-				</div>
-			</header>
+<BaseLayout
+	title="关于我 - 冯海泉"
+	description="冯海泉 — 前 AI 开发工程师，现独立构建者。专注 RAG 检索优化、Agent 自动化与大模型降本工程。"
+	redirectKey="showAbout"
+>
+	<header class="page-header">
+		<div class="container">
+			<p class="page-header-eyebrow">About</p>
+			<h1 class="page-header-title">关于我</h1>
+			<p class="page-header-desc">前 AI 开发工程师，现致力于帮中小企业和个人构建好用的 AI 工作流</p>
+		</div>
+	</header>
 
-			<section class="about-section" aria-label="个人故事">
-				<div class="container">
-					<div class="story-content">
-						<p class="story-p">比起写 PPT，我更喜欢用代码解决实际的生产力瓶颈。在大厂做 AI 开发工程师的那几年，我看到一个反复出现的断裂：模型能力在飞速进步，但把它变成生产系统的人，永远供不应求。到处都是讲概念的 PPT，而真正懂工程落地、懂帮老板算 Token 账的人却少之又少。</p>
-						<p class="story-p">现在选择独立构建。不是逃避，是更想掌控方向——用实战验证过的技术，帮真正需要的人解决问题。我只写跑得通的代码，只分享交过学费换来的工程真相。</p>
-						<p class="story-p story-muted">这里没有概念包装，只有能跑的代码、真实的成本账本、和踩过的坑。</p>
+	<section class="about-section" aria-label="个人故事">
+		<div class="container">
+			<div class="story-content">
+				<p class="story-p">比起写 PPT，我更喜欢用代码解决实际的生产力瓶颈。在大厂做 AI 开发工程师的那几年，我看到一个反复出现的断裂：模型能力在飞速进步，但把它变成生产系统的人，永远供不应求。到处都是讲概念的 PPT，而真正懂工程落地、懂帮老板算 Token 账的人却少之又少。</p>
+				<p class="story-p">现在选择独立构建。不是逃避，是更想掌控方向——用实战验证过的技术，帮真正需要的人解决问题。我只写跑得通的代码，只分享交过学费换来的工程真相。</p>
+				<p class="story-p story-muted">这里没有概念包装，只有能跑的代码、真实的成本账本、和踩过的坑。</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="about-section" aria-label="技术底座">
+		<div class="container">
+			<h2 class="section-eyebrow">Core Competencies <span class="section-eyebrow-divider">/</span> <span class="section-eyebrow-sub">技术底座</span></h2>
+			<div class="capability-grid">
+				<div class="capability-item">
+					<span class="capability-num">01</span>
+					<h3 class="capability-title">RAG 检索增强</h3>
+					<p class="capability-desc">不只是调 API。专注于解决复杂文档解析、向量数据库选型、检索链路微调与消除大模型幻觉。</p>
+				</div>
+				<div class="capability-item">
+					<span class="capability-num">02</span>
+					<h3 class="capability-title">Agent 自动化工作流</h3>
+					<p class="capability-desc">擅长复杂业务逻辑的 Agent 化拆解，处理多 Tool 协同、状态控制与长上下文吞吐。</p>
+				</div>
+				<div class="capability-item">
+					<span class="capability-num">03</span>
+					<h3 class="capability-title">大模型降本工程</h3>
+					<p class="capability-desc">精通 Token 消耗分析、语义缓存（Semantic Cache）设计、长文本压缩与 Prompt 路由调优。</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="about-section" aria-label="成长轨迹">
+		<div class="container">
+			<h2 class="section-eyebrow">Timeline <span class="section-eyebrow-divider">/</span> <span class="section-eyebrow-sub">成长轨迹</span></h2>
+			<div class="timeline" role="list">
+				<div class="timeline-line" aria-hidden="true"></div>
+				<div class="timeline-item" role="listitem">
+					<span class="timeline-year timeline-year--current">2026</span>
+					<span class="timeline-dot timeline-dot--active" aria-hidden="true"></span>
+					<div class="timeline-content">
+						<p class="timeline-title">本站上线，持续 Build in Public</p>
+						<p class="timeline-desc">输出 AI 工程实践笔记，记录每一次真实的成本账本与踩坑复盘。</p>
 					</div>
 				</div>
-			</section>
-
-			<section class="about-section" aria-label="技术底座">
-				<div class="container">
-					<h2 class="section-eyebrow">Core Competencies <span class="section-eyebrow-divider">/</span> <span class="section-eyebrow-sub">技术底座</span></h2>
-					<div class="capability-grid">
-						<div class="capability-item">
-							<span class="capability-num">01</span>
-							<h3 class="capability-title">RAG 检索增强</h3>
-							<p class="capability-desc">不只是调 API。专注于解决复杂文档解析、向量数据库选型、检索链路微调与消除大模型幻觉。</p>
-						</div>
-						<div class="capability-item">
-							<span class="capability-num">02</span>
-							<h3 class="capability-title">Agent 自动化工作流</h3>
-							<p class="capability-desc">擅长复杂业务逻辑的 Agent 化拆解，处理多 Tool 协同、状态控制与长上下文吞吐。</p>
-						</div>
-						<div class="capability-item">
-							<span class="capability-num">03</span>
-							<h3 class="capability-title">大模型降本工程</h3>
-							<p class="capability-desc">精通 Token 消耗分析、语义缓存（Semantic Cache）设计、长文本压缩与 Prompt 路由调优。</p>
-						</div>
+				<div class="timeline-item" role="listitem">
+					<span class="timeline-year">2025</span>
+					<span class="timeline-dot" aria-hidden="true"></span>
+					<div class="timeline-content">
+						<p class="timeline-title">转型独立构建者（OPC）</p>
+						<p class="timeline-desc">专注 AI 提效工具研发与独立商业探索，掌控方向而非被动接需求。</p>
 					</div>
 				</div>
-			</section>
-
-			<section class="about-section" aria-label="成长轨迹">
-				<div class="container">
-					<h2 class="section-eyebrow">Timeline <span class="section-eyebrow-divider">/</span> <span class="section-eyebrow-sub">成长轨迹</span></h2>
-					<div class="timeline" role="list">
-						<div class="timeline-line" aria-hidden="true"></div>
-						<div class="timeline-item" role="listitem">
-							<span class="timeline-year timeline-year--current">2026</span>
-							<span class="timeline-dot timeline-dot--active" aria-hidden="true"></span>
-							<div class="timeline-content">
-								<p class="timeline-title">本站上线，持续 Build in Public</p>
-								<p class="timeline-desc">输出 AI 工程实践笔记，记录每一次真实的成本账本与踩坑复盘。</p>
-							</div>
-						</div>
-						<div class="timeline-item" role="listitem">
-							<span class="timeline-year">2025</span>
-							<span class="timeline-dot" aria-hidden="true"></span>
-							<div class="timeline-content">
-								<p class="timeline-title">转型独立构建者（OPC）</p>
-								<p class="timeline-desc">专注 AI 提效工具研发与独立商业探索，掌控方向而非被动接需求。</p>
-							</div>
-						</div>
-						<div class="timeline-item" role="listitem">
-							<span class="timeline-year">2021–24</span>
-							<span class="timeline-dot" aria-hidden="true"></span>
-							<div class="timeline-content">
-								<p class="timeline-title">大厂 AI 开发工程师</p>
-								<p class="timeline-desc">负责生产环境下的 LLM 应用落地，从模型选型到 RAG 管线到成本优化的完整链路。</p>
-							</div>
-						</div>
+				<div class="timeline-item" role="listitem">
+					<span class="timeline-year">2021–24</span>
+					<span class="timeline-dot" aria-hidden="true"></span>
+					<div class="timeline-content">
+						<p class="timeline-title">大厂 AI 开发工程师</p>
+						<p class="timeline-desc">负责生产环境下的 LLM 应用落地，从模型选型到 RAG 管线到成本优化的完整链路。</p>
 					</div>
 				</div>
-			</section>
+			</div>
+		</div>
+	</section>
 
-			<section class="soft-bridge" aria-label="了解更多">
-				<div class="container">
-					<div class="soft-bridge-inner">
-						<h2 class="soft-bridge-title">想了解更多？</h2>
-						<p class="soft-bridge-item">如果你想每周收到硬核 AI 踩坑实盘与成本分析，欢迎前往<a href="/subscribe" class="soft-bridge-link">订阅中心</a>。</p>
-						<p class="soft-bridge-item">如果你的企业正面临大模型落地瓶颈、RAG 幻觉或高昂的 API 账单，我们可以在<a href="/cooperate" class="soft-bridge-link">合作咨询</a>聊聊。</p>
-					</div>
-				</div>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+	<section class="soft-bridge" aria-label="了解更多">
+		<div class="container">
+			<div class="soft-bridge-inner">
+				<h2 class="soft-bridge-title">想了解更多？</h2>
+				<p class="soft-bridge-item">如果你想每周收到硬核 AI 踩坑实盘与成本分析，欢迎前往<a href="/subscribe" class="soft-bridge-link">订阅中心</a>。</p>
+				<p class="soft-bridge-item">如果你的企业正面临大模型落地瓶颈、RAG 幻觉或高昂的 API 账单，我们可以在<a href="/cooperate" class="soft-bridge-link">合作咨询</a>聊聊。</p>
+			</div>
+		</div>
+	</section>
+</BaseLayout>

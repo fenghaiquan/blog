@@ -1,8 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import Header from '../../components/Header.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate, getReadTime } from '../../utils/format';
 import '../../styles/blog.css';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
@@ -19,95 +18,74 @@ const currentPage = 1;
 const startIndex = 0;
 const endIndex = POSTS_PER_PAGE;
 const pagePosts = allPosts.slice(startIndex, endIndex);
-
-function formatDate(date: Date): string {
-	const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-	return `${months[date.getMonth()]} ${String(date.getDate()).padStart(2, '0')}, ${date.getFullYear()}`;
-}
-
-function getReadTime(content: string): number {
-	const words = content.split(/\s+/).length;
-	return Math.ceil(words / 200);
-}
 ---
 
-<!doctype html>
-<html lang="zh-CN">
-	<head>
-		<BaseHead title="Blog - 冯海泉" description="工程实践与 AI 落地笔记" />
-	</head>
-	<body class="bg-bg font-sans text-fg-2 antialiased">
-		<Header />
-		<main id="main">
-			<header class="page-header">
-				<div class="container">
-					<p class="page-header-eyebrow">Blog</p>
-					<h1 class="page-header-title">工程实践与 AI 落地笔记</h1>
-					<p class="page-header-desc">
-						没有 PPT 概念，只有通过代码验证过的经验、成本账本与工程真相。
-					</p>
-				</div>
-			</header>
+<BaseLayout title="Blog - 冯海泉" description="工程实践与 AI 落地笔记">
+	<header class="page-header">
+		<div class="container">
+			<p class="page-header-eyebrow">Blog</p>
+			<h1 class="page-header-title">工程实践与 AI 落地笔记</h1>
+			<p class="page-header-desc">
+				没有 PPT 概念，只有通过代码验证过的经验、成本账本与工程真相。
+			</p>
+		</div>
+	</header>
 
-			<div class="container">
-				<div class="article-list" role="feed" aria-label="文章列表">
-					{pagePosts.map((post) => {
-						const isPinned = post.data.featured;
-						const readTime = getReadTime(post.body || '');
-						return (
-							<a href={`/blog/${post.id}/`} class="article-item" aria-label={`${post.data.title} — ${formatDate(post.data.date)}${isPinned ? ' — 置顶' : ''}`}>
-								<span class="article-date-badge">{formatDate(post.data.date)}</span>
-								{isPinned && <span class="article-pin">置顶</span>}
-								<h3 class="article-title">{post.data.title}</h3>
-								{post.data.description && (
-									<p class="article-excerpt">{post.data.description}</p>
-								)}
-								<div class="article-meta">
-									<span class="article-read-time">~ {readTime} min read</span>
-								</div>
-								<span class="article-arrow" aria-hidden="true">
-									<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-										<path d="M4 8h8M9 5l3 3-3 3"/>
-									</svg>
-								</span>
-							</a>
-						);
-					})}
-				</div>
-
-				{totalPages > 1 && (
-					<nav class="pagination" aria-label="分页">
-						<a href="#" class="page-btn page-btn--nav" aria-label="上一页" aria-disabled="true">
-							<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
-								<path d="M9 3L5 7l4 4"/>
+	<div class="container">
+		<div class="article-list" role="feed" aria-label="文章列表">
+			{pagePosts.map((post) => {
+				const isPinned = post.data.featured;
+				const readTime = getReadTime(post.body || '');
+				return (
+					<a href={`/blog/${post.id}/`} class="article-item" aria-label={`${post.data.title} — ${formatDate(post.data.date, 'readable')}${isPinned ? ' — 置顶' : ''}`}>
+						<span class="article-date-badge">{formatDate(post.data.date, 'readable')}</span>
+						{isPinned && <span class="article-pin">置顶</span>}
+						<h3 class="article-title">{post.data.title}</h3>
+						{post.data.description && (
+							<p class="article-excerpt">{post.data.description}</p>
+						)}
+						<div class="article-meta">
+							<span class="article-read-time">~ {readTime} min read</span>
+						</div>
+						<span class="article-arrow" aria-hidden="true">
+							<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+								<path d="M4 8h8M9 5l3 3-3 3"/>
 							</svg>
-							Prev
-						</a>
-						{Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-							<a
-								href={pageNum === 1 ? '/blog' : `/blog/page/${pageNum}`}
-								class:list={['page-btn', pageNum === currentPage && 'page-btn--active']}
-								aria-current={pageNum === currentPage ? 'page' : undefined}
-							>
-								{pageNum}
-							</a>
-						))}
-						<a
-							href={totalPages > 1 ? `/blog/page/2` : '#'}
-							class="page-btn page-btn--nav"
-							aria-label="下一页"
-							aria-disabled={totalPages <= 1 ? 'true' : undefined}
-						>
-							Next
-							<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
-								<path d="M5 3l4 4-4 4"/>
-							</svg>
-						</a>
-					</nav>
-				)}
-			</div>
-		</main>
+						</span>
+					</a>
+				);
+			})}
+		</div>
 
-		<Footer />
-	</body>
-</html>
+		{totalPages > 1 && (
+			<nav class="pagination" aria-label="分页">
+				<a href="#" class="page-btn page-btn--nav" aria-label="上一页" aria-disabled="true">
+					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+						<path d="M9 3L5 7l4 4"/>
+					</svg>
+					Prev
+				</a>
+				{Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+					<a
+						href={pageNum === 1 ? '/blog' : `/blog/page/${pageNum}`}
+						class:list={['page-btn', pageNum === currentPage && 'page-btn--active']}
+						aria-current={pageNum === currentPage ? 'page' : undefined}
+					>
+						{pageNum}
+					</a>
+				))}
+				<a
+					href={totalPages > 1 ? `/blog/page/2` : '#'}
+					class="page-btn page-btn--nav"
+					aria-label="下一页"
+					aria-disabled={totalPages <= 1 ? 'true' : undefined}
+				>
+					Next
+					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+						<path d="M5 3l4 4-4 4"/>
+					</svg>
+				</a>
+			</nav>
+		)}
+	</div>
+</BaseLayout>

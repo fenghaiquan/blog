@@ -1,0 +1,31 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	redirectKey?: 'showHome' | 'showAbout' | 'showSubscribe' | 'showCooperate';
+	mainClass?: string;
+}
+
+const { title, description, redirectKey, mainClass = '' } = Astro.props;
+const { featureFlags } = Astro.locals;
+const shouldRedirect = redirectKey && !featureFlags[redirectKey];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead {title} {description} />
+		{shouldRedirect && <script is:inline>location.replace('/blog');</script>}
+	</head>
+	<body class="bg-bg font-sans text-fg-2 antialiased">
+		<Header />
+		<main id="main" class:list={[mainClass]}>
+			<slot />
+		</main>
+		<Footer />
+	</body>
+</html>

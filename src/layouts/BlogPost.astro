@@ -1,9 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
+import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import 'katex/dist/katex.min.css';
 import '../styles/blog-post.css';
@@ -16,54 +14,45 @@ const { title, description, date, image, headings = [] } = Astro.props;
 const hasToc = headings.filter((h) => h.depth >= 2 && h.depth <= 3).length > 0;
 ---
 
-<html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-	</head>
+<BaseLayout {title} {description} mainClass={{ 'with-toc': hasToc }}>
+	<article>
+		<div class="hero-image">
+			{image && <img src={image} alt="" width="1020" height="510" />}
+		</div>
+		<div class="prose prose-neutral max-w-none mx-auto px-4 py-4">
+			<div class="title">
+				<div class="date">
+					<FormattedDate date={date} />
+				</div>
+				<h1>{title}</h1>
+				<hr />
+			</div>
+			<slot />
+		</div>
+	</article>
+	{hasToc && <TableOfContents headings={headings} />}
 
-	<body class="bg-bg font-sans text-fg-2 antialiased">
-		<Header />
-		<main class:list={[{ 'with-toc': hasToc }]}>
-			<article>
-				<div class="hero-image">
-					{image && <img src={image} alt="" width="1020" height="510" />}
-				</div>
-				<div class="prose prose-neutral max-w-none mx-auto px-4 py-4">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={date} />
-						</div>
-						<h1>{title}</h1>
-						<hr />
-					</div>
-					<slot />
-				</div>
-			</article>
-			{hasToc && <TableOfContents headings={headings} />}
-		</main>
-		<Footer />
-		<script>
-			const mermaidBlocks = document.querySelectorAll('pre[data-language="mermaid"]');
-			if (mermaidBlocks.length > 0) {
-				mermaidBlocks.forEach((pre) => {
-					const code = pre.querySelector('code');
-					if (code) {
-						pre.className = 'mermaid';
-						pre.removeAttribute('data-language');
-						pre.removeAttribute('tabindex');
-						pre.removeAttribute('style');
-						pre.textContent = code.textContent;
-					}
-				});
-				const script = document.createElement('script');
-				script.type = 'module';
-				script.textContent = `
-					import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-					mermaid.initialize({ startOnLoad: false, theme: 'default' });
-					await mermaid.run();
-				`;
-				document.body.appendChild(script);
-			}
-		</script>
-	</body>
-</html>
+	<script>
+		const mermaidBlocks = document.querySelectorAll('pre[data-language="mermaid"]');
+		if (mermaidBlocks.length > 0) {
+			mermaidBlocks.forEach((pre) => {
+				const code = pre.querySelector('code');
+				if (code) {
+					pre.className = 'mermaid';
+					pre.removeAttribute('data-language');
+					pre.removeAttribute('tabindex');
+					pre.removeAttribute('style');
+					pre.textContent = code.textContent;
+				}
+			});
+			const script = document.createElement('script');
+			script.type = 'module';
+			script.textContent = `
+				import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+				mermaid.initialize({ startOnLoad: false, theme: 'default' });
+				await mermaid.run();
+			`;
+			document.body.appendChild(script);
+		}
+	</script>
+</BaseLayout>

@@ -1,25 +1,16 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-
-const { featureFlags } = Astro.locals;
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<!doctype html>
-<html lang="zh-CN">
-	<head>
-		<BaseHead title="合作咨询 - 冯海泉" description="AI 工程咨询与定制开发合作" />
-		{!featureFlags.showCooperate && <script is:inline>location.replace('/blog');</script>}
-	</head>
-	<body class="bg-bg font-sans text-fg-2 antialiased">
-		<Header />
-		<main id="main" class="container" style="padding-top: 64px; padding-bottom: 96px;">
-			<div class="text-center">
-				<h1 class="text-3xl md:text-4xl font-bold text-fg tracking-tight mb-4">合作咨询</h1>
-				<p class="text-muted text-base md:text-lg mb-8">Coming soon...</p>
-			</div>
-		</main>
-		<Footer />
-	</body>
-</html>
+<BaseLayout
+	title="合作咨询 - 冯海泉"
+	description="AI 工程咨询与定制开发合作"
+	redirectKey="showCooperate"
+>
+	<div class="container" style="padding-top: 64px; padding-bottom: 96px;">
+		<div class="text-center">
+			<h1 class="text-3xl md:text-4xl font-bold text-fg tracking-tight mb-4">合作咨询</h1>
+			<p class="text-muted text-base md:text-lg mb-8">Coming soon...</p>
+		</div>
+	</div>
+</BaseLayout>

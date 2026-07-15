@@ -1,11 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatDate, getReadTime } from '../utils/format';
 import '../styles/home.css';
-
-const { featureFlags } = Astro.locals;
 
 const allPosts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 	(a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
@@ -13,243 +10,227 @@ const allPosts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 
 const featuredPost = allPosts.find((post) => post.data.featured);
 const recentPosts = allPosts.filter((post) => !post.data.featured).slice(0, 5);
-
-function formatDate(date: Date): string {
-	return date.toISOString().split('T')[0];
-}
-
-function getReadTime(content: string): number {
-	const words = content.split(/\s+/).length;
-	return Math.ceil(words / 200);
-}
 ---
 
-<!doctype html>
-<html lang="zh-CN">
-	<head>
-		<BaseHead title="冯海泉 — AI Engineer & Indie Builder" description="Building in public. 这里没有 PPT 概念，只有通过代码验证过的 AI 落地经验、成本账本与工程真相。" />
-		{!featureFlags.showHome && <script is:inline>location.replace('/blog');</script>}
-	</head>
-	<body class="bg-bg font-sans text-fg-2 antialiased">
-		<Header />
-		<main id="main">
-			<section class="hero">
-				<div class="container">
-					<div class="hero-grid">
-						<div>
-							<h1 class="hero-name">冯海泉</h1>
-							<p class="hero-name-en">Feng</p>
-							<p class="hero-tagline">前 AI 开发工程师 · 独立构建者</p>
-							<p class="hero-desc">
-								Building in public. 这里没有 PPT 概念，只有通过代码验证过的 AI 落地经验、成本账本与工程真相。
-							</p>
-						</div>
+<BaseLayout
+	title="冯海泉 — AI Engineer & Indie Builder"
+	description="Building in public. 这里没有 PPT 概念，只有通过代码验证过的 AI 落地经验、成本账本与工程真相。"
+	redirectKey="showHome"
+>
+	<section class="hero">
+		<div class="container">
+			<div class="hero-grid">
+				<div>
+					<h1 class="hero-name">冯海泉</h1>
+					<p class="hero-name-en">Feng</p>
+					<p class="hero-tagline">前 AI 开发工程师 · 独立构建者</p>
+					<p class="hero-desc">
+						Building in public. 这里没有 PPT 概念，只有通过代码验证过的 AI 落地经验、成本账本与工程真相。
+					</p>
+				</div>
 
-						<div class="terminal" aria-hidden="true">
-							<div class="terminal-bar">
-								<span class="terminal-dot terminal-dot--red"></span>
-								<span class="terminal-dot terminal-dot--yellow"></span>
-								<span class="terminal-dot terminal-dot--green"></span>
-								<span class="terminal-bar-title">terminal</span>
-							</div>
-							<div class="terminal-body">
-								<div><span class="terminal-prompt">$</span> whoami</div>
-								<div class="terminal-output" style="margin-bottom: 12px;">→ AI Engineer & Indie Builder</div>
-								<div><span class="terminal-prompt">$</span> cat current_focus.md</div>
-								<div class="terminal-output">→ Building production AI systems</div>
-								<div class="terminal-output">→ Cost optimization & deployment</div>
-								<div class="terminal-output" style="margin-bottom: 12px;">→ Open source contributions</div>
-								<div><span class="terminal-prompt">$</span> <span class="terminal-cursor">█</span></div>
-							</div>
-						</div>
+				<div class="terminal" aria-hidden="true">
+					<div class="terminal-bar">
+						<span class="terminal-dot terminal-dot--red"></span>
+						<span class="terminal-dot terminal-dot--yellow"></span>
+						<span class="terminal-dot terminal-dot--green"></span>
+						<span class="terminal-bar-title">terminal</span>
+					</div>
+					<div class="terminal-body">
+						<div><span class="terminal-prompt">$</span> whoami</div>
+						<div class="terminal-output" style="margin-bottom: 12px;">→ AI Engineer & Indie Builder</div>
+						<div><span class="terminal-prompt">$</span> cat current_focus.md</div>
+						<div class="terminal-output">→ Building production AI systems</div>
+						<div class="terminal-output">→ Cost optimization & deployment</div>
+						<div class="terminal-output" style="margin-bottom: 12px;">→ Open source contributions</div>
+						<div><span class="terminal-prompt">$</span> <span class="terminal-cursor">█</span></div>
 					</div>
 				</div>
-			</section>
+			</div>
+		</div>
+	</section>
 
-			<section class="featured" aria-label="置顶文章">
-				<div class="container">
-					<div class="section-eyebrow">
-						<span>Featured</span>
-						<span class="section-eyebrow-divider">/</span>
-						<span class="section-eyebrow-sub">深度实操</span>
+	<section class="featured" aria-label="置顶文章">
+		<div class="container">
+			<div class="section-eyebrow">
+				<span>Featured</span>
+				<span class="section-eyebrow-divider">/</span>
+				<span class="section-eyebrow-sub">深度实操</span>
+			</div>
+
+			{featuredPost ? (
+				<a href={`/blog/${featuredPost.id}/`} class="featured-card">
+					<div class="featured-img">
+						<div class="featured-img-pattern"></div>
+						<div class="featured-img-gradient"></div>
+						<span class="featured-badge">Deep Dive</span>
 					</div>
-
-					{featuredPost ? (
-						<a href={`/blog/${featuredPost.id}/`} class="featured-card">
-							<div class="featured-img">
-								<div class="featured-img-pattern"></div>
-								<div class="featured-img-gradient"></div>
-								<span class="featured-badge">Deep Dive</span>
+					<div class="featured-body">
+						<time datetime={formatDate(featuredPost.data.date)} class="featured-date">
+							{formatDate(featuredPost.data.date)}
+						</time>
+						<h2 class="featured-title">{featuredPost.data.title}</h2>
+						{featuredPost.data.description && (
+							<p class="featured-desc">{featuredPost.data.description}</p>
+						)}
+						<div class="featured-footer">
+							<div class="tags">
+								{featuredPost.data.tags.map((tag) => (
+									<span class="tag">{tag}</span>
+								))}
 							</div>
-							<div class="featured-body">
-								<time datetime={formatDate(featuredPost.data.date)} class="featured-date">
-									{formatDate(featuredPost.data.date)}
+							<span class="read-time">~ {getReadTime(featuredPost.body || '')} min read</span>
+						</div>
+						<span class="featured-read-more">
+							阅读全文
+							<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+								<path d="M3 7h8M8 4l3 3-3 3"/>
+							</svg>
+						</span>
+					</div>
+				</a>
+			) : (
+				<div class="featured-card">
+					<div class="featured-img">
+						<div class="featured-img-pattern"></div>
+						<div class="featured-img-gradient"></div>
+						<span class="featured-badge">Deep Dive</span>
+					</div>
+					<div class="featured-body">
+						<p class="featured-date">Coming soon...</p>
+						<h2 class="featured-title">深度实操文章即将发布</h2>
+						<p class="featured-desc">
+							敬请期待关于 AI Agent 系统架构、RAG 优化、成本控制的深度工程复盘。
+						</p>
+					</div>
+				</div>
+			)}
+		</div>
+	</section>
+
+	<section class="recent">
+		<div class="container">
+			<div class="section-eyebrow">
+				<span>Recent Posts</span>
+				<span class="section-eyebrow-divider">/</span>
+				<span class="section-eyebrow-sub">近期文章</span>
+			</div>
+
+			{recentPosts.length > 0 ? (
+				<ul class="compact-list" role="feed" aria-label="近期文章">
+					{recentPosts.map((post) => (
+						<li>
+							<a href={`/blog/${post.id}/`} class="compact-item" aria-label={`${post.data.title} — ${formatDate(post.data.date)}`}>
+								<time datetime={formatDate(post.data.date)} class="compact-date">
+									{formatDate(post.data.date)}
 								</time>
-								<h2 class="featured-title">{featuredPost.data.title}</h2>
-								{featuredPost.data.description && (
-									<p class="featured-desc">{featuredPost.data.description}</p>
-								)}
-								<div class="featured-footer">
-									<div class="tags">
-										{featuredPost.data.tags.map((tag) => (
-											<span class="tag">{tag}</span>
-										))}
-									</div>
-									<span class="read-time">~ {getReadTime(featuredPost.body || '')} min read</span>
-								</div>
-								<span class="featured-read-more">
-									阅读全文
+								<span class="compact-title">{post.data.title}</span>
+								<span class="compact-time">~ {getReadTime(post.body || '')} min</span>
+								<span class="compact-arrow" aria-hidden="true">
 									<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
 										<path d="M3 7h8M8 4l3 3-3 3"/>
 									</svg>
 								</span>
-							</div>
-						</a>
-					) : (
-						<div class="featured-card">
-							<div class="featured-img">
-								<div class="featured-img-pattern"></div>
-								<div class="featured-img-gradient"></div>
-								<span class="featured-badge">Deep Dive</span>
-							</div>
-							<div class="featured-body">
-								<p class="featured-date">Coming soon...</p>
-								<h2 class="featured-title">深度实操文章即将发布</h2>
-								<p class="featured-desc">
-									敬请期待关于 AI Agent 系统架构、RAG 优化、成本控制的深度工程复盘。
-								</p>
-							</div>
+							</a>
+						</li>
+					))}
+				</ul>
+			) : (
+				<p class="text-muted text-sm">暂无文章</p>
+			)}
+
+			<a href="/blog" class="see-all">
+				查看全部文章
+				<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+					<path d="M3 7h8M8 4l3 3-3 3"/>
+				</svg>
+			</a>
+		</div>
+	</section>
+
+	<section class="projects" aria-label="精选项目">
+		<div class="container">
+			<div class="section-eyebrow">
+				<span>Selected Projects</span>
+				<span class="section-eyebrow-divider">/</span>
+				<span class="section-eyebrow-sub">精选项目</span>
+			</div>
+
+			<div class="bento">
+				<a href="#" class="project-card" aria-label="Project Forge — AI 基础设施工具包">
+					<div class="project-header">
+						<div class="project-icon" aria-hidden="true">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+								<path d="M3 17L10 3l7 14H3z"/>
+								<path d="M7 17l3-6 3 6"/>
+							</svg>
 						</div>
-					)}
-				</div>
-			</section>
-
-			<section class="recent">
-				<div class="container">
-					<div class="section-eyebrow">
-						<span>Recent Posts</span>
-						<span class="section-eyebrow-divider">/</span>
-						<span class="section-eyebrow-sub">近期文章</span>
+						<span class="project-status">
+							<span class="project-status-dot"></span>
+							Live
+						</span>
 					</div>
-
-					{recentPosts.length > 0 ? (
-						<ul class="compact-list" role="feed" aria-label="近期文章">
-							{recentPosts.map((post) => (
-								<li>
-									<a href={`/blog/${post.id}/`} class="compact-item" aria-label={`${post.data.title} — ${formatDate(post.data.date)}`}>
-										<time datetime={formatDate(post.data.date)} class="compact-date">
-											{formatDate(post.data.date)}
-										</time>
-										<span class="compact-title">{post.data.title}</span>
-										<span class="compact-time">~ {getReadTime(post.body || '')} min</span>
-										<span class="compact-arrow" aria-hidden="true">
-											<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
-												<path d="M3 7h8M8 4l3 3-3 3"/>
-											</svg>
-										</span>
-									</a>
-								</li>
-							))}
-						</ul>
-					) : (
-						<p class="text-muted text-sm">暂无文章</p>
-					)}
-
-					<a href="/blog" class="see-all">
-						查看全部文章
-						<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
-							<path d="M3 7h8M8 4l3 3-3 3"/>
-						</svg>
-					</a>
-				</div>
-			</section>
-
-			<section class="projects" aria-label="精选项目">
-				<div class="container">
-					<div class="section-eyebrow">
-						<span>Selected Projects</span>
-						<span class="section-eyebrow-divider">/</span>
-						<span class="section-eyebrow-sub">精选项目</span>
+					<h3 class="project-name">Project Forge</h3>
+					<p class="project-desc">一套面向生产环境的 AI Agent 基础设施工具包：LLM 智能路由、多级缓存、成本监控面板与自动告警。从零搭建到日均处理 50 万次请求。</p>
+					<div class="project-metrics">
+						<div>
+							<div class="project-metric-value">95%</div>
+							<div class="project-metric-label">成本降低</div>
+						</div>
+						<div>
+							<div class="project-metric-value">500K</div>
+							<div class="project-metric-label">日均请求</div>
+						</div>
+						<div>
+							<div class="project-metric-value">&lt;200ms</div>
+							<div class="project-metric-label">P95 延迟</div>
+						</div>
 					</div>
-
-					<div class="bento">
-						<a href="#" class="project-card" aria-label="Project Forge — AI 基础设施工具包">
-							<div class="project-header">
-								<div class="project-icon" aria-hidden="true">
-									<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-										<path d="M3 17L10 3l7 14H3z"/>
-										<path d="M7 17l3-6 3 6"/>
-									</svg>
-								</div>
-								<span class="project-status">
-									<span class="project-status-dot"></span>
-									Live
-								</span>
-							</div>
-							<h3 class="project-name">Project Forge</h3>
-							<p class="project-desc">一套面向生产环境的 AI Agent 基础设施工具包：LLM 智能路由、多级缓存、成本监控面板与自动告警。从零搭建到日均处理 50 万次请求。</p>
-							<div class="project-metrics">
-								<div>
-									<div class="project-metric-value">95%</div>
-									<div class="project-metric-label">成本降低</div>
-								</div>
-								<div>
-									<div class="project-metric-value">500K</div>
-									<div class="project-metric-label">日均请求</div>
-								</div>
-								<div>
-									<div class="project-metric-value">&lt;200ms</div>
-									<div class="project-metric-label">P95 延迟</div>
-								</div>
-							</div>
-							<div class="project-stack">
-								<span class="project-stack-tag">Python</span>
-								<span class="project-stack-tag">FastAPI</span>
-								<span class="project-stack-tag">Redis</span>
-								<span class="project-stack-tag">K8s</span>
-							</div>
-						</a>
-
-						<a href="#" class="project-card" aria-label="Project Atlas — RAG 管线框架">
-							<div class="project-header">
-								<div class="project-icon" aria-hidden="true">
-									<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-										<rect x="3" y="3" width="14" height="14" rx="2"/>
-										<path d="M7 7h6M7 10h6M7 13h4"/>
-									</svg>
-								</div>
-								<span class="project-status">
-									<span class="project-status-dot"></span>
-									Open Source
-								</span>
-							</div>
-							<h3 class="project-name">Project Atlas</h3>
-							<p class="project-desc">端到端 RAG 管线框架：支持多向量库后端（Pinecone / Weaviate / Qdrant）、自适应 chunk 策略与 reranking 管线，开箱即用。</p>
-							<div class="project-metrics">
-								<div>
-									<div class="project-metric-value">89%</div>
-									<div class="project-metric-label">检索准确率</div>
-								</div>
-								<div>
-									<div class="project-metric-value">3</div>
-									<div class="project-metric-label">向量库支持</div>
-								</div>
-								<div>
-									<div class="project-metric-value">1.2K</div>
-									<div class="project-metric-label">GitHub Stars</div>
-								</div>
-							</div>
-							<div class="project-stack">
-								<span class="project-stack-tag">Python</span>
-								<span class="project-stack-tag">LangChain</span>
-								<span class="project-stack-tag">Docker</span>
-								<span class="project-stack-tag">OpenAI</span>
-							</div>
-						</a>
+					<div class="project-stack">
+						<span class="project-stack-tag">Python</span>
+						<span class="project-stack-tag">FastAPI</span>
+						<span class="project-stack-tag">Redis</span>
+						<span class="project-stack-tag">K8s</span>
 					</div>
-				</div>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+				</a>
+
+				<a href="#" class="project-card" aria-label="Project Atlas — RAG 管线框架">
+					<div class="project-header">
+						<div class="project-icon" aria-hidden="true">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+								<rect x="3" y="3" width="14" height="14" rx="2"/>
+								<path d="M7 7h6M7 10h6M7 13h4"/>
+							</svg>
+						</div>
+						<span class="project-status">
+							<span class="project-status-dot"></span>
+							Open Source
+						</span>
+					</div>
+					<h3 class="project-name">Project Atlas</h3>
+					<p class="project-desc">端到端 RAG 管线框架：支持多向量库后端（Pinecone / Weaviate / Qdrant）、自适应 chunk 策略与 reranking 管线，开箱即用。</p>
+					<div class="project-metrics">
+						<div>
+							<div class="project-metric-value">89%</div>
+							<div class="project-metric-label">检索准确率</div>
+						</div>
+						<div>
+							<div class="project-metric-value">3</div>
+							<div class="project-metric-label">向量库支持</div>
+						</div>
+						<div>
+							<div class="project-metric-value">1.2K</div>
+							<div class="project-metric-label">GitHub Stars</div>
+						</div>
+					</div>
+					<div class="project-stack">
+						<span class="project-stack-tag">Python</span>
+						<span class="project-stack-tag">LangChain</span>
+						<span class="project-stack-tag">Docker</span>
+						<span class="project-stack-tag">OpenAI</span>
+					</div>
+				</a>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
