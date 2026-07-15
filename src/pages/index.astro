@@ -28,7 +28,7 @@ function getReadTime(content: string): number {
 <html lang="zh-CN">
 	<head>
 		<BaseHead title="冯海泉 — AI Engineer & Indie Builder" description="Building in public. 这里没有 PPT 概念，只有通过代码验证过的 AI 落地经验、成本账本与工程真相。" />
-		{!featureFlags.showHome && <meta http-equiv="refresh" content="0;url=/blog" />}
+		{!featureFlags.showHome && <script>location.replace('/blog');</script>}
 	</head>
 	<body class="bg-bg font-sans text-fg-2 antialiased">
 		<Header />

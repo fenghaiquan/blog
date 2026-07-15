@@ -5,10 +5,13 @@ const { featureFlags } = Astro.locals;
 const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '');
 const subpath = pathname.match(/[^\/]+/g);
 const cooperateActive = subpath?.[0] === 'cooperate';
+const hasNavigation = featureFlags.showHome || featureFlags.showAbout || 
+                      featureFlags.showSubscribe || featureFlags.showCooperate;
 ---
 
 <a href="#main" class="skip-link">跳至正文</a>
 
+{hasNavigation && (
 <nav class="nav" role="navigation" aria-label="主导航">
 	<div class="nav-inner">
 		<a href="/" class="nav-brand" aria-label="冯海泉 — 首页">
@@ -27,6 +30,7 @@ const cooperateActive = subpath?.[0] === 'cooperate';
 		</div>
 	</div>
 </nav>
+)}
 
 <style>
 	.skip-link {

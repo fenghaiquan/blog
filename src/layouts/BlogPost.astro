@@ -21,7 +21,7 @@ const hasToc = headings.filter((h) => h.depth >= 2 && h.depth <= 3).length > 0;
 		<BaseHead title={title} description={description} />
 	</head>
 
-	<body>
+	<body class="bg-bg font-sans text-fg-2 antialiased">
 		<Header />
 		<main class:list={[{ 'with-toc': hasToc }]}>
 			<article>
