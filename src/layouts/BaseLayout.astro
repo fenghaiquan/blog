@@ -1,4 +1,7 @@
 ---
+// [ADR-003] redirectKey 机制：生产环境非 blog 页面自动 redirect
+// 使用 is:inline 防止 Astro 将脚本转为 type="module"（会导致页面闪烁）
+// 详见：docs/decisions/003-baselayout-with-redirectkey.md
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';

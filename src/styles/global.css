@@ -1,3 +1,6 @@
+/* [ADR-002] CSS 两层继承架构：本文件为第一层（设计系统 token + 共享组件类） */
+/* 页面特定样式在 src/styles/<page>.css 中定义 */
+/* 详见：docs/decisions/002-two-layer-css-inheritance.md */
 @import "tailwindcss";
 
 @plugin "@tailwindcss/typography";

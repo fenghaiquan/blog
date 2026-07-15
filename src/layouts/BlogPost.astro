@@ -1,4 +1,6 @@
 ---
+// [ADR-003] BlogPost 继承 BaseLayout，通过 mainClass 传递 with-toc 布局类
+// Mermaid 图表通过客户端 CDN 动态加载（SSG 无法服务端渲染）
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
