@@ -134,6 +134,11 @@ async function generateAll() {
   console.log(`[og-images] Generating OG images for ${posts.length} posts...`);
 
   for (const post of posts) {
+    if (post.draft) {
+      console.log(`[og-images] Skip (draft): ${post.slug}`);
+      continue;
+    }
+
     const outputPath = path.join(OUTPUT_DIR, `${post.slug}.png`);
 
     if (fs.existsSync(outputPath)) {

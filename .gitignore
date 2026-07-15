@@ -34,4 +34,4 @@ src/assets/fonts/*.ttf
 # og image generator
 .og-cache/
 .og-manifest.json
-# .opencode/plans/*
+.opencode/plans/*

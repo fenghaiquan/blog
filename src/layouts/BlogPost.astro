@@ -20,6 +20,10 @@ const hasToc = headings.filter((h) => h.depth >= 2 && h.depth <= 3).length > 0;
 <BaseLayout {title} {description} mainClass={{ 'with-toc': hasToc }} ogImage={ogImage}>
 	<div class="reading-progress" id="readingProgress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="阅读进度"></div>
 	<article>
+		<a href="/blog" class="back-link" aria-label="返回博客列表">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+			<span>返回</span>
+		</a>
 		<div class="hero-image">
 			{image && <img src={image} alt="" width="1020" height="510" />}
 		</div>
