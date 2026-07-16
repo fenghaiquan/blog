@@ -10,6 +10,32 @@ const allPosts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 
 const featuredPost = allPosts.find((post) => post.data.featured);
 const recentPosts = allPosts.filter((post) => !post.data.featured).slice(0, 5);
+
+const siteSchemas = [
+	{
+		'@context': 'https://schema.org',
+		'@type': 'WebSite',
+		name: "Feng's Blog",
+		url: 'https://www.fenghaiquan-ai.com',
+		description: 'Building in public. AI 落地经验、成本账本与工程真相。',
+		inLanguage: 'zh-CN',
+		potentialAction: {
+			'@type': 'SearchAction',
+			target: 'https://www.google.com/search?q=site:fenghaiquan-ai.com+{search_term_string}',
+			'query-input': 'required name=search_term_string',
+		},
+	},
+	{
+		'@context': 'https://schema.org',
+		'@type': 'Organization',
+		name: "Feng's Blog",
+		url: 'https://www.fenghaiquan-ai.com',
+		logo: 'https://www.fenghaiquan-ai.com/favicon.svg',
+		sameAs: [
+			'https://github.com/fenghaiquan',
+		],
+	},
+];
 ---
 
 <BaseLayout
@@ -234,4 +260,6 @@ const recentPosts = allPosts.filter((post) => !post.data.featured).slice(0, 5);
 			</div>
 		</div>
 	</section>
+
+	<script type="application/ld+json" set:html={JSON.stringify(siteSchemas)}></script>
 </BaseLayout>

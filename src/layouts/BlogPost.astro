@@ -19,24 +19,50 @@ const articleUrl = Astro.url.toString();
 const publishedDate = date instanceof Date ? date.toISOString().split('T')[0] : String(date);
 const articleImage = ogImage || image || '';
 
-const jsonLd = {
-	'@context': 'https://schema.org',
-	'@type': 'BlogPosting',
-	headline: title,
-	description: description || '',
-	datePublished: publishedDate,
-	url: articleUrl,
-	image: articleImage,
-	author: {
-		'@type': 'Person',
-		name: '冯海泉',
+const jsonLd = [
+	{
+		'@context': 'https://schema.org',
+		'@type': 'BlogPosting',
+		headline: title,
+		description: description || '',
+		datePublished: publishedDate,
+		url: articleUrl,
+		image: articleImage,
+		author: {
+			'@type': 'Person',
+			name: '冯海泉',
+		},
+		publisher: {
+			'@type': 'Organization',
+			name: "Feng's Blog",
+			url: 'https://www.fenghaiquan-ai.com',
+		},
 	},
-	publisher: {
-		'@type': 'Organization',
-		name: "Feng's Blog",
-		url: 'https://www.fenghaiquan-ai.com',
+	{
+		'@context': 'https://schema.org',
+		'@type': 'BreadcrumbList',
+		itemListElement: [
+			{
+				'@type': 'ListItem',
+				position: 1,
+				name: '首页',
+				item: 'https://www.fenghaiquan-ai.com/',
+			},
+			{
+				'@type': 'ListItem',
+				position: 2,
+				name: '博客',
+				item: 'https://www.fenghaiquan-ai.com/blog/',
+			},
+			{
+				'@type': 'ListItem',
+				position: 3,
+				name: title,
+				item: articleUrl,
+			},
+		],
 	},
-};
+];
 ---
 
 <BaseLayout {title} {description} mainClass={{ 'with-toc': hasToc }} ogImage={ogImage}>
