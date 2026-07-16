@@ -62,41 +62,48 @@ export function createOGTemplate({ title, description, date, siteName }) {
                   ],
                 },
               },
-              // Title
+              // Text block — vertically centered
               {
                 type: 'div',
                 props: {
                   style: {
-                    fontSize: '56px',
-                    fontWeight: 500,
-                    lineHeight: 1.25,
-                    color: '#1C1917',
-                    maxWidth: '820px',
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
                   },
-                  children: title,
-                },
-              },
-              // Description
-              description
-                ? {
-                    type: 'div',
-                    props: {
-                      style: {
-                        fontSize: '24px',
-                        color: '#6B6560',
-                        lineHeight: 1.5,
-                        maxWidth: '760px',
-                        marginTop: '20px',
+                  children: [
+                    // Title
+                    {
+                      type: 'div',
+                      props: {
+                        style: {
+                          fontSize: '56px',
+                          fontWeight: 500,
+                          lineHeight: 1.25,
+                          color: '#1C1917',
+                          maxWidth: '820px',
+                        },
+                        children: title,
                       },
-                      children: description,
                     },
-                  }
-                : null,
-              // Spacer — push bottom bar down
-              {
-                type: 'div',
-                props: {
-                  style: { flex: 1 },
+                    // Description
+                    description
+                      ? {
+                          type: 'div',
+                          props: {
+                            style: {
+                              fontSize: '24px',
+                              color: '#6B6560',
+                              lineHeight: 1.5,
+                              maxWidth: '760px',
+                              marginTop: '20px',
+                            },
+                            children: description,
+                          },
+                        }
+                      : null,
+                  ].filter(Boolean),
                 },
               },
               // Bottom bar
@@ -135,7 +142,7 @@ export function createOGTemplate({ title, description, date, siteName }) {
                   ],
                 },
               },
-            ].filter(Boolean),
+            ],
           },
         },
       ],
