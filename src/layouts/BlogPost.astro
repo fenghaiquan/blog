@@ -15,6 +15,28 @@ type Props = CollectionEntry<'blog'>['data'] & {
 
 const { title, description, date, image, headings = [], ogImage } = Astro.props;
 const hasToc = headings.filter((h) => h.depth >= 2 && h.depth <= 3).length > 0;
+const articleUrl = Astro.url.toString();
+const publishedDate = date instanceof Date ? date.toISOString().split('T')[0] : String(date);
+const articleImage = ogImage || image || '';
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'BlogPosting',
+	headline: title,
+	description: description || '',
+	datePublished: publishedDate,
+	url: articleUrl,
+	image: articleImage,
+	author: {
+		'@type': 'Person',
+		name: '冯海泉',
+	},
+	publisher: {
+		'@type': 'Organization',
+		name: "Feng's Blog",
+		url: 'https://www.fenghaiquan-ai.com',
+	},
+};
 ---
 
 <BaseLayout {title} {description} mainClass={{ 'with-toc': hasToc }} ogImage={ogImage}>
@@ -40,6 +62,8 @@ const hasToc = headings.filter((h) => h.depth >= 2 && h.depth <= 3).length > 0;
 			<slot />
 		</div>
 	</article>
+
+	<script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
 
 	{hasToc && (
 		<button class="toc-mobile-toggle" id="tocMobileToggle" onclick="toggleMobileToc()" aria-expanded="false" aria-controls="tocNav">

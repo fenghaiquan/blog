@@ -3,7 +3,7 @@ title: "Obsidian 语法渲染测试"
 date: 2026-07-13
 description: "一篇用于测试 Blog 对 Obsidian 各种 Markdown 扩展语法渲染效果的笔记"
 tags: [Obsidian, 测试, Markdown, Blog]
-draft: false
+draft: true
 ---
 
 > [!abstract] 本文目的
