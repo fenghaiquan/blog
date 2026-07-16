@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
+import crypto from 'crypto';
 import { Resvg } from '@resvg/resvg-js';
 import { createOGTemplate, generateOGImage } from './og-template.js';
 
@@ -102,6 +103,24 @@ function formatDate(dateStr) {
   return d.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
+function getContentHash(post) {
+  const content = `${post.title}|${post.description}|${post.date}`;
+  return crypto.createHash('md5').update(content).digest('hex');
+}
+
+const CACHE_FILE = path.join(OUTPUT_DIR, '.og-cache.json');
+
+function loadCache() {
+  if (fs.existsSync(CACHE_FILE)) {
+    return JSON.parse(fs.readFileSync(CACHE_FILE, 'utf-8'));
+  }
+  return {};
+}
+
+function saveCache(cache) {
+  fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2));
+}
+
 async function generateAll() {
   console.log('[og-images] Extracting characters...');
   const chars = extractCharacters();
@@ -131,6 +150,8 @@ async function generateAll() {
 
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
+  const cache = loadCache();
+
   const files = fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith('.md'));
   const posts = files.map((file) => {
     const content = fs.readFileSync(path.join(CONTENT_DIR, file), 'utf-8');
@@ -148,12 +169,14 @@ async function generateAll() {
     }
 
     const outputPath = path.join(OUTPUT_DIR, `${post.slug}.png`);
+    const contentHash = getContentHash(post);
 
     if (fs.existsSync(outputPath)) {
-      const mdPath = path.join(CONTENT_DIR, `${post.slug}.md`);
-      const mdStat = fs.statSync(mdPath);
-      const pngStat = fs.statSync(outputPath);
-      if (mdStat.mtime <= pngStat.mtime) {
+      if (!(post.slug in cache)) {
+        console.log(`[og-images] Skip (custom): ${post.slug}.png`);
+        continue;
+      }
+      if (cache[post.slug] === contentHash) {
         console.log(`[og-images] Skip (cached): ${post.slug}.png`);
         continue;
       }
@@ -174,6 +197,7 @@ async function generateAll() {
     const pngBuffer = pngData.asPng();
 
     fs.writeFileSync(outputPath, pngBuffer);
+    cache[post.slug] = contentHash;
     console.log(`[og-images] Generated: ${post.slug}.png (${(pngBuffer.length / 1024).toFixed(0)}KB)`);
   }
 
@@ -192,6 +216,7 @@ async function generateAll() {
     console.log(`[og-images] Generated: default.png (${(pngBuffer.length / 1024).toFixed(0)}KB)`);
   }
 
+  saveCache(cache);
   console.log('[og-images] Done!');
 }
 
