@@ -9,6 +9,7 @@
     "sync": "node scripts/sync-content.js",
     "dev": "astro dev",
     "build": "astro build",
+    "build:og": "astro build && node scripts/post-og-commit.js",
     "preview": "astro preview",
     "astro": "astro",
     "og:prepare": "node .agents/skills/og-image-generator/scripts/prepare-manifest.js",
