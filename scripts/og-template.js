@@ -1,6 +1,8 @@
 import satori from 'satori';
 
-export function createOGTemplate({ title, description, date, tags, siteName }) {
+export function createOGTemplate({ title, description, date, siteName }) {
+  const brand = siteName || "Feng's Blog";
+
   return {
     type: 'div',
     props: {
@@ -8,108 +10,132 @@ export function createOGTemplate({ title, description, date, tags, siteName }) {
         width: '100%',
         height: '100%',
         display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        padding: '60px 80px',
         background: '#FAF8F5',
         fontFamily: 'LXGW WenKai',
       },
       children: [
+        // Left amber accent bar
         {
           type: 'div',
           props: {
             style: {
+              width: '8px',
+              background: '#92400E',
+              flexShrink: 0,
+            },
+          },
+        },
+        // Main content area
+        {
+          type: 'div',
+          props: {
+            style: {
+              flex: 1,
               display: 'flex',
               flexDirection: 'column',
-              gap: '24px',
-              flex: 1,
+              padding: '100px 80px 60px 62px',
+              position: 'relative',
             },
             children: [
+              // Decorative circle (top-right, partially clipped)
+              {
+                type: 'svg',
+                props: {
+                  style: {
+                    position: 'absolute',
+                    top: '-60px',
+                    right: '-60px',
+                    width: '420px',
+                    height: '420px',
+                  },
+                  children: [
+                    {
+                      type: 'circle',
+                      props: {
+                        cx: '210',
+                        cy: '210',
+                        r: '200',
+                        fill: '#92400E',
+                        opacity: '0.06',
+                      },
+                    },
+                  ],
+                },
+              },
+              // Title
               {
                 type: 'div',
                 props: {
                   style: {
-                    fontSize: '52px',
+                    fontSize: '56px',
                     fontWeight: 500,
-                    lineHeight: 1.3,
+                    lineHeight: 1.25,
                     color: '#1C1917',
-                    maxWidth: '900px',
+                    maxWidth: '820px',
                   },
                   children: title,
                 },
               },
-              description && {
+              // Description
+              description
+                ? {
+                    type: 'div',
+                    props: {
+                      style: {
+                        fontSize: '24px',
+                        color: '#6B6560',
+                        lineHeight: 1.5,
+                        maxWidth: '760px',
+                        marginTop: '20px',
+                      },
+                      children: description,
+                    },
+                  }
+                : null,
+              // Spacer — push bottom bar down
+              {
                 type: 'div',
                 props: {
-                  style: {
-                    fontSize: '28px',
-                    color: '#78716C',
-                    lineHeight: 1.5,
-                    maxWidth: '800px',
-                  },
-                  children: description,
+                  style: { flex: 1 },
                 },
               },
-              tags && tags.length > 0 && {
+              // Bottom bar
+              {
                 type: 'div',
                 props: {
                   style: {
                     display: 'flex',
-                    gap: '12px',
-                    flexWrap: 'wrap',
-                    marginTop: '8px',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    borderTop: '1px solid #E7E5E4',
+                    paddingTop: '24px',
                   },
-                  children: tags.map((tag) => ({
-                    type: 'div',
-                    props: {
-                      style: {
-                        fontSize: '20px',
-                        color: '#92400E',
-                        background: 'rgba(146, 64, 14, 0.1)',
-                        padding: '6px 16px',
-                        borderRadius: '6px',
+                  children: [
+                    {
+                      type: 'div',
+                      props: {
+                        style: {
+                          fontSize: '28px',
+                          fontWeight: 600,
+                          color: '#92400E',
+                        },
+                        children: brand,
                       },
-                      children: tag,
                     },
-                  })),
+                    {
+                      type: 'div',
+                      props: {
+                        style: {
+                          fontSize: '22px',
+                          color: '#78716C',
+                        },
+                        children: date,
+                      },
+                    },
+                  ],
                 },
               },
             ].filter(Boolean),
-          },
-        },
-        {
-          type: 'div',
-          props: {
-            style: {
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              borderTop: '2px solid #E7E5E4',
-              paddingTop: '24px',
-            },
-            children: [
-              {
-                type: 'div',
-                props: {
-                  style: {
-                    fontSize: '28px',
-                    fontWeight: 500,
-                    color: '#92400E',
-                  },
-                  children: siteName || "Feng's Blog",
-                },
-              },
-              {
-                type: 'div',
-                props: {
-                  style: {
-                    fontSize: '24px',
-                    color: '#78716C',
-                  },
-                  children: date,
-                },
-              },
-            ],
           },
         },
       ],

@@ -108,15 +108,23 @@ async function generateAll() {
   console.log(`[og-images] Found ${chars.size} unique characters`);
 
   console.log('[og-images] Subsetting font...');
-  const subsetFontPath = subsetFont(chars);
-  const fontData = fs.readFileSync(subsetFontPath);
-  console.log(`[og-images] Font subset: ${(fontData.length / 1024).toFixed(0)}KB`);
+  subsetFont(chars);
+  console.log('[og-images] Font subset done');
+
+  const fontRegular = fs.readFileSync(path.join(FONTS_DIR, 'LXGWWenKai-Regular.subset.ttf'));
+  const fontMedium = fs.readFileSync(path.join(FONTS_DIR, 'LXGWWenKai-Medium.ttf'));
 
   const fonts = [
     {
       name: 'LXGW WenKai',
-      data: fontData,
+      data: fontRegular,
       weight: 400,
+      style: 'normal',
+    },
+    {
+      name: 'LXGW WenKai',
+      data: fontMedium,
+      weight: 500,
       style: 'normal',
     },
   ];
@@ -155,7 +163,6 @@ async function generateAll() {
       title: post.title,
       description: post.description,
       date: formatDate(post.date),
-      tags: post.tags,
       siteName: SITE_NAME,
     });
 
@@ -176,7 +183,6 @@ async function generateAll() {
       title: SITE_NAME,
       description: 'AI 工程实践 & 构建经验',
       date: '',
-      tags: [],
       siteName: SITE_NAME,
     });
     const svg = await generateOGImage(template, fonts);
