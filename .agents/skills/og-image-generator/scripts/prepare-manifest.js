@@ -50,39 +50,53 @@ function parseFrontmatter(content) {
   return { title, description, date, tags, draft: draft === 'true' };
 }
 
-function buildPrompt({ title, description, tags }) {
-  const tagStr = tags.length > 0 ? tags.join(', ') : '';
+function readConcept(slug) {
+  const conceptPath = path.join(CACHE_DIR, `${slug}-concept.md`);
+  if (!fs.existsSync(conceptPath)) {
+    return null;
+  }
+  return fs.readFileSync(conceptPath, 'utf-8').trim();
+}
 
-  return `Generate an OG sharing card image for a blog post.
+function buildPrompt({ title, description, concept }) {
+  return `Generate an OG image for a blog post.
 
-## Article Content
+## Article
 - Title: ${title}
 ${description ? `- Summary: ${description}` : ''}
-${tagStr ? `- Tags: ${tagStr}` : ''}
 
-## Design Requirements
+## Concept Description
+${concept}
+
+## Style Guidelines
+- Minimal, clean layout with generous whitespace
+- Let the content structure drive the design (cards, lists, diagrams as appropriate)
+- Avoid decorative elements that don't serve the content
+- Use subtle color accents to differentiate sections
+- Ensure readability at thumbnail size (200x200)
 - Size: 1200 x 630 px
-- Choose a visual style that fits the article content
-- Include brand identifier "Feng's Blog" at the bottom
-- Ensure title is clearly readable with good visual hierarchy
+- Include brand identifier "Foong's Blog" at the bottom
 - Keep key content in the central safe area (15% margin on each side) for cross-platform cropping`;
 }
 
-function buildCNPrompt({ title, description, tags }) {
-  const tagStr = tags.length > 0 ? tags.join(', ') : '';
+function buildCNPrompt({ title, description, concept }) {
+  return `为博客文章生成 OG 图片（正方形，面向微信等国内平台）。
 
-  return `为博客文章生成 OG 分享卡片图片（正方形，面向微信等国内平台）。
-
-## 文章内容
+## 文章
 - 标题：${title}
 ${description ? `- 摘要：${description}` : ''}
-${tagStr ? `- 标签：${tagStr}` : ''}
 
-## 设计要求
+## 概念描述
+${concept}
+
+## 风格指南
+- 极简布局，大量留白
+- 让内容结构驱动设计（卡片、列表、流程图等）
+- 避免无意义的装饰元素
+- 用克制的色彩区分不同区块
+- 确保缩略图尺寸（200x200）下仍可阅读
 - 尺寸：1080 x 1080 px（正方形构图）
-- 根据文章内容自动选择合适的视觉风格
-- 底部包含品牌标识 "Feng's Blog"
-- 确保标题清晰可读，信息层级分明
+- 底部包含品牌标识 "Foong's Blog"
 - 中文排版，使用暖色调设计系统
 - **输出格式：HTML 文件**（不要生成 PNG 图片，直接输出 HTML 代码）`;
 }
@@ -98,6 +112,10 @@ function scanPosts() {
     process.exit(1);
   }
 
+  if (!fs.existsSync(CACHE_DIR)) {
+    fs.mkdirSync(CACHE_DIR, { recursive: true });
+  }
+
   const files = fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith('.md'));
   const posts = [];
 
@@ -109,6 +127,12 @@ function scanPosts() {
     if (!fm || fm.draft) continue;
     if (hasOGImage(slug)) continue;
 
+    const concept = readConcept(slug);
+    if (!concept) {
+      console.warn(`[og-prepare] Skipping "${slug}": concept file not found at .og-cache/${slug}-concept.md`);
+      continue;
+    }
+
     const isCN = hasCJK(fm.title);
     posts.push({
       slug,
@@ -118,7 +142,7 @@ function scanPosts() {
       date: fm.date,
       path: 'opendesign',
       skill: isCN ? 'canvas-design' : 'card-twitter',
-      prompt: isCN ? buildCNPrompt(fm) : buildPrompt(fm),
+      prompt: isCN ? buildCNPrompt({ ...fm, concept }) : buildPrompt({ ...fm, concept }),
     });
   }
 

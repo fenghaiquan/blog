@@ -27,7 +27,7 @@ When designing for multiple aspect ratios from a single HTML layout:
 - **Keep critical content (title, brand) in the center 70% area**
 - Left/right margins: at least 15% of width
 - Top/bottom margins: at least 10% of height
-- Brand footer ("Feng's Blog") should be centered, not edge-aligned
+- Brand footer ("Foong's Blog") should be centered, not edge-aligned
 
 ## File Size Limits
 

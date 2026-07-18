@@ -13,7 +13,7 @@ const FONTS_DIR = path.join(rootDir, 'src/assets/fonts');
 const OUTPUT_DIR = path.join(rootDir, 'public/og');
 const CONTENT_DIR = path.join(rootDir, 'src/content/blog');
 
-const SITE_NAME = "Feng's Blog";
+const SITE_NAME = "Foong's Blog";
 
 function extractCharacters() {
   const files = fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith('.md'));

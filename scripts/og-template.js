@@ -1,7 +1,7 @@
 import satori from 'satori';
 
 export function createOGTemplate({ title, description, date, siteName }) {
-  const brand = siteName || "Feng's Blog";
+  const brand = siteName || "Foong's Blog";
 
   return {
     type: 'div',

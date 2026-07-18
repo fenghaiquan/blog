@@ -3,7 +3,7 @@ title: AI对话的四象限框架：如何与AI高效共创未来
 date: 2026-07-12
 description: 探讨如何与AI高效对话的思维工具——AI对话四象限框架，灵感来源于乔哈里窗口
 tags: [AI, Prompt-Engineering, Johari-Window, Obsidian-Note, 人机协同]
-draft: false
+draft: true
 featured: true
 speaker: 姜学长 (清华大学计算机硕士 / 前阿里达摩院 / 华为AI专家)
 source: Bilibili

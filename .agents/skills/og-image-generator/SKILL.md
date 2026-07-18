@@ -25,17 +25,49 @@ Both paths produce HTML that gets screenshot via Playwright. `canvas-design` is 
 ## Workflow Overview
 
 ```
-Phase 1: prepare-manifest.js    → Scan posts, detect language, generate prompts, write manifest
-Phase 2: Open Design MCP calls  → Generate HTML/PNG designs (the slow part)
-Phase 3: screenshot.js          → Playwright screenshots (card-twitter) or copy PNG (canvas-design)
-Phase 4: validate.js            → Validate generated images, mark failed for regeneration
+Phase 0: Agent concept extraction → Read article, write concept to .og-cache/{slug}-concept.md
+Phase 1: prepare-manifest.js      → Read concept files, build prompts, write manifest
+Phase 2: Open Design MCP calls    → Generate HTML designs (the slow part)
+Phase 3: screenshot.js            → Playwright screenshots → public/og/{slug}.png
+Phase 4: validate.js              → Validate generated images, mark failed for regeneration
 ```
 
-Phase 1, 3, and 4 are deterministic scripts. Phase 2 uses Open Design MCP tools and is the creative step.
+Phase 0 is the agent's responsibility (concept extraction from article content).
+Phase 1, 3, and 4 are deterministic scripts. Phase 2 uses Open Design MCP tools.
 
-If Phase 4 finds issues, the workflow loops back to Phase 2 for failed tasks.
+If Phase 4 finds issues, the workflow loops back to Phase 0 (re-analyze concept) or Phase 2 (regenerate).
 
 ## Execution Steps
+
+### Step 0: Extract concepts (Agent)
+
+For each post that needs an OG image, the agent reads the full article and writes a concept description to `.og-cache/{slug}-concept.md`.
+
+The concept file should capture:
+1. **核心概念** — What is the article's central idea or argument?
+2. **思维模型** — What mental model or framework does the article use?
+3. **视觉隐喻建议** — What visual metaphor could express this concept? (e.g., four axes radiating from center, a decision tree, nested loops, etc.)
+
+Example concept file:
+```markdown
+# 核心概念
+四个正交的问题域构成 AI Agent 工程的完整地图，互不包含、互不替代。
+
+# 思维模型
+2x2 矩阵 / 四象限图 — 表达域、信息域、可靠性域、自治域
+
+# 视觉隐喻
+四个独立轴线从中心向外辐射，每条轴线标注一个问题域的名称和核心问题。
+轴线之间用虚线连接表示正交关系。
+```
+
+The agent should:
+1. Read the article's full content from `src/content/blog/{slug}.md`
+2. Analyze the core argument, mental model, and key metaphors
+3. Write the concept to `.og-cache/{slug}-concept.md`
+4. Ensure `.og-cache/` directory exists (create if needed)
+
+**Important:** This step must complete before running prepare-manifest.js. The script reads concept files to build prompts.
 
 ### Step 1: Run prepare-manifest.js
 

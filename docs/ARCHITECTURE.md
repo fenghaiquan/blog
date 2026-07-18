@@ -107,6 +107,18 @@ Astro Content Collections
 页面渲染（blog/index.astro、[...slug].astro）
 ```
 
+### Content Schema 字段
+
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| `title` | string | 文章标题 |
+| `date` | date | 发布日期 |
+| `description` | string? | 文章摘要 |
+| `tags` | string[] | 标签列表 |
+| `draft` | boolean | 草稿标记（默认 false） |
+| `featured` | boolean | 精选文章（默认 false） |
+| `image` | string? | 封面图路径 |
+
 ## 构建与部署
 
 ```bash
