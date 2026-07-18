@@ -21,12 +21,12 @@ const pagePosts = allPosts.slice(startIndex, endIndex);
 ---
 
 <BaseLayout title="Blog - 冯海泉" description="工程实践与 AI 落地笔记" ogImage="/og/default.png">
-	<header class="page-header">
+	<header class="blog-header">
 		<div class="container">
 			<p class="page-header-eyebrow">Blog</p>
 			<h1 class="page-header-title">工程实践与 AI 落地笔记</h1>
-			<p class="page-header-desc">
-				没有 PPT 概念，只有通过代码验证过的经验、成本账本与工程真相。
+			<p class="blog-header-desc">
+				全球 AI 技术雷达、成本账本与工程落地真相。
 			</p>
 		</div>
 	</header>
@@ -35,21 +35,21 @@ const pagePosts = allPosts.slice(startIndex, endIndex);
 		<div class="article-list" role="feed" aria-label="文章列表">
 			{pagePosts.map((post) => {
 				const isPinned = post.data.featured;
-				const readTime = getReadTime(post.body || '');
 				return (
 					<a href={`/blog/${post.id}/`} class="article-item" aria-label={`${post.data.title} — ${formatDate(post.data.date, 'readable')}${isPinned ? ' — 置顶' : ''}`}>
-						<span class="article-date-badge">{formatDate(post.data.date, 'readable')}</span>
-						{isPinned && <span class="article-pin">置顶</span>}
-						<h3 class="article-title">{post.data.title}</h3>
-						{post.data.description && (
-							<p class="article-excerpt">{post.data.description}</p>
-						)}
-						<div class="article-meta">
-							<span class="article-read-time">~ {readTime} min read</span>
+						<div class="article-date-col">
+							<span class="article-date-badge">{formatDate(post.data.date, 'readable')}</span>
+							{isPinned && <span class="article-pin">置顶</span>}
+						</div>
+						<div class="article-content-col">
+							<h3 class="article-title">{post.data.title}</h3>
+							{post.data.description && (
+								<p class="article-excerpt">{post.data.description}</p>
+							)}
 						</div>
 						<span class="article-arrow" aria-hidden="true">
-							<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-								<path d="M4 8h8M9 5l3 3-3 3"/>
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+								<path d="M7 4l6 6-6 6"/>
 							</svg>
 						</span>
 					</a>

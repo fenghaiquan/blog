@@ -39,7 +39,11 @@ async function sync() {
 			const src = path.join(sourcePath, file);
 			const dest = path.join(targetDir, path.basename(file));
 
-			fs.copyFileSync(src, dest);
+			// Normalize line endings: CRLF → LF (Obsidian on Windows writes \r\n)
+			let content = fs.readFileSync(src, 'utf-8');
+			content = content.replace(/\r\n/g, '\n');
+			fs.writeFileSync(dest, content, 'utf-8');
+
 			syncedFiles.add(path.basename(file));
 			console.log(`  ✓ ${file}`);
 		}

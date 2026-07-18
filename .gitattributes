@@ -1,0 +1,3 @@
+# Enforce LF line endings for markdown files (Obsidian on Windows writes CRLF)
+*.md text eol=lf
+*.mdx text eol=lf
