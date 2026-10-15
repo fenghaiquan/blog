@@ -63,6 +63,11 @@ Markdown 增强：wiki-links（remark-obsidian-md）、数学公式（KaTeX）�
 
 详见 [docs/decisions/004](../docs/decisions/004-obsidian-content-pipeline.md)
 
+### 3.5 付费数字产物离仓交付（ADR-005）
+付费 PDF 脱离 git：`.gitignore` 排除 + `.vercelignore` 不列（CLI 部署仍上线）+ 每收费版本轮换随机后缀。铁律：付费 PDF 不得进 `.vercelignore`；`src/content/blog/*.md` 不得被部署排除。新付费产品发布清单见 ADR。
+
+详见 [docs/decisions/005](../docs/decisions/005-paid-product-off-repo-delivery.md)
+
 ## 4. 设计系统
 
 详见 [docs/DESIGN-SYSTEM.md](../docs/DESIGN-SYSTEM.md)

@@ -25,7 +25,7 @@ const { PDFParse } = require('pdf-parse');
 const MANUSCRIPT =
   '/mnt/d/Documents/Obsidian/LLMBrain/5_Output/Product/product-cheatsheet/manuscript';
 const DEFAULT_OUT =
-  'public/downloads/agent-patterns-cheatsheet-v1.0-6e0395.pdf'; // 后缀 = 不可猜测交付路径，改动时同步 src/consts.ts
+  'public/downloads/agent-patterns-cheatsheet-v1.1-ba43bf.pdf'; // 后缀 = 不可猜测交付路径，改动时同步 src/consts.ts
 const PREVIEW_OUT = 'public/downloads/agent-patterns-cheatsheet-preview.pdf';
 
 const args = Object.fromEntries(

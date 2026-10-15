@@ -1,0 +1,21 @@
+# .vercelignore —— Vercel CLI 部署排除清单
+#
+# 注意：本文件存在时【整体取代】.gitignore 的部署过滤（Vercel CLI 行为），
+# 因此这里只列"构建不需要"的本地目录/文件；src/content/blog/*.md 等源文件
+# 必须随部署上传（云端构建依赖），不要扩大排除范围。
+# 付费 PDF（public/downloads/*.pdf）必须【不】列在此处——它们被 .gitignore
+# 排除出 git，唯一上线通道就是 CLI 本地部署上传。策略见 docs/decisions/005。
+
+node_modules/
+dist/
+.git/
+.astro/
+.og-cache/
+.og-manifest.json
+.env
+.env.production
+.env.local
+notes/
+content-sources.json
+nohup.out
+.vercel/

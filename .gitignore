@@ -35,3 +35,7 @@ src/assets/fonts/*.ttf
 .og-cache/
 .og-manifest.json
 .opencode/plans/*
+
+# 付费数字产物（脱离 git，经 Vercel CLI 本地部署上线；策略见 docs/decisions/005）
+# 试读版/免费钩子不受保护，继续纳入 git
+public/downloads/agent-patterns-cheatsheet-v1.*-*.pdf
