@@ -58,6 +58,22 @@
 	color: var(--color-fg);
 }
 
+.success-download {
+	margin-top: 16px;
+	padding: 12px 28px;
+	border-radius: var(--radius-md, 8px);
+	background: var(--color-primary);
+	color: #fff;
+	font-size: 15px;
+	font-weight: 600;
+	text-decoration: none;
+	transition: background 0.2s ease;
+}
+
+.success-download:hover {
+	background: var(--color-primary-hover);
+}
+
 .success-back {
 	margin-top: 12px;
 	font-size: 14px;

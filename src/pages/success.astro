@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SUPPORT_EMAIL } from '../consts';
+import { SUPPORT_EMAIL, PRODUCT_NAME, PRODUCT_DOWNLOAD_URL } from '../consts';
 import '../styles/success.css';
 ---
 
@@ -23,12 +23,12 @@ import '../styles/success.css';
 				<p class="success-check" aria-hidden="true">✓</p>
 				<h2 class="success-title">购买完成</h2>
 				<p class="success-desc">
-					<!-- TODO(Creem 闭环): 上线真实产品后，替换为交付说明与下载链接 -->
-					你的付款已确认。产品交付说明与下载链接会显示在这里。
+					感谢支持！你的{PRODUCT_NAME}（PDF · 26 页）已就绪，点击下方按钮下载：
 				</p>
+				<a href={PRODUCT_DOWNLOAD_URL} class="success-download" download>⬇ 下载 PDF（约 2.6 MB）</a>
 				<p class="success-note">
-					遇到问题？3 个工作日内必复，联系
-					<a href={`mailto:${SUPPORT_EMAIL}`} class="success-link">{SUPPORT_EMAIL}</a>
+					下载遇到问题？联系
+					<a href={`mailto:${SUPPORT_EMAIL}`} class="success-link">{SUPPORT_EMAIL}</a>，3 个工作日内必复
 				</p>
 				<a href="/blog" class="success-back">← 返回博客</a>
 			</div>

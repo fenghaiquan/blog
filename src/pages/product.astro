@@ -1,19 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SUPPORT_EMAIL, CREEM_CHECKOUT_URL, PRODUCT_PRICE } from '../consts';
+import { SUPPORT_EMAIL, CREEM_CHECKOUT_URL, PRODUCT_PRICE, PRODUCT_NAME } from '../consts';
 import '../styles/product.css';
 ---
 
 <BaseLayout
-	title="付费内容 - 冯海泉"
-	description="AI 工程实战文章合集 PDF，一次性购买，即时交付。"
+	title="AI Agent 工程模式速查手册 - 冯海泉"
+	description="193 个 Agent 工程模式速查表 PDF：证据等级标注 + 问题树导航 + 常见问题映射，一次性购买 $5。"
 	ogImage="/og/default.png"
 >
 	<section class="page-header">
 		<div class="container">
 			<p class="page-header-eyebrow">Product</p>
-			<h1 class="page-header-title">AI 工程踩坑实录</h1>
-			<p class="page-header-desc">代码验证过的 AI 落地经验、成本账本与工程真相 —— 精选合集 PDF 版</p>
+			<h1 class="page-header-title">AI Agent 工程模式速查手册</h1>
+			<p class="page-header-desc">193 个模式 · 13 个主题 · 证据等级标注 —— 一份可定位的 Agent 工程方案地图（PDF）</p>
 		</div>
 	</section>
 
@@ -23,19 +23,24 @@ import '../styles/product.css';
 				<div class="product-info">
 					<h2 class="product-heading">包含内容</h2>
 					<ul class="product-list">
-						<li>精选文章合集（无广告、适合打印与批注的排版）</li>
-						<li>文章中出现的完整代码清单与配置文件</li>
-						<li>真实成本账本：Token 消耗、API 开销与优化前后对比</li>
+						<li><strong>193 个模式速查条目</strong>：每条一句话说明 + 证据等级（● 生产验证 34 / ★ 成熟 41 / ◐ 新兴 103 / ○ 提案 16）</li>
+						<li><strong>常见问题速查</strong>：15 类高频工程问题（上下文溢出、提示注入、成本过高……）→ 推荐模式与章节</li>
+						<li><strong>问题树导航</strong>：T1–T4 四部十三题（能力 / 可靠 / 演化 / 边界），从根问题定位到具体模式</li>
+						<li><strong>64 个跨主题关联模式</strong>标注，同一问题在不同主题下的解法线索</li>
+						<li>26 页 A4 PDF · 中文排版 · 无广告、适合打印与检索</li>
 						<li>后续小版本更新免费获取</li>
 					</ul>
+					<h2 class="product-heading">内容来源与版权</h2>
+					<p class="product-text">基于开源知识库 awesome-agentic-patterns（Apache-2.0，含 221 篇研究报告、覆盖 Anthropic / OpenAI / Cursor / Sourcegraph 等生产数据）中文编辑整理，保留上游署名与许可声明，详见手册卷末署名页。</p>
 					<h2 class="product-heading">交付方式</h2>
-					<p class="product-text">通过 Creem 安全结账付款后，即可在成功页获取下载链接，同时发送至你的邮箱。</p>
+					<p class="product-text">通过 Creem 安全结账付款后，即可在成功页获取下载链接。</p>
 				</div>
 
 				<aside class="product-card" aria-label="购买">
 					<p class="product-card-label">一次性购买</p>
 					<p class="product-price">{PRODUCT_PRICE}<span class="product-price-unit"> USD · 一次性</span></p>
 					<ul class="product-card-perks">
+						<li>{PRODUCT_NAME} · PDF</li>
 						<li>即时交付 · 无订阅 · 无自动续费</li>
 						<li>14 天缺陷退款保障</li>
 					</ul>
