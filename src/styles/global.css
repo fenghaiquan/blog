@@ -5,6 +5,8 @@
 
 @plugin "@tailwindcss/typography";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-primary: #92400E;
   --color-primary-hover: #78350F;
@@ -32,6 +34,29 @@
   --shadow-sm: 0 1px 2px rgba(28,25,23,0.04);
   --shadow-md: 0 4px 12px rgba(28,25,23,0.06);
   --shadow-lg: 0 8px 24px rgba(28,25,23,0.08);
+}
+
+.dark {
+  --color-primary: #D97706;
+  --color-primary-hover: #F59E0B;
+  --color-success: #22C55E;
+  --color-bg: #1C1917;
+  --color-surface: #292524;
+  --color-surface-warm: #1C1917;
+  --color-fg: #FAF8F5;
+  --color-fg-2: #D6D3D1;
+  --color-fg-3: #A8A29E;
+  --color-muted: #78716C;
+  --color-border: #44403C;
+  --color-border-soft: #292524;
+  --color-accent: #D97706;
+  --color-accent-light: #F59E0B;
+  --color-accent-on: #1C1917;
+  --color-white: #292524;
+  --color-focus-ring: rgba(250, 248, 245, 0.15);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
 }
 
 html, body {
@@ -63,7 +88,7 @@ main {
 }
 
 .dot-grid {
-  background-image: radial-gradient(circle, #E7E5E4 0.8px, transparent 0.8px);
+  background-image: radial-gradient(circle, var(--color-border) 0.8px, transparent 0.8px);
   background-size: 20px 20px;
 }
 
@@ -77,7 +102,7 @@ main {
 }
 .card-base:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-lg);
   border-color: var(--color-border);
 }
 
@@ -104,6 +129,9 @@ main {
   background: linear-gradient(135deg, #F5F5F4 0%, #EFE9DC 50%, #E7E5E4 100%);
   position: relative;
 }
+.dark .featured-visual {
+  background: linear-gradient(135deg, #292524 0%, #1C1917 50%, #44403C 100%);
+}
 .featured-visual::before {
   content: '';
   position: absolute;
@@ -123,7 +151,7 @@ main {
   left: 0;
   right: 0;
   height: 60%;
-  background: linear-gradient(to top, rgba(250,248,245,0.8), transparent);
+  background: linear-gradient(to top, var(--color-bg), transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {

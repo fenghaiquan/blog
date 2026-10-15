@@ -34,6 +34,16 @@ const ogImageUrl = new URL(ogImagePath, Astro.url);
 	href={new URL('rss.xml', Astro.site)}
 />
 <meta name="generator" content={Astro.generator} />
+<meta name="color-scheme" content="light dark" />
+
+<script is:inline>
+	(function() {
+		const theme = localStorage.getItem('theme');
+		if (theme === 'dark') {
+			document.documentElement.classList.add('dark');
+		}
+	})();
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

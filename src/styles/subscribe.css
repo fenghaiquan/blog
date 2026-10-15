@@ -32,7 +32,7 @@
 }
 .sub-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgb(0 0 0 / 0.1);
+  box-shadow: var(--shadow-md);
   border-color: var(--color-primary);
 }
 
@@ -86,7 +86,7 @@
   align-items: center;
   gap: 8px;
   background: var(--color-primary);
-  color: white;
+  color: var(--color-bg);
   font-size: 14px;
   font-weight: 500;
   padding: 12px 28px;
@@ -157,7 +157,7 @@
   transition: all 200ms ease-out;
 }
 .btn-outline:hover {
-  background: rgba(146, 64, 14, 0.04);
+  background: color-mix(in srgb, var(--color-primary) 4%, transparent);
 }
 .btn-outline:focus-visible {
   outline: none;
@@ -227,7 +227,7 @@
   left: 50%;
   transform: translateX(-50%) translateY(20px);
   background: var(--color-fg);
-  color: white;
+  color: var(--color-bg);
   font-size: 13px;
   font-weight: 500;
   padding: 10px 20px;

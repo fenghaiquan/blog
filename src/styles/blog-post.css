@@ -166,14 +166,14 @@ article {
   border-left: 3px solid var(--color-accent);
   padding: 0.75rem 1.25rem;
   margin: 1.5rem 0;
-  background: rgba(146, 64, 14, 0.04);
+  background: color-mix(in srgb, var(--color-accent) 4%, transparent);
   color: var(--color-fg-2);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 .prose code {
   font-family: var(--font-mono);
   font-size: 0.875em;
-  background: rgba(0,0,0,0.05);
+  background: color-mix(in srgb, var(--color-fg) 5%, transparent);
   padding: 0.125rem 0.375rem;
   border-radius: 4px;
 }
@@ -204,7 +204,7 @@ article {
   overflow: hidden;
 }
 .prose th {
-  background: rgba(146,64,14,0.05);
+  background: color-mix(in srgb, var(--color-accent) 5%, transparent);
   font-weight: 600;
   text-align: left;
   padding: 0.875rem 1.125rem;
@@ -219,10 +219,10 @@ article {
   border-bottom: 1px solid var(--color-border-soft);
 }
 .prose tbody tr:nth-child(even) td {
-  background: rgba(0,0,0,0.015);
+  background: color-mix(in srgb, var(--color-fg) 1.5%, transparent);
 }
 .prose tbody tr:hover td {
-  background: rgba(146,64,14,0.03);
+  background: color-mix(in srgb, var(--color-accent) 3%, transparent);
 }
 .prose tbody tr:last-child td {
   border-bottom: none;
@@ -254,7 +254,7 @@ article {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background: var(--callout-icon-bg, rgba(146,64,14,0.1));
+  background: color-mix(in srgb, var(--callout-color, var(--color-accent)) 10%, transparent);
   color: var(--callout-color, var(--color-accent));
 }
 .callout-icon svg {
@@ -266,34 +266,27 @@ article {
 .callout[data-callout="note"],
 .callout[data-callout="info"] {
   --callout-color: #2563EB;
-  --callout-icon-bg: rgba(37,99,235,0.1);
 }
 .callout[data-callout="tip"],
 .callout[data-callout="success"] {
   --callout-color: #16A34A;
-  --callout-icon-bg: rgba(22,163,74,0.1);
 }
 .callout[data-callout="warning"],
 .callout[data-callout="question"] {
   --callout-color: #D97706;
-  --callout-icon-bg: rgba(217,119,6,0.1);
 }
 .callout[data-callout="bug"],
 .callout[data-callout="fail"] {
   --callout-color: #DC2626;
-  --callout-icon-bg: rgba(220,38,38,0.1);
 }
 .callout[data-callout="example"] {
   --callout-color: #7C3AED;
-  --callout-icon-bg: rgba(124,58,237,0.1);
 }
 .callout[data-callout="quote"] {
   --callout-color: #6B7280;
-  --callout-icon-bg: rgba(107,114,128,0.1);
 }
 .callout[data-callout="abstract"] {
   --callout-color: #92400E;
-  --callout-icon-bg: rgba(146,64,14,0.1);
 }
 .callout[data-callout="quote"] {
   font-style: italic;
@@ -353,7 +346,7 @@ article {
   padding: 0.2rem 0.5rem;
   border-radius: 999px;
   letter-spacing: 0.02em;
-  background: rgba(146,64,14,0.08);
+  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
   color: var(--color-accent);
 }
 .quadrant-card-body {
@@ -625,4 +618,64 @@ article {
   .prose a[href^="#"]::after {
     content: none;
   }
+}
+
+/* Dark mode prose overrides for @tailwindcss/typography */
+.dark .prose {
+  --tw-prose-body: var(--color-fg-2);
+  --tw-prose-headings: var(--color-fg);
+  --tw-prose-lead: var(--color-fg-3);
+  --tw-prose-links: var(--color-accent);
+  --tw-prose-bold: var(--color-fg);
+  --tw-prose-counters: var(--color-fg-3);
+  --tw-prose-bullets: var(--color-fg-3);
+  --tw-prose-hr: var(--color-border);
+  --tw-prose-quotes: var(--color-fg-2);
+  --tw-prose-quote-borders: var(--color-accent);
+  --tw-prose-captions: var(--color-fg-3);
+  --tw-prose-code: var(--color-fg);
+  --tw-prose-pre-code: var(--color-fg-2);
+  --tw-prose-pre-bg: var(--color-surface);
+  --tw-prose-th-borders: var(--color-border);
+  --tw-prose-td-borders: var(--color-border-soft);
+  color: var(--color-fg-2);
+}
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3,
+.dark .prose h4 {
+  color: var(--color-fg);
+}
+.dark .prose strong {
+  color: var(--color-fg);
+}
+.dark .prose a {
+  color: var(--color-accent);
+}
+.dark .prose a:hover {
+  color: var(--color-accent-light);
+}
+.dark .prose blockquote {
+  color: var(--color-fg-2);
+}
+.dark .prose code {
+  color: var(--color-fg);
+  background: color-mix(in srgb, var(--color-fg) 8%, transparent);
+}
+.dark .prose pre {
+  background: var(--color-surface);
+  color: var(--color-fg-2);
+}
+.dark .prose pre code {
+  background: transparent;
+  color: inherit;
+}
+.dark .prose table {
+  border-color: var(--color-border);
+}
+.dark .prose th {
+  color: var(--color-fg);
+}
+.dark .prose td {
+  color: var(--color-fg-2);
 }

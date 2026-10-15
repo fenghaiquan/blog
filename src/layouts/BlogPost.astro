@@ -199,10 +199,23 @@ const jsonLd = [
 			script.type = 'module';
 			script.textContent = `
 				import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-				mermaid.initialize({
-				startOnLoad: false,
-				theme: 'base',
-				themeVariables: {
+				const isDark = document.documentElement.classList.contains('dark');
+				const themeVars = isDark ? {
+					primaryColor: '#292524',
+					primaryTextColor: '#FAF8F5',
+					primaryBorderColor: '#D97706',
+					lineColor: '#D97706',
+					secondaryColor: '#1C1917',
+					tertiaryColor: '#44403C',
+					background: '#1C1917',
+					mainBkg: '#292524',
+					actorBkg: '#292524',
+					actorBorder: '#D97706',
+					actorTextColor: '#FAF8F5',
+					noteBkgColor: '#292524',
+					noteBorderColor: '#44403C',
+					arrowheadColor: '#D97706',
+				} : {
 					primaryColor: '#FAF8F5',
 					primaryTextColor: '#1C1917',
 					primaryBorderColor: '#92400E',
@@ -217,13 +230,18 @@ const jsonLd = [
 					noteBkgColor: '#FAF8F5',
 					noteBorderColor: '#E7E5E4',
 					arrowheadColor: '#92400E',
-				}
+				};
+				mermaid.initialize({
+					startOnLoad: false,
+					theme: 'base',
+					themeVariables: themeVars
 				});
 				await mermaid.run();
+				const bgColor = isDark ? '#1C1917' : '#FAF8F5';
 				document.querySelectorAll('.mermaid svg').forEach(svg => {
-					svg.style.background = '#FAF8F5';
+					svg.style.background = bgColor;
 					const bgRect = svg.querySelector('rect');
-					if (bgRect) bgRect.setAttribute('fill', '#FAF8F5');
+					if (bgRect) bgRect.setAttribute('fill', bgColor);
 				});
 			`;
 			document.body.appendChild(script);
