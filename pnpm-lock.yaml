@@ -54,6 +54,9 @@ importers:
         specifier: ^4.3.2
         version: 4.3.2
     devDependencies:
+      marked:
+        specifier: ^18.1.1
+        version: 18.1.1
       playwright:
         specifier: ^1.61.1
         version: 1.61.1
@@ -1518,6 +1521,11 @@ packages:
 
   markdown-table@3.0.4:
     resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
+
+  marked@18.1.1:
+    resolution: {integrity: sha512-zEGgrtUG8crk+TrMacJSVABU4DYDDkS8uqgU3ohrn/2fW9C2AEfUrO3m6IhpIpQpl7YcVpiXXC9cSMWDANT3dg==}
+    engines: {node: '>= 20'}
+    hasBin: true
 
   mdast-util-definitions@6.0.0:
     resolution: {integrity: sha512-scTllyX6pnYNZH/AIp/0ePz6s4cZtARxImwoPJ7kS42n+MnVsI4XbnG6d4ibehRIldYMWM2LD7ImQblVhUejVQ==}
@@ -3635,6 +3643,8 @@ snapshots:
   markdown-extensions@2.0.0: {}
 
   markdown-table@3.0.4: {}
+
+  marked@18.1.1: {}
 
   mdast-util-definitions@6.0.0:
     dependencies:
