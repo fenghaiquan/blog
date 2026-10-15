@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "marked": "^18.1.1",
+    "pdf-parse": "^2.4.5",
     "playwright": "^1.61.1"
   }
 }

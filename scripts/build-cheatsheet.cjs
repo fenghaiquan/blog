@@ -57,14 +57,32 @@ const STATUS_MAP = {
 // ---------- 工具函数 ----------
 const read = (p) => fs.readFileSync(p, 'utf8');
 
-/** 从模式文件的 frontmatter 提取 status（只读前 25 行，避免读大文件） */
-function patternStatus(patternFile) {
+/** slug → 人类可读英文名：context-minimization-pattern → Context Minimization Pattern */
+const SMALL_WORDS = new Set(['as', 'of', 'over', 'the', 'with', 'to', 'and', 'in', 'on', 'a', 'an', 'for', 'via', 'or', 'vs']);
+function humanizeSlug(slug) {
+  return slug
+    .replace(/\.md$/, '')
+    .split('-')
+    .map((w, i) => (i > 0 && SMALL_WORDS.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)))
+    .join(' ');
+}
+
+/** 从模式文件的 frontmatter 提取 status + 英文名（只读前 25 行，避免读大文件） */
+function patternMeta(patternFile, slug) {
   try {
     const head = read(patternFile).split('\n').slice(0, 25).join('\n');
-    const m = head.match(/^\s*status:\s*"?([a-z-]+)"?/m);
-    return m ? m[1] : null;
+    const sm = head.match(/^\s*status:\s*"?([a-z-]+)"?/m);
+    const tm = head.match(/^\s*title:\s*"?([^"\n]+)"?/m);
+    let en = null;
+    if (tm) {
+      const t = tm[1].trim();
+      const em = t.match(/[（(]([A-Za-z0-9][^）)]{2,})[）)]\s*$/);
+      // 中文（English）→ 取括号内英文；纯英文标题 → 整个 title；纯中文 → slug 人性化兜底
+      en = em ? em[1].trim() : /[\u4e00-\u9fff]/.test(t) ? (slug ? humanizeSlug(slug) : null) : t;
+    }
+    return { status: sm ? sm[1] : null, en };
   } catch {
-    return null;
+    return { status: null, en: null };
   }
 }
 
@@ -127,18 +145,23 @@ function parseRef(ref) {
 function main() {
   fs.mkdirSync(path.join(OUT, 'chapters'), { recursive: true });
 
-  const stats = { themes: [], statusCount: {}, total: 0, unlabeled: 0 };
+  const stats = { themes: [], statusCount: {}, total: 0, unlabeled: 0, withEn: 0 };
+
+  const enCell = (p) => {
+    if (p.en) { stats.withEn++; return `**${p.name}**（${p.en}）`; }
+    return `**${p.name}**`;
+  };
 
   for (const theme of THEMES) {
     const { patterns, cross } = parseIndex(theme.dir);
     const withStatus = patterns.map((p) => ({
       ...p,
-      status: patternStatus(path.join(SRC, theme.dir, 'patterns', p.slug)),
+      ...patternMeta(path.join(SRC, theme.dir, 'patterns', p.slug), p.slug),
     }));
 
     const crossResolved = cross.map((c) => ({
       ...c,
-      status: patternStatus(path.join(SRC, c.dir, 'patterns', c.slug)),
+      ...patternMeta(path.join(SRC, c.dir, 'patterns', c.slug), c.slug),
       ch: dirToChapter[c.dir],
     }));
 
@@ -151,7 +174,7 @@ function main() {
       '',
       `| 模式 | 一句话说明 | 证据等级 |`,
       `| --- | --- | --- |`,
-      ...withStatus.map((p) => `| **${p.name}** | ${p.desc} | ${statusMark(p.status)} |`),
+      ...withStatus.map((p) => `| ${enCell(p)} | ${p.desc} | ${statusMark(p.status)} |`),
     ];
 
     if (crossResolved.length) {
@@ -162,7 +185,7 @@ function main() {
         `| 模式 | 一句话说明 | 证据等级 |`,
         `| --- | --- | --- |`,
         ...crossResolved.map(
-          (c) => `| **${c.name}**（第 ${c.ch} 章） | ${c.note || '—'} | ${statusMark(c.status)} |`
+          (c) => `| ${c.en ? `**${c.name}**（${c.en} · 第 ${c.ch} 章）` : `**${c.name}**（第 ${c.ch} 章）`} | ${c.note || '—'} | ${statusMark(c.status)} |`
         )
       );
     }
@@ -219,7 +242,7 @@ function main() {
 
   // 汇总输出
   console.log(`✅ 提取完成 → ${OUT}`);
-  console.log(`   模式总数：${stats.total}（未标注 status：${stats.unlabeled}）`);
+  console.log(`   模式总数：${stats.total}（未标注 status：${stats.unlabeled}，含英文对照：${stats.withEn}）`);
   console.log('   证据等级分布：');
   for (const [s, n] of Object.entries(stats.statusCount).sort((a, b) => b[1] - a[1])) {
     console.log(`     ${s.padEnd(26)} ${n}`);
