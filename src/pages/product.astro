@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SUPPORT_EMAIL, CREEM_CHECKOUT_URL, PRODUCT_PRICE } from '../consts';
+import '../styles/product.css';
+---
+
+<BaseLayout
+	title="付费内容 - 冯海泉"
+	description="AI 工程实战文章合集 PDF，一次性购买，即时交付。"
+	ogImage="/og/default.png"
+>
+	<section class="page-header">
+		<div class="container">
+			<p class="page-header-eyebrow">Product</p>
+			<h1 class="page-header-title">AI 工程踩坑实录</h1>
+			<p class="page-header-desc">代码验证过的 AI 落地经验、成本账本与工程真相 —— 精选合集 PDF 版</p>
+		</div>
+	</section>
+
+	<section class="product-section">
+		<div class="container">
+			<div class="product-grid">
+				<div class="product-info">
+					<h2 class="product-heading">包含内容</h2>
+					<ul class="product-list">
+						<li>精选文章合集（无广告、适合打印与批注的排版）</li>
+						<li>文章中出现的完整代码清单与配置文件</li>
+						<li>真实成本账本：Token 消耗、API 开销与优化前后对比</li>
+						<li>后续小版本更新免费获取</li>
+					</ul>
+					<h2 class="product-heading">交付方式</h2>
+					<p class="product-text">通过 Creem 安全结账付款后，即可在成功页获取下载链接，同时发送至你的邮箱。</p>
+				</div>
+
+				<aside class="product-card" aria-label="购买">
+					<p class="product-card-label">一次性购买</p>
+					<p class="product-price">{PRODUCT_PRICE}<span class="product-price-unit"> USD · 一次性</span></p>
+					<ul class="product-card-perks">
+						<li>即时交付 · 无订阅 · 无自动续费</li>
+						<li>14 天缺陷退款保障</li>
+					</ul>
+					{CREEM_CHECKOUT_URL ? (
+						<a href={CREEM_CHECKOUT_URL} class="product-buy" rel="noopener">立即购买（Creem 安全结账）</a>
+					) : (
+						<span class="product-buy product-buy--disabled">购买通道即将开放</span>
+					)}
+					<p class="product-card-note">
+						遇到问题？联系
+						<a href={`mailto:${SUPPORT_EMAIL}`} class="product-link">{SUPPORT_EMAIL}</a>，
+						3 个工作日内必复。详见
+						<a href="/terms" class="product-link">服务条款</a>
+						与
+						<a href="/privacy" class="product-link">隐私政策</a>。
+					</p>
+				</aside>
+			</div>
+		</div>
+	</section>
+</BaseLayout>

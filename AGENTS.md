@@ -33,8 +33,8 @@ src/
 
 ### 3.1 环境管理（ADR-001）
 使用 middleware + `Astro.locals.featureFlags` 控制页面可见性：
-- 开发环境：所有页面可见
-- 生产环境：仅 `/blog` 可见，其他页面 redirect 到 `/blog`
+- 当前配置：所有页面在生产环境均可见（为通过 Creem 收款账户审查已全量开放，机制见 ADR-001）
+- 如需重新限制某页面，在 `src/middleware.ts` 中将对应 flag 设为 `false` 即可
 
 实现：`src/middleware.ts` 注入 flags → `BaseLayout.astro` 读取 `redirectKey` prop 并插入 redirect 脚本。
 

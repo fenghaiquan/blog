@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SUPPORT_EMAIL } from '../consts';
+import '../styles/legal.css';
+---
+
+<BaseLayout
+	title="隐私政策 - 冯海泉"
+	description="本站数据收集、使用与保护说明。"
+	ogImage="/og/default.png"
+>
+	<section class="page-header">
+		<div class="container">
+			<p class="page-header-eyebrow">Legal</p>
+			<h1 class="page-header-title">隐私政策</h1>
+			<p class="page-header-desc">最后更新：2026-10-15</p>
+		</div>
+	</section>
+
+	<section class="legal-section">
+		<div class="container legal-container">
+			<h2>我们收集的信息</h2>
+			<ul>
+				<li><strong>订阅邮箱</strong>：订阅 Newsletter 时提供的邮箱地址（由 beehiiv 托管，可随时一键退订）。</li>
+				<li><strong>支付信息</strong>：购买付费产品时，支付由 Creem 作为记录商户（MoR）处理。本站不接收、不存储任何银行卡号或支付凭据。</li>
+				<li><strong>访问日志</strong>：站点托管方（Vercel）记录的基本访问日志（如 IP、User-Agent），仅用于安全与运维。</li>
+			</ul>
+
+			<h2>信息的用途</h2>
+			<ul>
+				<li>向你订阅的 Newsletter 投递内容；</li>
+				<li>完成付费订单的交付与客户支持；</li>
+				<li>防范滥用与保障站点安全。</li>
+			</ul>
+
+			<h2>第三方服务</h2>
+			<ul>
+				<li><strong>Creem</strong>：支付处理、税务合规与订单记录（详见 Creem 官方隐私政策）；</li>
+				<li><strong>beehiiv</strong>：邮件订阅服务；</li>
+				<li><strong>Vercel</strong>：站点托管。</li>
+			</ul>
+
+			<h2>Cookie</h2>
+			<p>本站不使用广告或跨站追踪 Cookie，仅使用浏览器本地存储（localStorage）保存主题偏好（暗色模式）。</p>
+
+			<h2>你的权利</h2>
+			<p>你可以随时查询、更正或要求删除你的个人数据。联系 <a href={`mailto:${SUPPORT_EMAIL}`} class="legal-link">{SUPPORT_EMAIL}</a>，我们将在 3 个工作日内响应。</p>
+		</div>
+	</section>
+</BaseLayout>

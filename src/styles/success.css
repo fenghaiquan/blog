@@ -1,0 +1,69 @@
+/* 支付成功页（Creem checkout success_url 落点，Test / Live 共用） */
+
+.success-section {
+	padding: 0 0 96px;
+}
+
+.success-card {
+	max-width: 560px;
+	margin: 0 auto;
+	padding: 40px 32px;
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-lg);
+	background: var(--color-surface, var(--color-bg));
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 12px;
+}
+
+.success-check {
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 28px;
+	color: #166534;
+	background: #dcfce7;
+	margin-bottom: 4px;
+}
+
+.success-title {
+	font-size: 22px;
+	font-weight: 700;
+	color: var(--color-fg);
+}
+
+.success-desc {
+	font-size: 15px;
+	line-height: 1.7;
+	color: var(--color-muted);
+}
+
+.success-note {
+	font-size: 14px;
+	color: var(--color-muted);
+}
+
+.success-link {
+	color: var(--color-muted);
+	text-decoration: underline dotted;
+	text-underline-offset: 3px;
+}
+
+.success-link:hover {
+	color: var(--color-fg);
+}
+
+.success-back {
+	margin-top: 12px;
+	font-size: 14px;
+	color: var(--color-primary);
+}
+
+.success-back:hover {
+	color: var(--color-primary-hover);
+}

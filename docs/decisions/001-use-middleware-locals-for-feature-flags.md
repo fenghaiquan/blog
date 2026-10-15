@@ -42,3 +42,7 @@
 - `src/env.d.ts`
 - `src/layouts/BaseLayout.astro`
 - `src/components/Header.astro`
+
+## 更新记录
+- 初版：开发环境全量可见，生产环境仅 `/blog` 可见，其余页面 redirect。
+- 更新：为通过 Creem 收款账户审查（要求产品页、定价、法律页在生产环境可见），所有 flag 已在生产开放。机制（middleware + locals）不变，仅 flag 取值调整；如需重新收紧，修改 `src/middleware.ts` 中对应 flag 即可。

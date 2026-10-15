@@ -1,0 +1,643 @@
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.creem.io/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Quickstart
+
+> Start accepting payments in minutes with Creem.
+
+export const Copy = ({children, text}) => {
+  const [copied, setCopied] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const handleCopy = event => {
+    const content = event.currentTarget.querySelector("[data-copy-content]");
+    const value = (text ?? (content ? content.textContent : "")).trim();
+    if (!value) return;
+    navigator.clipboard.writeText(value);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+  return <button type="button" onClick={handleCopy} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} title="Copy to clipboard" aria-label={text ? `Copy ${text}` : "Copy to clipboard"} style={{
+    cursor: "pointer",
+    whiteSpace: "nowrap",
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "0.4em",
+    verticalAlign: "middle"
+  }}>
+      <span data-copy-content>{children}</span>
+      <span aria-hidden="true" style={{
+    display: "inline-flex",
+    opacity: copied ? 1 : hovered ? 0.9 : 0.45,
+    transition: "opacity 120ms ease-in-out"
+  }}>
+        {copied ? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20 6 9 17l-5-5" />
+          </svg> : <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+            <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+          </svg>}
+      </span>
+    </button>;
+};
+
+Choose the path that works best for you:
+
+<CardGroup cols={2}>
+  <Card title="Code Integration" icon="code" href="#code-integration">
+    Integrate Creem into your application with our SDKs and APIs
+  </Card>
+
+  <Card title="No-Code Solution" icon="link" href="#no-code-solution">
+    Create a payment link and start selling without writing code
+  </Card>
+</CardGroup>
+
+***
+
+## Code Integration
+
+Integrate Creem directly into your application. It's as easy as the following:
+
+### 1. Get access & your API key
+
+Sign up at [creem.io](https://creem.io) to get started. Once your account is created, navigate to the [Developers section](https://creem.io/dashboard/developers) in your dashboard and copy your API key.
+
+<Tip>Use [Test Mode](/getting-started/test-mode) to develop without processing real payments.</Tip>
+
+### 2. Install and create a checkout
+
+<Tabs>
+  <Tab title="Next.js">
+    Install the Next.js adapter for the fastest integration with built-in routes and components.
+
+    <CodeGroup>
+      ```bash npm theme={null}
+      npm install @creem_io/nextjs
+      ```
+
+      ```bash yarn theme={null}
+      yarn add @creem_io/nextjs
+      ```
+
+      ```bash pnpm theme={null}
+      pnpm install @creem_io/nextjs
+      ```
+
+      ```bash bun theme={null}
+      bun install @creem_io/nextjs
+      ```
+    </CodeGroup>
+
+    Add your API Key as environment variable:
+
+    ```bash theme={null}
+    # .env
+    CREEM_API_KEY=your_api_key_here
+    ```
+
+    Create a checkout API route:
+
+    ```ts theme={null}
+    // app/api/checkout/route.ts
+    import { Checkout } from "@creem_io/nextjs";
+
+    export const GET = Checkout({
+      apiKey: process.env.CREEM_API_KEY!,
+      testMode: true,
+      defaultSuccessUrl: "/success",
+    });
+    ```
+
+    Add a checkout button to your page:
+
+    ```tsx theme={null}
+    // app/page.tsx
+    import { CreemCheckout } from "@creem_io/nextjs";
+
+    export default function Page() {
+      return (
+        <CreemCheckout productId="prod_YOUR_PRODUCT_ID">
+          <button>Subscribe Now</button>
+        </CreemCheckout>
+      );
+    }
+    ```
+
+    <Card title="Next.js Adapter Docs" icon="react" href="/code/sdks/nextjs">
+      Learn about advanced features, webhooks, and server components.
+    </Card>
+  </Tab>
+
+  <Tab title="TypeScript SDK">
+    Install the TypeScript SDK for full type-safety and flexibility.
+
+    <CodeGroup>
+      ```bash npm theme={null}
+      npm install creem
+      ```
+
+      ```bash yarn theme={null}
+      yarn add creem
+      ```
+
+      ```bash pnpm theme={null}
+      pnpm install creem
+      ```
+
+      ```bash bun theme={null}
+      bun install creem
+      ```
+    </CodeGroup>
+
+    Add your API Key as environment variable:
+
+    ```bash theme={null}
+    # .env
+    CREEM_API_KEY=your_api_key_here
+    ```
+
+    <Tip>
+      See the [API Keys](/getting-started/dashboard-overview#finding-your-api-keys) page for more
+      information.
+    </Tip>
+
+    Create a checkout session:
+
+    ```ts theme={null}
+    import { Creem } from "creem";
+
+    const creem = new Creem({
+      apiKey: process.env.CREEM_API_KEY!,
+      server: "test",
+    });
+
+    const checkout = await creem.checkouts.create({
+      productId: "prod_abc123",
+      successUrl: "https://yoursite.com/success",
+    });
+
+    // Redirect to checkout.checkoutUrl
+    console.log(checkout.checkoutUrl);
+    ```
+
+    <Card title="TypeScript SDK Docs" icon="code" href="/code/sdks/typescript">
+      Explore the full SDK API reference and advanced usage.
+    </Card>
+  </Tab>
+
+  <Tab title="Better Auth">
+    Integrate Creem with Better Auth for seamless authentication and billing.
+
+    ```bash theme={null}
+    npm install @creem_io/better-auth better-auth
+    ```
+
+    Add your API Key as environment variable:
+
+    ```bash theme={null}
+    # .env
+    CREEM_API_KEY=your_api_key_here
+    ```
+
+    <Tip>
+      See the [API Keys](/getting-started/dashboard-overview#finding-your-api-keys) page for more
+      information.
+    </Tip>
+
+    Configure Better Auth with the Creem plugin:
+
+    ```ts theme={null}
+    // auth.ts
+    import { betterAuth } from "better-auth";
+    import { creem } from "@creem_io/better-auth";
+
+    export const auth = betterAuth({
+      database: {
+        // your database config
+      },
+      plugins: [
+        creem({
+          apiKey: process.env.CREEM_API_KEY!,
+          testMode: true,
+        }),
+      ],
+    });
+    ```
+
+    Client configuration:
+
+    ```ts theme={null}
+    // lib/auth-client.ts
+    import { createAuthClient } from "better-auth/react";
+    import { creemClient } from "@creem_io/better-auth/client";
+
+    export const authClient = createAuthClient({
+      baseURL: process.env.NEXT_PUBLIC_APP_URL,
+      plugins: [creemClient()],
+    });
+    ```
+
+    Creating a checkout:
+
+    ```ts theme={null}
+    import { authClient } from "@/lib/auth-client";
+
+    // Client-side integration
+    const { data, error } = await authClient.creem.createCheckout({
+      productId,
+      successUrl: "/success",
+    });
+    ```
+
+    <Card title="Better Auth Integration" icon="lock" href="/code/sdks/better-auth">
+      Learn how to sync with your database users, manage access, and handle webhooks.
+    </Card>
+  </Tab>
+
+  <Tab title="Convex">
+    Building on [Convex](https://convex.dev)? The Creem Convex component syncs billing state into your Convex database and ships React and Svelte widgets.
+
+    ```bash theme={null}
+    npm install @creem_io/convex convex creem
+    ```
+
+    Register the component and set your secrets:
+
+    ```ts theme={null}
+    // convex/convex.config.ts
+    import { defineApp } from "convex/server";
+    import creem from "@creem_io/convex/convex.config";
+
+    const app = defineApp();
+    app.use(creem);
+
+    export default app;
+    ```
+
+    ```bash theme={null}
+    npx convex env set CREEM_API_KEY your_api_key_here
+    npx convex env set CREEM_WEBHOOK_SECRET your_webhook_secret_here
+    npx convex env set CREEM_SERVER test
+    ```
+
+    Export the billing API and register the webhook route:
+
+    ```ts theme={null}
+    // convex/billing.ts
+    import { Creem, type ApiResolver } from "@creem_io/convex";
+    import { api, components } from "./_generated/api";
+
+    export const creem = new Creem(components.creem);
+
+    const resolve: ApiResolver = async (ctx) => {
+      const user = await ctx.runQuery(api.users.currentUser);
+      return { userId: user._id, email: user.email, entityId: user._id };
+    };
+
+    const { uiModel, checkouts } = creem.api({ resolve });
+    export { uiModel };
+    export const checkoutsCreate = checkouts.create;
+    ```
+
+    ```ts theme={null}
+    // convex/http.ts
+    import { httpRouter } from "convex/server";
+    import { creem } from "./billing";
+
+    const http = httpRouter();
+    creem.registerRoutes(http);
+    export default http;
+    ```
+
+    Then render a pricing page with the pre-built widgets — checkout, plan switching, and cancellation included.
+
+    <Card title="Convex Component Docs" icon="database" href="/code/sdks/convex/quickstart">
+      Full quickstart, subscriptions, credits, entitlements, and React/Svelte widgets.
+    </Card>
+  </Tab>
+
+  <Tab title="REST API">
+    Use our REST API directly from any language or framework.
+
+    <Warning>
+      If you're in test mode, use `https://test-api.creem.io` instead of `https://api.creem.io`. Learn
+      more about [Test Mode](/getting-started/test-mode).
+    </Warning>
+
+    ```bash theme={null}
+    curl -X POST https://api.creem.io/v1/checkouts \
+      -H "x-api-key: YOUR_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "product_id": "prod_YOUR_PRODUCT_ID",
+        "success_url": "https://yoursite.com/success"
+      }'
+    ```
+
+    Response:
+
+    ```json theme={null}
+    {
+      "id": "ch_1QyIQDw9cbFWdA1ry5Qc6I",
+      "checkout_url": "https://checkout.creem.io/ch_1QyIQDw9cbFWdA1ry5Qc6I",
+      "product_id": "prod_YOUR_PRODUCT_ID",
+      "status": "pending"
+    }
+    ```
+
+    Redirect your user to the `checkout_url` to complete payment.
+
+    <Card title="API Reference" icon="book" href="/api-reference/introduction">
+      View the complete API documentation and endpoint reference.
+    </Card>
+  </Tab>
+</Tabs>
+
+### 3. Handle successful payments
+
+After payment, users are redirected to your `success_url` with payment details:
+
+```
+https://yoursite.com/success?checkout_id=ch_xxx&order_id=ord_xxx&customer_id=cust_xxx&product_id=prod_xxx
+```
+
+<Tip>
+  For production apps, use [Webhooks](/code/webhooks) to reliably receive payment events on your
+  server.
+</Tip>
+
+***
+
+## Complete Working Example
+
+Here's a full Next.js App Router example you can copy and run. This includes everything: checkout creation, success page, and webhook handling.
+
+### Project Structure
+
+```
+your-app/
+├── app/
+│   ├── api/
+│   │   ├── checkout/
+│   │   │   └── route.ts      # Creates checkout sessions
+│   │   └── webhooks/
+│   │       └── creem/
+│   │           └── route.ts  # Handles payment webhooks
+│   ├── success/
+│   │   └── page.tsx          # Success page after payment
+│   └── page.tsx              # Main page with buy button
+├── lib/
+│   └── creem.ts              # Creem client setup
+└── .env.local
+```
+
+### 1. Environment Variables
+
+```bash theme={null}
+# .env.local
+CREEM_API_KEY=creem_test_your_api_key
+CREEM_WEBHOOK_SECRET=whsec_your_webhook_secret
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+### 2. Creem Client Setup
+
+```typescript theme={null}
+// lib/creem.ts
+import { Creem } from "creem";
+
+export const creem = new Creem({
+  apiKey: process.env.CREEM_API_KEY!,
+  server: "test",
+});
+```
+
+### 3. Checkout API Route
+
+```typescript theme={null}
+// app/api/checkout/route.ts
+import { NextRequest, NextResponse } from "next/server";
+import { creem } from "@/lib/creem";
+
+export async function POST(request: NextRequest) {
+  try {
+    const { productId } = await request.json();
+
+    const checkout = await creem.checkouts.create({
+      productId,
+      successUrl: `${process.env.NEXT_PUBLIC_APP_URL}/success`,
+    });
+
+    return NextResponse.json({
+      checkoutUrl: checkout.checkoutUrl,
+    });
+  } catch (error) {
+    console.error("Checkout error:", error);
+    return NextResponse.json({ error: "Failed to create checkout" }, { status: 500 });
+  }
+}
+```
+
+### 4. Webhook Handler
+
+```typescript theme={null}
+// app/api/webhooks/creem/route.ts
+import { NextRequest, NextResponse } from "next/server";
+import { constructWebhookEventEntity } from "creem/webhooks";
+
+export async function POST(request: NextRequest) {
+  const body = await request.text();
+  const event = await constructWebhookEventEntity(body, request.headers, {
+    secret: process.env.CREEM_WEBHOOK_SECRET!,
+  }).catch(() => null);
+
+  if (!event) {
+    return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
+  }
+
+  // Handle different event types
+  switch (event.eventType) {
+    case "checkout.completed":
+      console.log("Payment successful!", {
+        checkoutId: event.object.id,
+        customer: event.object.customer,
+        product: event.object.product,
+      });
+      // Grant access, send email, update database, etc.
+      break;
+
+    case "subscription.active":
+      console.log("Subscription active:", event.object);
+      break;
+
+    case "subscription.canceled":
+      console.log("Subscription canceled:", event.object);
+      // Revoke access
+      break;
+  }
+
+  return NextResponse.json({ received: true });
+}
+```
+
+### 5. Buy Button Component
+
+```tsx theme={null}
+// app/page.tsx
+"use client";
+
+import { useState } from "react";
+
+export default function Home() {
+  const [loading, setLoading] = useState(false);
+
+  const handleCheckout = async () => {
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productId: "prod_YOUR_PRODUCT_ID", // Replace with your product ID
+        }),
+      });
+
+      const { checkoutUrl } = await response.json();
+
+      // Redirect to Creem checkout
+      window.location.href = checkoutUrl;
+    } catch (error) {
+      console.error("Checkout failed:", error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+      <h1 className="text-4xl font-bold mb-8">My Awesome Product</h1>
+      <button
+        onClick={handleCheckout}
+        disabled={loading}
+        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg disabled:opacity-50"
+      >
+        {loading ? "Loading..." : "Buy Now - $29"}
+      </button>
+    </main>
+  );
+}
+```
+
+### 6. Success Page
+
+```tsx theme={null}
+// app/success/page.tsx
+import { Suspense } from "react";
+
+function SuccessContent({ searchParams }: { searchParams: { checkout_id?: string } }) {
+  return (
+    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-green-600 mb-4">🎉 Payment Successful!</h1>
+        <p className="text-lg text-gray-600 mb-8">
+          Thank you for your purchase. You should receive a confirmation email shortly.
+        </p>
+        {searchParams.checkout_id && (
+          <p className="text-sm text-gray-400">Order ID: {searchParams.checkout_id}</p>
+        )}
+        <a
+          href="/"
+          className="inline-block mt-8 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Back to Home
+        </a>
+      </div>
+    </main>
+  );
+}
+
+export default function SuccessPage({ searchParams }: { searchParams: { checkout_id?: string } }) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SuccessContent searchParams={searchParams} />
+    </Suspense>
+  );
+}
+```
+
+### Running the Example
+
+1. Install dependencies:
+
+```bash theme={null}
+npm install creem
+```
+
+2. Create a product in the [Creem dashboard](https://creem.io/dashboard/products)
+
+3. Copy the product ID (starts with `prod_`) and update `app/page.tsx`
+
+4. Get your webhook secret from the dashboard and add to `.env.local`
+
+5. Run the development server:
+
+```bash theme={null}
+npm run dev
+```
+
+6. Visit `http://localhost:3000` and click "Buy Now"
+
+<Note>
+  In test mode, use test card number <Copy>`4111 1111 1111 1111`</Copy> with any future expiry date
+  and any CVC.
+</Note>
+
+***
+
+## No-Code Solution
+
+Perfect for creators, vibe coders, and anyone who wants to start selling quickly without code.
+
+### 1. Create a product
+
+Go to the [products tab](https://creem.io/dashboard/products) in your dashboard and create your first product with a name, description, and price.
+
+### 2. Share your payment link
+
+Click the **Share** button on your product to get your payment link. Send it to customers via email, social media, or anywhere else.
+
+<img style={{ borderRadius: "0.5rem" }} src="https://nucn5fajkcc6sgrd.public.blob.vercel-storage.com/product-share-vrV42jh8mnhvpUs1AeSyLtuJLZmBJo.png" />
+
+That's it! You're ready to accept payments.
+
+<Card title="Learn More About Payment Links" icon="book" href="/features/checkout/checkout-link">
+  Explore advanced customization options, custom fields, and more.
+</Card>
+
+***
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Test Mode" icon="flask" href="/getting-started/test-mode">
+    Learn how to test your integration without real payments
+  </Card>
+
+  <Card title="Checkout" icon="shopping-cart" href="/features/checkout/checkout-link">
+    Create payment links and accept payments without code.
+  </Card>
+
+  <Card title="Subscriptions" icon="repeat" href="/features/subscriptions/introduction">
+    Set up recurring billing and subscription management
+  </Card>
+
+  <Card title="Webhooks" icon="webhook" href="/code/webhooks">
+    Set up webhooks to receive real-time payment notifications
+  </Card>
+</CardGroup>
+
+
+This documentation is built and hosted on [Mintlify](https://mintlify.com), a developer documentation platform.

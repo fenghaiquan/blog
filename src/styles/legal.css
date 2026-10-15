@@ -1,0 +1,51 @@
+/* 法律页面（隐私政策 / 服务条款）通用排版 */
+
+.legal-section {
+	padding: 0 0 96px;
+}
+
+.legal-container {
+	max-width: 720px;
+}
+
+.legal-container h2 {
+	font-family: var(--font-serif);
+	font-size: 20px;
+	font-weight: 700;
+	color: var(--color-fg);
+	margin: 32px 0 12px;
+}
+
+.legal-container h2:first-child {
+	margin-top: 0;
+}
+
+.legal-container p,
+.legal-container li {
+	font-size: 15px;
+	line-height: 1.8;
+	color: var(--color-fg-2);
+}
+
+.legal-container ul {
+	padding-left: 20px;
+	list-style: disc;
+}
+
+.legal-container li {
+	margin-bottom: 6px;
+}
+
+.legal-container li::marker {
+	color: var(--color-muted);
+}
+
+.legal-link {
+	color: var(--color-primary);
+	text-decoration: underline dotted;
+	text-underline-offset: 3px;
+}
+
+.legal-link:hover {
+	color: var(--color-primary-hover);
+}

@@ -24,6 +24,7 @@ const hasNavigation = featureFlags.showHome || featureFlags.showAbout ||
 		<div class="nav-links" id="navLinks">
 			{featureFlags.showHome && <HeaderLink href="/">Home</HeaderLink>}
 			<HeaderLink href="/blog">Blog</HeaderLink>
+			<HeaderLink href="/product">Product</HeaderLink>
 			{featureFlags.showAbout && <HeaderLink href="/about">About</HeaderLink>}
 			{featureFlags.showSubscribe && <HeaderLink href="/subscribe">Subscribe</HeaderLink>}
 			{featureFlags.showCooperate && <a href="/cooperate" class:list={['nav-cta', cooperateActive && 'nav-cta--active']}>Cooperate</a>}

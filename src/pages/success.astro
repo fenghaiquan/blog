@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SUPPORT_EMAIL } from '../consts';
+import '../styles/success.css';
+---
+
+<BaseLayout
+	title="支付成功 - 冯海泉"
+	description="付款已确认，感谢支持。"
+	ogImage="/og/default.png"
+>
+	<section class="page-header">
+		<div class="container">
+			<p class="page-header-eyebrow">Payment</p>
+			<h1 class="page-header-title">支付成功 🎉</h1>
+			<p class="page-header-desc">付款已确认，感谢支持！</p>
+		</div>
+	</section>
+
+	<section class="success-section">
+		<div class="container">
+			<div class="success-card">
+				<p class="success-check" aria-hidden="true">✓</p>
+				<h2 class="success-title">购买完成</h2>
+				<p class="success-desc">
+					<!-- TODO(Creem 闭环): 上线真实产品后，替换为交付说明与下载链接 -->
+					你的付款已确认。产品交付说明与下载链接会显示在这里。
+				</p>
+				<p class="success-note">
+					遇到问题？3 个工作日内必复，联系
+					<a href={`mailto:${SUPPORT_EMAIL}`} class="success-link">{SUPPORT_EMAIL}</a>
+				</p>
+				<a href="/blog" class="success-back">← 返回博客</a>
+			</div>
+		</div>
+	</section>
+</BaseLayout>

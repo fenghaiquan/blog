@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SUPPORT_EMAIL } from '../consts';
+import '../styles/legal.css';
+---
+
+<BaseLayout
+	title="服务条款 - 冯海泉"
+	description="本站服务条款与退款政策。"
+	ogImage="/og/default.png"
+>
+	<section class="page-header">
+		<div class="container">
+			<p class="page-header-eyebrow">Legal</p>
+			<h1 class="page-header-title">服务条款</h1>
+			<p class="page-header-desc">最后更新：2026-10-15</p>
+		</div>
+	</section>
+
+	<section class="legal-section">
+		<div class="container legal-container">
+			<h2>服务内容</h2>
+			<p>本站（fenghaiquan-ai.com）提供数字内容，包括免费公开的文章与付费数字商品（PDF 等电子文档）。所有内容仅供个人使用。</p>
+
+			<h2>购买与支付</h2>
+			<ul>
+				<li>付费商品通过 Creem 以记录商户（MoR）身份销售，支付处理、税务合规与订单记录由 Creem 依其条款执行；</li>
+				<li>定价在产品页面明示，最终价格以结账页为准，可能包含由 Creem 依法代收的增值税/消费税；</li>
+				<li>付款确认后，交付内容与下载方式见结账成功页及确认邮件。</li>
+			</ul>
+
+			<h2>退款政策</h2>
+			<ul>
+				<li>购买后 14 天内，如数字商品存在缺陷或与页面描述严重不符，可联系 <a href={`mailto:${SUPPORT_EMAIL}`} class="legal-link">{SUPPORT_EMAIL}</a> 申请全额退款；</li>
+				<li>符合当地消费者保护法规的情形，按适用法规处理。</li>
+			</ul>
+
+			<h2>可接受使用</h2>
+			<ul>
+				<li>禁止转售、公开分发或批量抓取本站内容；</li>
+				<li>不得利用本站内容从事任何违法活动。</li>
+			</ul>
+
+			<h2>知识产权</h2>
+			<p>本站原创内容的版权归 冯海泉 所有。</p>
+
+			<h2>免责声明与责任限制</h2>
+			<p>文章与技术内容为个人经验分享，按"现状"提供，不构成任何投资或专业建议。在法律允许的范围内，本站对任何索赔的责任总额不超过相关订单的实际支付金额。</p>
+
+			<h2>联系</h2>
+			<p>任何问题请联系 <a href={`mailto:${SUPPORT_EMAIL}`} class="legal-link">{SUPPORT_EMAIL}</a>，3 个工作日内响应。</p>
+		</div>
+	</section>
+</BaseLayout>
