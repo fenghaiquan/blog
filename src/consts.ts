@@ -15,4 +15,6 @@ export const PRODUCT_DOWNLOAD_URL = '/downloads/agent-patterns-cheatsheet-v1.1-b
 export const PRODUCT_PREVIEW_URL = '/downloads/agent-patterns-cheatsheet-preview.pdf';
 // TODO(Creem live): 在 Creem Live 模式创建产品后，把 Checkout Link 填到这里
 export const CREEM_CHECKOUT_URL = 'https://www.creem.io/payment/prod_69Y7fTqk4XVygYv1oLdgvC';
+// Creem 产品 ID（/success 验签时校验 product_id 一致）
+export const CREEM_PRODUCT_ID = 'prod_69Y7fTqk4XVygYv1oLdgvC';
 export const PRODUCT_PRICE = '$5';

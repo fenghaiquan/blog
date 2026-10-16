@@ -35,6 +35,7 @@
     "tailwindcss": "^4.3.2"
   },
   "devDependencies": {
+    "@astrojs/vercel": "^11.0.14",
     "marked": "^18.1.1",
     "pdf-parse": "^2.4.5",
     "playwright": "^1.61.1"

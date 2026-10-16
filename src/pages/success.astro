@@ -1,37 +1,86 @@
 ---
+import crypto from 'node:crypto';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SUPPORT_EMAIL, PRODUCT_NAME, PRODUCT_DOWNLOAD_URL } from '../consts';
+import { SUPPORT_EMAIL, PRODUCT_NAME, PRODUCT_DOWNLOAD_URL, CREEM_PRODUCT_ID } from '../consts';
 import '../styles/success.css';
+
+// 服务端渲染：下载链接仅在 Creem 跳转签名验证通过后渲染（算法见 docs.creem.io verify）
+export const prerender = false;
+
+const apiKey = import.meta.env.CREEM_API_KEY;
+
+// 跳转 URL 例：/success?checkout_id=...&order_id=...&customer_id=...&product_id=...&signature=...
+const params = Astro.url.searchParams;
+const signature = params.get('signature') || '';
+
+// 规范串：按 URL 中参数出现顺序取 key=value（跳过空值），末尾拼 salt={apiKey}，SHA-256 hex
+const parts: string[] = [];
+for (const [key, value] of params) {
+	if (key === 'signature') continue;
+	if (value == null || value === '') continue;
+	parts.push(`${key}=${value}`);
+}
+parts.push(`salt=${apiKey ?? ''}`);
+
+const expected = crypto.createHash('sha256').update(parts.join('|')).digest('hex');
+const sigValid =
+	apiKey != null &&
+	signature.length === 64 &&
+	crypto.timingSafeEqual(Buffer.from(expected, 'hex'), Buffer.from(signature, 'hex'));
+const productValid = params.get('product_id') === CREEM_PRODUCT_ID;
+
+const verified = sigValid && productValid;
+const hasParams = [...params.keys()].length > 0;
 ---
 
 <BaseLayout
-	title="支付成功 - 冯海泉"
+	title={verified ? '支付成功 - 冯海泉' : '付款验证 - 冯海泉'}
 	description="付款已确认，感谢支持。"
 	ogImage="/og/default.png"
 >
 	<section class="page-header">
 		<div class="container">
 			<p class="page-header-eyebrow">Payment</p>
-			<h1 class="page-header-title">支付成功 🎉</h1>
-			<p class="page-header-desc">付款已确认，感谢支持！</p>
+			<h1 class="page-header-title">{verified ? '支付成功 🎉' : '付款验证'}</h1>
+			<p class="page-header-desc">{verified ? '付款已确认，感谢支持！' : '正在核验付款信息'}</p>
 		</div>
 	</section>
 
 	<section class="success-section">
 		<div class="container">
-			<div class="success-card">
-				<p class="success-check" aria-hidden="true">✓</p>
-				<h2 class="success-title">购买完成</h2>
-				<p class="success-desc">
-					感谢支持！你的{PRODUCT_NAME}（PDF · 31 页）已就绪，点击下方按钮下载：
-				</p>
-				<a href={PRODUCT_DOWNLOAD_URL} class="success-download" download>⬇ 下载 PDF（约 2.7 MB）</a>
-				<p class="success-note">
-					下载遇到问题？联系
-					<a href={`mailto:${SUPPORT_EMAIL}`} class="success-link">{SUPPORT_EMAIL}</a>，3 个工作日内必复
-				</p>
-				<a href="/blog" class="success-back">← 返回博客</a>
-			</div>
+			{verified ? (
+				<div class="success-card">
+					<p class="success-check" aria-hidden="true">✓</p>
+					<h2 class="success-title">购买完成</h2>
+					<p class="success-desc">
+						感谢支持！你的{PRODUCT_NAME}（PDF · 31 页）已就绪，点击下方按钮下载：
+					</p>
+					<a href={PRODUCT_DOWNLOAD_URL} class="success-download" download>⬇ 下载 PDF（约 2.7 MB）</a>
+					<p class="success-note">
+						提示：本页链接含你的付款凭证参数，可保存书签随时回来重新下载；请勿分享给他人。
+					</p>
+					<p class="success-note">
+						下载遇到问题？联系
+						<a href={`mailto:${SUPPORT_EMAIL}`} class="success-link">{SUPPORT_EMAIL}</a>，3 个工作日内必复
+					</p>
+					<a href="/blog" class="success-back">← 返回博客</a>
+				</div>
+			) : (
+				<div class="success-card">
+					<p class="success-check" aria-hidden="true">!</p>
+					<h2 class="success-title">无法验证付款</h2>
+					<p class="success-desc">
+						{hasParams
+							? '付款参数校验未通过——链接可能不完整或被修改。请从支付完成后的原始跳转链接重新进入。'
+							: '未检测到付款信息。请先完成支付，支付成功后会自动跳转到本页。'}
+					</p>
+					<p class="success-note">
+						已付款但无法下载？联系
+						<a href={`mailto:${SUPPORT_EMAIL}`} class="success-link">{SUPPORT_EMAIL}</a>，附上付款邮箱与订单号，3 个工作日内必复
+					</p>
+					<a href="/product" class="success-back">← 返回产品页</a>
+				</div>
+			)}
 		</div>
 	</section>
 </BaseLayout>

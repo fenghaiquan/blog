@@ -68,6 +68,11 @@ Markdown 增强：wiki-links（remark-obsidian-md）、数学公式（KaTeX）�
 
 详见 [docs/decisions/005](../docs/decisions/005-paid-product-off-repo-delivery.md)
 
+### 3.6 /success 付款验签下载门（ADR-006）
+仅 `/success` 服务端渲染（Vercel adapter + `prerender = false`），Creem 跳转签名本地验证通过才渲染下载按钮；`CREEM_API_KEY` 存 .env 与 Vercel 环境变量。铁律：部署前必须先 `vercel env add CREEM_API_KEY`。
+
+详见 [docs/decisions/006](../docs/decisions/006-payment-verified-success-page.md)
+
 ## 4. 设计系统
 
 详见 [docs/DESIGN-SYSTEM.md](../docs/DESIGN-SYSTEM.md)

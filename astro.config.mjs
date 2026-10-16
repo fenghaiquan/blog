@@ -2,6 +2,7 @@
 
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import vercel from '@astrojs/vercel';
 import { unified } from '@astrojs/markdown-remark';
 import { defineConfig } from 'astro/config';
 import rehypeKatex from 'rehype-katex';
@@ -27,6 +28,8 @@ function slugify(text) {
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://www.fenghaiquan-ai.com',
+	// Vercel adapter：仅 /success 服务端渲染（付款验签），其余页面静态预渲染
+	adapter: vercel(),
 	integrations: [mdx(), sitemap(), ogImages()],
 	vite: {
 		plugins: [tailwindcss()],
