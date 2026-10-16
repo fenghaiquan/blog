@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SUPPORT_EMAIL, CREEM_CHECKOUT_URL, PRODUCT_PRICE, PRODUCT_NAME, PRODUCT_PREVIEW_URL } from '../consts';
+import { SUPPORT_EMAIL, CREEM_CHECKOUT_URL, PRODUCT_PRICE, PRODUCT_NAME, PRODUCT_PREVIEW_URL, CN_CHECKOUT_URL, CN_PRICE } from '../consts';
 import '../styles/product.css';
 ---
 
@@ -38,7 +38,7 @@ import '../styles/product.css';
 					<h2 class="product-heading">内容来源与版权</h2>
 					<p class="product-text">基于开源知识库 awesome-agentic-patterns（Apache-2.0，含 221 篇研究报告、覆盖 Anthropic / OpenAI / Cursor / Sourcegraph 等生产数据）中文编辑整理，保留上游署名与许可声明，详见手册卷末署名页。</p>
 					<h2 class="product-heading">交付方式</h2>
-					<p class="product-text">通过 Creem 安全结账付款后，即可在成功页获取下载链接。</p>
+					<p class="product-text">两个通道任选其一：国内通道（微信 / 支付宝）付款后凭私信中的「下载码」到 <a href="/redeem" class="product-link">兑换页</a> 取件；海外通道（信用卡，Creem 结账）付款后自动跳转到成功页取件。</p>
 				</div>
 
 				<aside class="product-card" aria-label="购买">
@@ -50,12 +50,19 @@ import '../styles/product.css';
 						<li>14 天缺陷退款保障</li>
 					</ul>
 					{CREEM_CHECKOUT_URL ? (
-						<a href={CREEM_CHECKOUT_URL} class="product-buy" rel="noopener">立即购买（Creem 安全结账）</a>
+						<a href={CREEM_CHECKOUT_URL} class="product-buy product-buy--secondary" rel="noopener">海外购买（信用卡 · {PRODUCT_PRICE} USD · Creem）</a>
 					) : (
-						<span class="product-buy product-buy--disabled">购买通道即将开放</span>
+						<span class="product-buy product-buy--secondary product-buy--disabled">海外通道即将开放</span>
 					)}
+					<div class="product-buy-group">
+						{CN_CHECKOUT_URL ? (
+							<a href={CN_CHECKOUT_URL} class="product-buy" rel="noopener">国内购买（微信 / 支付宝 · {CN_PRICE}）</a>
+						) : (
+							<span class="product-buy product-buy--disabled">国内通道即将开放</span>
+						)}
+					</div>
 					<p class="product-card-note">
-						遇到问题？联系
+						国内通道无需代理（微信 / 支付宝直接扫码），海外通道走 Creem 结账；两通道均为一次性购买。遇到问题？联系
 						<a href={`mailto:${SUPPORT_EMAIL}`} class="product-link">{SUPPORT_EMAIL}</a>，
 						3 个工作日内必复。详见
 						<a href="/terms" class="product-link">服务条款</a>

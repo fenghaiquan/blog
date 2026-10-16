@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { verifyCode } from '../utils/redeem.js';
+import { SUPPORT_EMAIL, PRODUCT_NAME, PRODUCT_DOWNLOAD_URL, REDEEM_BATCH, REDEEM_COUNT } from '../consts';
+import '../styles/success.css';
+
+// 服务端渲染：面包多「递减消息」兑换码验证（零存储 HMAC 设计，ADR-007）
+export const prerender = false;
+
+const input = Astro.url.searchParams.get('code') || '';
+const attempted = input.trim().length > 0;
+const verified = verifyCode(import.meta.env.REDEEM_SECRET, REDEEM_BATCH, REDEEM_COUNT, input);
+---
+
+<BaseLayout
+	title="兑换下载码 - 冯海泉"
+	description="输入下载码获取已购买的完整版 PDF。"
+	ogImage="/og/default.png"
+	noindex
+>
+	<section class="page-header">
+		<div class="container">
+			<p class="page-header-eyebrow">Redeem</p>
+			<h1 class="page-header-title">兑换下载码</h1>
+			<p class="page-header-desc">输入付款后收到的下载码，获取完整版 PDF。</p>
+		</div>
+	</section>
+
+	<section class="success-section">
+		<div class="container">
+			{verified ? (
+				<div class="success-card">
+					<p class="success-check" aria-hidden="true">✓</p>
+					<h2 class="success-title">下载码验证成功</h2>
+					<p class="success-desc">
+						你的{PRODUCT_NAME}（PDF · 31 页）已就绪，点击下方按钮下载：
+					</p>
+					<a href={PRODUCT_DOWNLOAD_URL} class="success-download" download>⬇ 下载 PDF（约 2.7 MB）</a>
+					<p class="success-note">
+						提示：下载码是你的购买凭证，可保存后随时回到本页重新下载；请勿分享给他人。
+					</p>
+					<p class="success-note">
+						下载遇到问题？联系
+						<a href={`mailto:${SUPPORT_EMAIL}`} class="success-link">{SUPPORT_EMAIL}</a>，3 个工作日内必复
+					</p>
+					<a href="/blog" class="success-back">← 返回博客</a>
+				</div>
+			) : (
+				<div class="success-card">
+					<p class="success-check" aria-hidden="true">!</p>
+					<h2 class="success-title">{attempted ? '下载码无效' : '输入下载码'}</h2>
+					<p class="success-desc">
+						{attempted
+							? '下载码校验未通过——请检查输入（注意区分 0/O、1/I，可直接复制粘贴），或使用付款后私信中的原始下载码重试。'
+							: '在面包多（微信 / 支付宝）完成付款后，你会收到一条含「专属下载码」的私信。在下方粘贴下载码即可获取完整版 PDF。'}
+					</p>
+					<form method="GET" action="/redeem" class="redeem-form">
+						<label for="redeem-code" class="redeem-label">下载码</label>
+						<input
+							id="redeem-code"
+							name="code"
+							type="text"
+							class="redeem-input"
+							placeholder="XXXXX-XXXXX-XXXXX-XXXXX"
+							value={attempted ? input : ''}
+							autocomplete="off"
+							autocapitalize="characters"
+							spellcheck="false"
+							required
+						/>
+						<button type="submit" class="redeem-submit">验证并下载</button>
+					</form>
+					<p class="success-note">
+						已付款但没收到下载码？联系
+						<a href={`mailto:${SUPPORT_EMAIL}`} class="success-link">{SUPPORT_EMAIL}</a>，附上面包多订单号，3 个工作日内必复
+					</p>
+					<a href="/product" class="success-back">← 返回产品页</a>
+				</div>
+			)}
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.redeem-form {
+		display: grid;
+		gap: 10px;
+		margin: 16px 0 8px;
+		text-align: left;
+	}
+
+	.redeem-label {
+		font-size: 13px;
+		font-weight: 600;
+		color: var(--color-fg-1);
+	}
+
+	.redeem-input {
+		width: 100%;
+		padding: 10px 14px;
+		border-radius: var(--radius-md);
+		border: 1px solid var(--color-border);
+		background: #fff;
+		font-family: var(--font-mono, monospace);
+		font-size: 15px;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+	}
+
+	.redeem-input:focus {
+		outline: 2px solid var(--color-primary);
+		outline-offset: -1px;
+	}
+
+	.redeem-submit {
+		padding: 10px 16px;
+		border: none;
+		border-radius: var(--radius-md);
+		background: var(--color-primary);
+		color: #fff;
+		font-size: 14px;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.redeem-submit:hover {
+		background: var(--color-primary-hover);
+	}
+</style>

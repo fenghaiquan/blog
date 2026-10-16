@@ -73,6 +73,11 @@ Markdown 增强：wiki-links（remark-obsidian-md）、数学公式（KaTeX）�
 
 详见 [docs/decisions/006](../docs/decisions/006-payment-verified-success-page.md)
 
+### 3.7 双轨收款：面包多国内轨 + 兑换码验码（ADR-007）
+国内无代理买家走面包多（微信/支付宝，¥35.9）→ 平台「自动回复·递减消息」发唯一下载码 → `/redeem`（SSR）零存储 HMAC 验码（码批由 `scripts/gen-redeem-codes.mjs` 生成，码文件绝不入库）。`REDEEM_SECRET` 存 .env 与 Vercel 环境变量，轮换即作废全批。
+
+详见 [docs/decisions/007](../docs/decisions/007-dual-track-payment-mianbaoduo.md)
+
 ## 4. 设计系统
 
 详见 [docs/DESIGN-SYSTEM.md](../docs/DESIGN-SYSTEM.md)

@@ -12,9 +12,10 @@ interface Props {
 	redirectKey?: 'showHome' | 'showAbout' | 'showSubscribe' | 'showCooperate';
 	mainClass?: string;
 	ogImage?: string;
+	noindex?: boolean;
 }
 
-const { title, description, redirectKey, mainClass = '', ogImage } = Astro.props;
+const { title, description, redirectKey, mainClass = '', ogImage, noindex } = Astro.props;
 const { featureFlags } = Astro.locals;
 const shouldRedirect = redirectKey && !featureFlags[redirectKey];
 ---
@@ -23,6 +24,7 @@ const shouldRedirect = redirectKey && !featureFlags[redirectKey];
 <html lang="zh-CN">
 	<head>
 		<BaseHead {title} {description} ogImage={ogImage} />
+		{noindex && <meta name="robots" content="noindex" />}
 		{shouldRedirect && <script is:inline>location.replace('/blog');</script>}
 	</head>
 	<body class="bg-bg font-sans text-fg-2 antialiased">

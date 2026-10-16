@@ -117,6 +117,23 @@
 	cursor: not-allowed;
 }
 
+.product-buy-group {
+	display: grid;
+	gap: 10px;
+	margin: 4px 0 12px;
+}
+
+.product-buy--secondary {
+	background: transparent;
+	color: var(--color-primary);
+	box-shadow: inset 0 0 0 1px var(--color-border);
+}
+
+.product-buy--secondary:hover {
+	background: var(--color-bg-2, #f0ebe4);
+	color: var(--color-primary);
+}
+
 .product-card-note {
 	font-size: 12px;
 	line-height: 1.7;
